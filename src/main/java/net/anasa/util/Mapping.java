@@ -57,6 +57,11 @@ public class Mapping<K, V>
 		}
 	}
 	
+	public void remove(K key)
+	{
+		getMap().remove(key);
+	}
+	
 	public Set<K> getKeys()
 	{
 		return getMap().keySet();

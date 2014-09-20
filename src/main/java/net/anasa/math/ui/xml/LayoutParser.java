@@ -1,9 +1,9 @@
-package net.anasa.math.ui.layout.xml;
+package net.anasa.math.ui.xml;
 
 import java.io.InputStream;
 
-import net.anasa.math.ui.layout.xml.builder.AbstractBuilder;
-import net.anasa.math.ui.layout.xml.builder.ILayoutBuilder;
+import net.anasa.math.ui.xml.builder.AbstractBuilder;
+import net.anasa.math.ui.xml.builder.ILayoutBuilder;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;

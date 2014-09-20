@@ -1,4 +1,4 @@
-package net.anasa.math.ui.layout.xml;
+package net.anasa.math.ui.xml;
 
 import net.anasa.util.Mapping;
 import net.anasa.util.data.DataConform.FormatException;

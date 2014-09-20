@@ -1,6 +1,6 @@
-package net.anasa.math.ui.layout.xml.builder;
+package net.anasa.math.ui.xml.builder;
 
-import net.anasa.math.ui.layout.xml.ILayoutNode;
+import net.anasa.math.ui.xml.ILayoutNode;
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.xml.Element;
