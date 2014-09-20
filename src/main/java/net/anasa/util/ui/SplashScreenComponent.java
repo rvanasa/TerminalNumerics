@@ -7,24 +7,20 @@ import net.anasa.util.Progress;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 
-public class SplashScreenComponent extends PanelComponent
+public class SplashScreenComponent extends WindowComponent
 {
-	private final Progress progress;
-	
 	public SplashScreenComponent(Icon icon, Progress progress, ICallback loading)
 	{
-		this.progress = progress;
+		setFrameVisible(false);
 		
 		UIBorderLayout layout = new UIBorderLayout();
 		layout.set(BorderPosition.CENTER, new LabelComponent(icon));
 		layout.set(BorderPosition.BOTTOM, new ProgressBarComponent(progress));
 		layout.apply(this);
 		
-		new Thread(loading::call).start();
-	}
-	
-	public Progress getProgress()
-	{
-		return progress;
+		new Thread(() -> {
+			loading.call();
+			dispose();
+		}).start();
 	}
 }

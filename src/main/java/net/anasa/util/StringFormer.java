@@ -1,5 +1,6 @@
 package net.anasa.util;
 
+@Deprecated
 public class StringFormer
 {
 	private String data = "";

@@ -14,9 +14,24 @@ public class WindowComponent extends UIParentComponent<JFrame>
 {
 	private static final Listing<WindowComponent> WINDOWS = new Listing<>();
 	
+	public WindowComponent()
+	{
+		this(null, null, true);
+	}
+	
+	public WindowComponent(String title)
+	{
+		this(title, null);
+	}
+	
 	public WindowComponent(String title, IComponent content)
 	{
 		this(title, content, true);
+	}
+	
+	public WindowComponent(IComponent content)
+	{
+		this(null, content, false);
 	}
 	
 	public WindowComponent(String title, IComponent content, boolean frame)
@@ -106,5 +121,10 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		setPosition(new Vector2(screen.getWidth() / 2 - getSize().getX() / 2 - 20, screen.getHeight() / 2 - getSize().getY() / 2 - 20));
 		
 		getHandle().setVisible(true);
+	}
+	
+	public void dispose()
+	{
+		getHandle().dispose();
 	}
 }

@@ -12,12 +12,18 @@ public abstract class UIParentComponent<T extends Container> extends UIComponent
 	@Override
 	public void setComponent(IComponent component, String pos)
 	{
-		getHandle().add(component.getHandle(), pos);
+		if(component != null)
+		{
+			getHandle().add(component.getHandle(), pos);
+		}
 	}
 	
 	@Override
 	public void addComponent(IComponent component)
 	{
-		getHandle().add(component.getHandle());
+		if(component != null)
+		{
+			getHandle().add(component.getHandle());
+		}
 	}
 }
