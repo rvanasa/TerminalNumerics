@@ -1,12 +1,20 @@
-  _   __  __       _______ _    _   _______ _    _ _____ _   _  _____   _ 
- | | |  \/  |   /\|__   __| |  | | |__   __| |  | |_   _| \ | |/ ____| | |
- | | | \  / |  /  \  | |  | |__| |    | |  | |__| | | | |  \| | |  __  | |
- | | | |\/| | / /\ \ | |  |  __  |    | |  |  __  | | | | . ` | | |_ | | |
- | | | |  | |/ ____ \| |  | |  | |    | |  | |  | |_| |_| |\  | |__| | | |
- | | |_|  |_/_/    \_\_|  |_|  |_|    |_|  |_|  |_|_____|_| \_|\_____| | |
- | |                                                                   | |
- |_|                                                                   |_|
- 
+ _  ______           _      _____                                 _____ _____  ___    _                  
+| | | ___ \         | |    /  __ \                               |_   _/  ___|/ _ \  | |                 
+| | | |_/ /___   ___| | __ | /  \/ __ _ _ __  _   _  ___  _ __     | | \ `--./ /_\ \ | |                 
+| | |    // _ \ / __| |/ / | |    / _` | '_ \| | | |/ _ \| '_ \    | |  `--. \  _  | | |                 
+| | | |\ \ (_) | (__|   <  | \__/\ (_| | | | | |_| | (_) | | | |   | | /\__/ / | | | | |                 
+| | \_| \_\___/ \___|_|\_\  \____/\__,_|_| |_|\__, |\___/|_| |_|   \_/ \____/\_| |_/ | |                 
+| |                                            __/ |                                 | |                 
+|_|                                           |___/                                  |_|                 
+ _____        __ _                           ______               _                                  _   
+/  ___|      / _| |                          |  _  \             | |                                | |  
+\ `--.  ___ | |_| |___      ____ _ _ __ ___  | | | |_____   _____| | ___  _ __  _ __ ___   ___ _ __ | |_ 
+ `--. \/ _ \|  _| __\ \ /\ / / _` | '__/ _ \ | | | / _ \ \ / / _ \ |/ _ \| '_ \| '_ ` _ \ / _ \ '_ \| __|
+/\__/ / (_) | | | |_ \ V  V / (_| | | |  __/ | |/ /  __/\ V /  __/ | (_) | |_) | | | | | |  __/ | | | |_ 
+\____/ \___/|_|  \__| \_/\_/ \__,_|_|  \___| |___/ \___| \_/ \___|_|\___/| .__/|_| |_| |_|\___|_| |_|\__|
+                                                                         | |                             
+                                                                         |_|                             
+
 The Anasa class library is in src/main/net.anasa.util (no touchey touchey)
 
 The math API is in the package src/main/net.anasa.math (do whatever* you want in there)
@@ -14,4 +22,4 @@ The math API is in the package src/main/net.anasa.math (do whatever* you want in
 
 I hope we can come up with a good name before that ASCII art becomes official. 
 
-I hope someone can please come up with a more useful readme than this (at least we have something I guess).
+I'll try and make a more useful and less silly readme (this is a placeholder file so GitHub won't yell at me).
