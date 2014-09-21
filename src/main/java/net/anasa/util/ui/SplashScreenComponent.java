@@ -3,14 +3,14 @@ package net.anasa.util.ui;
 import javax.swing.Icon;
 
 import net.anasa.util.ICallback;
-import net.anasa.util.Progress;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 
 public class SplashScreenComponent extends WindowComponent
 {
-	public SplashScreenComponent(Icon icon, Progress progress, ICallback loading)
+	public SplashScreenComponent(Icon icon, String progress, ICallback loading)
 	{
+		setAlwaysOnTop(true);
 		setFrameVisible(false);
 		
 		UIBorderLayout layout = new UIBorderLayout();
@@ -20,7 +20,7 @@ public class SplashScreenComponent extends WindowComponent
 		
 		new Thread(() -> {
 			loading.call();
-			dispose();
+			close();
 		}).start();
 	}
 }

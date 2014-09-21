@@ -18,14 +18,8 @@ import net.anasa.util.ui.event.UIEventTracker;
 
 public abstract class UIComponent<T extends Component> implements IComponent
 {
-	private final UIEventTracker events = new UIEventTracker();
-	
-	private final T handle;
-	
-	public UIComponent(T handle)
+	static
 	{
-		this.handle = handle;
-		
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -34,6 +28,15 @@ public abstract class UIComponent<T extends Component> implements IComponent
 		{
 			Debug.err("Failed to set look and feel: " + e.getMessage());
 		}
+	}
+	
+	private final UIEventTracker events = new UIEventTracker();
+	
+	private final T handle;
+	
+	public UIComponent(T handle)
+	{
+		this.handle = handle;
 		
 		handle.addMouseListener(new MouseListener()
 		{

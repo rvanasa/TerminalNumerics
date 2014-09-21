@@ -90,10 +90,4 @@ public class JarModule implements IModule
 	{
 		return delegate;
 	}
-	
-	@Override
-	public String toString()
-	{
-		return getName() + " " + getVersion();
-	}
 }

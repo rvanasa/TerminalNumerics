@@ -61,7 +61,7 @@ public final class Progress
 	private final String id;
 	
 	private int value;
-	private final int max;
+	private int max;
 	
 	private Progress(String id, int max)
 	{
@@ -95,6 +95,11 @@ public final class Progress
 	public int getMax()
 	{
 		return max;
+	}
+	
+	public void setMax(int max)
+	{
+		this.max = max;
 	}
 	
 	public double getPercent()

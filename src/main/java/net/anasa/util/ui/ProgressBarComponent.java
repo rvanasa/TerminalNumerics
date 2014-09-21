@@ -6,25 +6,34 @@ import net.anasa.util.Progress;
 
 public class ProgressBarComponent extends UIParentComponent<JProgressBar> implements ISwingComponent
 {
-	private final String progressID;
+	private final String progress;
 	
-	public ProgressBarComponent(Progress progress)
+	public ProgressBarComponent(String progress)
 	{
-		super(new JProgressBar(JProgressBar.HORIZONTAL, progress.getMax()));
+		super(new JProgressBar());
 		
-		this.progressID = progress.getID();
+		this.progress = progress;
 		
 		new Thread(() -> {
-			while(!Progress.isComplete(getProgressID()))
+			while(!Progress.isComplete(getProgress()))
 			{
-				getHandle().setValue(Progress.get(getProgressID()).getValue());
+				Progress current = Progress.get(getProgress());
+				if(current != null)
+				{
+					getHandle().setMaximum(current.getMax());
+					getHandle().setValue(current.getValue());
+				}
+				else
+				{
+					setWaiting(false);
+				}
 			}
 		}).start();
 	}
 
-	public String getProgressID()
+	public String getProgress()
 	{
-		return progressID;
+		return progress;
 	}
 
 	public boolean isWaiting()

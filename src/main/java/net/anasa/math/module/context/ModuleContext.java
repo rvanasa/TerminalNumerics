@@ -1,15 +1,13 @@
 package net.anasa.math.module.context;
 
-import java.io.File;
-
 import net.anasa.math.module.IModule;
-import net.anasa.math.module.JarModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.util.Debug;
-import net.anasa.util.Listing;
 
 public class ModuleContext
 {
+	public static final String PROGRESS_MODULE = "moduleProgress";
+	
 	private static final ModuleContext INSTANCE = new ModuleContext();
 	
 	public static ModuleContext getInstance()
@@ -34,26 +32,11 @@ public class ModuleContext
 	{
 		return components;
 	}
-
-	public IModule loadModule(File file) throws ModuleException
+	
+	public IModule addModule(IModule module) throws ModuleException
 	{
-		IModule module = new JarModule(file);
 		getModules().register(module);
-		
-		Debug.log("Loaded module: " + module);
-		
+		Debug.log("Loaded module: " + module.getName() + " " + module.getVersion());
 		return module;
-	}
-
-	public Listing<IModule> loadModules(File dir) throws ModuleException
-	{
-		Listing<IModule> modules = new Listing<>();
-		
-		for(File file : dir.listFiles((path, name) -> name.endsWith(".jar")))
-		{
-			modules.add(loadModule(file));
-		}
-		
-		return modules;
 	}
 }

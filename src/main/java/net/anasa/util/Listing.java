@@ -249,16 +249,6 @@ public class Listing<E> implements Iterable<E>
 		return this;
 	}
 	
-	public Listing<E> forEach(IListAction<E> action)
-	{
-		for(E element : this)
-		{
-			action.act(element);
-		}
-		
-		return this;
-	}
-	
 	public Listing<E> compute(IListOperation<E> operation)
 	{
 		for(int i = 0; i < size(); i++)

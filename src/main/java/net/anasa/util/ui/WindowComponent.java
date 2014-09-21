@@ -93,9 +93,9 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		getHandle().setMinimumSize(new Dimension((int)size.getX(), (int)size.getY()));
 	}
 	
-	public void setAlwaysOnTop()
+	public void setAlwaysOnTop(boolean alwaysOnTop)
 	{
-		getHandle().setAlwaysOnTop(true);
+		getHandle().setAlwaysOnTop(alwaysOnTop);
 	}
 	
 	public void setResizable(boolean resizable)
@@ -123,7 +123,7 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		getHandle().setVisible(true);
 	}
 	
-	public void dispose()
+	public void close()
 	{
 		getHandle().dispose();
 	}
