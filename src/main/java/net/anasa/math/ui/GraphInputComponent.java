@@ -35,7 +35,7 @@ public class GraphInputComponent extends PanelComponent
 	{
 		graph = new GraphComponent();
 		
-		input = new TextFieldComponent(() -> getGraph().loadGraphs(getInput().getValue()));
+		input = new TextFieldComponent((data) -> getGraph().addGraphs(data));
 		input.setToolTipText("<html>Input an expression to be displayed on the graph. (Example: -5x+3^x)<br/>You can graph multiple functions by seperating each expression with a semicolon (;).<html>");
 		
 		selectedGraph = new SelectionComponent<>((value) -> getGraph().getFunctionColor(getGraph().getGraphs().indexOf(value)).getName());
@@ -50,7 +50,7 @@ public class GraphInputComponent extends PanelComponent
 		UIBorderLayout topLayout = new UIBorderLayout();
 		topLayout.set(BorderPosition.LEFT, new LabelComponent(" f(x) = "));
 		topLayout.set(BorderPosition.CENTER, input);
-		topLayout.set(BorderPosition.RIGHT, new ButtonComponent("Graph", () -> getGraph().loadGraphs(getInput().getValue())));
+		topLayout.set(BorderPosition.RIGHT, new ButtonComponent("Graph", () -> getGraph().addGraphs(getInput().getValue())));
 		topLayout.apply(top);
 		
 		PropertyFieldComponent<Graph> graphSelect = new PropertyFieldComponent<>("Selected Graph", selectedGraph);

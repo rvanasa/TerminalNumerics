@@ -1,6 +1,7 @@
 package net.anasa.util.ui;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 
@@ -106,6 +107,16 @@ public class WindowComponent extends UIParentComponent<JFrame>
 	public void setFrameVisible(boolean frame)
 	{
 		getHandle().setUndecorated(!frame);
+	}
+	
+	public Image getIcon()
+	{
+		return getHandle().getIconImage();
+	}
+	
+	public void setIcon(Image image)
+	{
+		getHandle().setIconImage(image);
 	}
 	
 	public void pack()

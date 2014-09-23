@@ -59,7 +59,7 @@ public class GraphComponent extends PanelComponent
 	{
 		this();
 		
-		loadGraphs(data);
+		addGraphs(data);
 	}
 	
 	public GraphComponent(Graph... graphs)
@@ -137,12 +137,12 @@ public class GraphComponent extends PanelComponent
 		getPanel().redraw();
 	}
 	
-	public void loadGraph(Listing<SequenceToken> data)
+	public void addGraph(Listing<SequenceToken> data)
 	{
-		loadGraphs(new Listing<Listing<SequenceToken>>(data));
+		addGraphs(new Listing<Listing<SequenceToken>>(data));
 	}
 	
-	public void loadGraphs(Listing<Listing<SequenceToken>> data)
+	public void addGraphs(Listing<Listing<SequenceToken>> data)
 	{
 		Checks.checkNotNull(data, "data cannot be null");
 		
@@ -166,12 +166,12 @@ public class GraphComponent extends PanelComponent
 		}).start();
 	}
 	
-	public void loadGraphs(String data)
+	public void addGraphs(String data)
 	{
 		try
 		{
 			SequenceParser parser = new SequenceParser();
-			loadGraphs(new Listing<>(data.split(";")).filter((item) -> !item.trim().isEmpty()).conform((item) -> {
+			addGraphs(new Listing<>(data.split(";")).filter((item) -> !item.trim().isEmpty()).conform((item) -> {
 				try
 				{
 					return parser.getSequence(item);
@@ -186,6 +186,18 @@ public class GraphComponent extends PanelComponent
 		{
 			clearGraphs();
 		}
+	}
+	
+	public void setGraph(String data)
+	{
+		clearGraphs();
+		addGraphs(data);
+	}
+	
+	public void setGraph(Graph graph)
+	{
+		clearGraphs();
+		addGraph(graph);
 	}
 	
 	public void addGraphListener(IUIListener<GraphEvent> listener)

@@ -5,30 +5,37 @@ import net.anasa.math.MathException;
 import net.anasa.math.MathNumber;
 import net.anasa.util.Checks;
 
-public class VariableExpression extends MathExpression
+public class VariableExpression extends MathExpression implements IVariable
 {
-	private final String key;
+	private final String name;
 	
-	public VariableExpression(String key)
+	public VariableExpression(String name)
 	{
-		this.key = key;
+		this.name = name;
 	}
 
-	public String getKey()
+	@Override
+	public String getName()
 	{
-		return key;
+		return name;
 	}
 
 	@Override
 	public MathNumber evaluate(MathData data) throws MathException
 	{
-		Checks.check(data.hasVariable(getKey()), new MathException("Variable is not defined: " + getKey()));
-		return data.getVariable(getKey());
+		Checks.check(data.hasVariable(getName()), new MathException("Variable is not defined: " + getName()));
+		return data.getVariable(getName());
 	}
 
 	@Override
 	public String getStringValue()
 	{
-		return getKey();
+		return getName();
+	}
+	
+	@Override
+	public IExpression[] getChildren()
+	{
+		return new IExpression[] {};
 	}
 }

@@ -53,4 +53,10 @@ public class OperationExpression extends MathExpression
 		
 		return expression.toString();
 	}
+	
+	@Override
+	public IExpression[] getChildren()
+	{
+		return new IExpression[] {getA(), getB()};
+	}
 }

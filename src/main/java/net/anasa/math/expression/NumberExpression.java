@@ -7,6 +7,11 @@ public class NumberExpression extends MathExpression
 {
 	private final MathNumber number;
 	
+	public NumberExpression(double number)
+	{
+		this(new MathNumber(number));
+	}
+	
 	public NumberExpression(MathNumber number)
 	{
 		this.number = number;
@@ -27,5 +32,11 @@ public class NumberExpression extends MathExpression
 	public String getStringValue()
 	{
 		return getNumber().toString();
+	}
+	
+	@Override
+	public IExpression[] getChildren()
+	{
+		return new IExpression[] {};
 	}
 }

@@ -19,21 +19,27 @@ public class FunctionExpression extends MathExpression
 	{
 		return function;
 	}
-
+	
 	public IExpression getOperand()
 	{
 		return operand;
 	}
-
+	
 	@Override
 	public MathNumber evaluate(MathData data) throws MathException
 	{
 		return getFunction().evaluate(getOperand().evaluate(data), data);
 	}
-
+	
 	@Override
 	public String getStringValue()
 	{
 		return getFunction().getName() + "(" + getOperand() + ")";
+	}
+	
+	@Override
+	public IExpression[] getChildren()
+	{
+		return new IExpression[] {getOperand()};
 	}
 }

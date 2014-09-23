@@ -4,11 +4,12 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import net.anasa.math.MathException;
 import net.anasa.math.module.JarModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.module.provided.UIModule;
-import net.anasa.math.ui.GraphInputComponent;
+import net.anasa.math.ui.TransformationComponent;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.Progress;
@@ -18,7 +19,7 @@ import net.anasa.util.ui.WindowComponent;
 
 public class MathLauncher
 {
-	public MathLauncher(File dir)
+	public MathLauncher(File dir) throws MathException
 	{
 		try
 		{
@@ -48,7 +49,7 @@ public class MathLauncher
 							e.printStackTrace();
 						}
 					});
-					new WindowComponent("Graph Interface", new GraphInputComponent()).display();
+					new WindowComponent("Graph Interface", new TransformationComponent()).display();
 				}
 				catch(Exception e)
 				{
@@ -60,6 +61,7 @@ public class MathLauncher
 		{
 			e.printStackTrace();
 			new MessageComponent("An internal error has occurred. Please notify the developers.\n(" + e + ")").display();
+			System.exit(1);
 		}
 	}
 	

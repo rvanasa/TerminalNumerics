@@ -11,7 +11,7 @@ public class TextFieldComponent extends UIActionComponent<JTextField> implements
 		this(null);
 	}
 	
-	public TextFieldComponent(ICallback callback)
+	public TextFieldComponent(ITextCallback callback)
 	{
 		this(20, callback);
 	}
@@ -21,16 +21,21 @@ public class TextFieldComponent extends UIActionComponent<JTextField> implements
 		this(width, null);
 	}
 	
-	public TextFieldComponent(int width, ICallback callback)
+	public TextFieldComponent(int width, ITextCallback callback)
 	{
 		this(width, callback, null);
 	}
 	
-	public TextFieldComponent(int width, ICallback callback, String value)
+	public TextFieldComponent(int width, ITextCallback callback, String value)
 	{
 		super(new JTextField(width));
 		
-		addActionListener(callback);
+		
+		if(callback != null)
+		{
+			addActionListener(() -> callback.call(getValue()));
+		}
+		
 		setValue(value);
 	}
 
@@ -71,5 +76,10 @@ public class TextFieldComponent extends UIActionComponent<JTextField> implements
 	public void setEditable(boolean editable)
 	{
 		getHandle().setEditable(editable);
+	}
+	
+	public interface ITextCallback
+	{
+		public void call(String data);
 	}
 }
