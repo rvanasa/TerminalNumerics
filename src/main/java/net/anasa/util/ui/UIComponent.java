@@ -124,6 +124,11 @@ public abstract class UIComponent<T extends Component> implements IComponent
 		getHandle().setForeground(color);
 	}
 	
+	public void setFocusable(boolean focusable)
+	{
+		getHandle().setFocusable(focusable);
+	}
+	
 	public void setCursor(CursorType type)
 	{
 		getHandle().setCursor(Cursor.getPredefinedCursor(type.getID()));

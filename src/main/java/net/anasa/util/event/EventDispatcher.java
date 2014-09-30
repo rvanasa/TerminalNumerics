@@ -4,25 +4,25 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
+import net.anasa.util.Listing;
 import net.anasa.util.event.EventHandler.EventListener;
 
 public class EventDispatcher
 {
-	private final List<EventBuffer> listeners = new CopyOnWriteArrayList<>();
+	private final Listing<EventBuffer> listeners = new Listing<EventBuffer>().setHandle(new CopyOnWriteArrayList<>());
 	
-	public List<EventBuffer> getListeners()
+	public Listing<EventBuffer> getListeners()
 	{
 		return listeners;
 	}
 	
 	public void register(IEventListener listener)
 	{
-		if(!getListeners().contains(listener) && listener != null)
+		if(!getListeners().contains((buffer) -> buffer.getListener() == listener) && listener != null)
 		{
 			try
 			{
@@ -76,7 +76,7 @@ public class EventDispatcher
 	
 	public void clean()
 	{
-		getListeners().removeIf((buffer) -> !buffer.getListener().isAlive());
+		getListeners().filter((buffer) -> buffer.getListener().isAlive());
 	}
 	
 	public interface IEventListener
