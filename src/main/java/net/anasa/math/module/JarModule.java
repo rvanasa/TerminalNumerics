@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import net.anasa.util.Checks;
 import net.anasa.util.data.properties.Properties;
 
-public class JarModule implements IModule
+public class JarModule implements IModule, IUserModule
 {
 	private final Properties props;
 	
@@ -23,7 +23,7 @@ public class JarModule implements IModule
 	
 	private final Image icon;
 	
-	private final ModuleDelegate delegate;
+	private final IModuleDelegate delegate;
 	
 	public JarModule(File file) throws ModuleException
 	{
@@ -43,7 +43,7 @@ public class JarModule implements IModule
 			URLClassLoader loader = new URLClassLoader(new URL[] {new URL("jar:file:" + file.getPath() + "!/")});
 			
 			@SuppressWarnings("unchecked")
-			Class<? extends ModuleDelegate> componentClass = (Class<? extends ModuleDelegate>)Class.forName(props.getString("delegate"), true, loader);
+			Class<? extends IModuleDelegate> componentClass = (Class<? extends IModuleDelegate>)Class.forName(props.getString("delegate"), true, loader);
 			delegate = componentClass.newInstance();
 			
 			loader.close();
@@ -86,7 +86,7 @@ public class JarModule implements IModule
 	}
 	
 	@Override
-	public ModuleDelegate getDelegate()
+	public IModuleDelegate getDelegate()
 	{
 		return delegate;
 	}

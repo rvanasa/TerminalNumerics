@@ -1,8 +1,7 @@
 package net.anasa.math.module;
 
-import java.awt.Image;
 
-public abstract class AbstractModule implements IModule
+public abstract class AbstractModule implements IModule, IModuleDelegate
 {
 	private final String id;
 	private final Version version;
@@ -10,19 +9,13 @@ public abstract class AbstractModule implements IModule
 	private final String name;
 	private final String description;
 	
-	private final Image icon;
-	private final ModuleDelegate delegate;
-	
-	public AbstractModule(String id, Version version, String name, String description, Image icon, ModuleDelegate delegate)
+	public AbstractModule(String id, Version version, String name, String description)
 	{
 		this.id = id;
 		this.version = version;
 		
 		this.name = name;
 		this.description = description;
-		
-		this.icon = icon;
-		this.delegate = delegate;
 	}
 
 	@Override
@@ -50,14 +43,8 @@ public abstract class AbstractModule implements IModule
 	}
 
 	@Override
-	public Image getIcon()
+	public IModuleDelegate getDelegate()
 	{
-		return icon;
-	}
-
-	@Override
-	public ModuleDelegate getDelegate()
-	{
-		return delegate;
+		return this;
 	}
 }

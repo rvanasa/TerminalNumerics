@@ -124,6 +124,7 @@ public class GraphComponent extends PanelComponent
 	public void addGraph(Graph graph)
 	{
 		getGraphs().add(graph);
+		redraw();
 	}
 	
 	public void clearGraphs()

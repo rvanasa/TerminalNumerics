@@ -4,24 +4,24 @@ import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.util.ui.IComponent;
 
-public abstract class ModuleDelegate
+public interface IModuleDelegate
 {
-	public void init() throws Exception
+	public default void init() throws Exception
 	{
 		
 	}
 	
-	public IComponent getPrimaryComponent() throws ModuleException
+	public default IComponent getPrimaryComponent() throws ModuleException
 	{
 		return null;
 	}
 	
-	public ModuleContext getContext()
+	public default ModuleContext getContext()
 	{
 		return ModuleContext.getInstance();
 	}
 	
-	public void addComponent(String id, IComponentEntry entry)
+	public default void addComponent(String id, IComponentEntry entry)
 	{
 		getContext().getComponents().register(id, entry);
 	}

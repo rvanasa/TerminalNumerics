@@ -15,6 +15,18 @@ public class Evaluator
 		return PARSER.getFrom(data);
 	}
 	
+	public static IExpression evaluate(String data, IExpression def)
+	{
+		try
+		{
+			return evaluate(data);
+		}
+		catch(MathException e)
+		{
+			return def;
+		}
+	}
+	
 	public static IExpression evaluate(Listing<SequenceToken> data) throws MathException
 	{
 		return PARSER.getFrom(data);

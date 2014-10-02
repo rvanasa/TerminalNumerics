@@ -2,6 +2,7 @@ package net.anasa.math.ui;
 
 import net.anasa.math.MathException;
 import net.anasa.math.expression.IExpression;
+import net.anasa.math.expression.NumberExpression;
 import net.anasa.math.expression.OperationExpression;
 import net.anasa.math.expression.OperatorType;
 import net.anasa.math.graph.Graph;
@@ -49,8 +50,8 @@ public class TransformationComponent extends PanelComponent
 		{
 			IExpression expression = Evaluator.evaluate(graphData.getValue());
 			
-			expression = new OperationExpression(OperatorType.MULTIPLY, expression, Evaluator.evaluate(verticalScale.getValue()));
-			expression = new OperationExpression(OperatorType.ADD, expression, Evaluator.evaluate(verticalTranslation.getValue()));
+			expression = new OperationExpression(OperatorType.MULTIPLY, expression, Evaluator.evaluate(verticalScale.getValue(), new NumberExpression(1)));
+			expression = new OperationExpression(OperatorType.ADD, expression, Evaluator.evaluate(verticalTranslation.getValue(), new NumberExpression(0)));
 			
 			getGraph().setGraph(new Graph(expression));
 		}

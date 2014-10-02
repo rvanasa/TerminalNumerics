@@ -17,6 +17,7 @@ public class ModuleContext
 	
 	private final ModuleRegistry modules = new ModuleRegistry();
 	private final ComponentRegistry components = new ComponentRegistry();
+	private final ActionRegistry actions = new ActionRegistry();
 	
 	private ModuleContext()
 	{
@@ -31,6 +32,11 @@ public class ModuleContext
 	public ComponentRegistry getComponents()
 	{
 		return components;
+	}
+	
+	public ActionRegistry getActions()
+	{
+		return actions;
 	}
 	
 	public IModule addModule(IModule module) throws ModuleException

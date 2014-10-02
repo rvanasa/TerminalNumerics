@@ -2,7 +2,7 @@ package net.anasa.math.ui;
 
 import javax.swing.BorderFactory;
 
-import net.anasa.math.module.IModule;
+import net.anasa.math.module.IUserModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
@@ -11,9 +11,9 @@ import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 
 public class ModuleComponent extends PanelComponent
 {
-	private final IModule module;
+	private final IUserModule module;
 	
-	public ModuleComponent(IModule module) throws ModuleException
+	public ModuleComponent(IUserModule module) throws ModuleException
 	{
 		this.module = module;
 		
@@ -31,7 +31,7 @@ public class ModuleComponent extends PanelComponent
 		getHandle().setBorder(BorderFactory.createEtchedBorder());
 	}
 	
-	public IModule getModule()
+	public IUserModule getModule()
 	{
 		return module;
 	}

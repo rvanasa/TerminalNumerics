@@ -4,7 +4,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import net.anasa.math.module.IModule;
+import net.anasa.math.module.IUserModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.util.Checks;
 import net.anasa.util.ui.IComponent;
@@ -16,14 +16,14 @@ public class ModuleIconComponent extends LabelComponent
 {
 	private static final int IMAGE_SIZE = 32;
 	
-	private final IModule module;
+	private final IUserModule module;
 	
-	public IModule getModule()
+	public IUserModule getModule()
 	{
 		return module;
 	}
 
-	public ModuleIconComponent(IModule module) throws ModuleException
+	public ModuleIconComponent(IUserModule module) throws ModuleException
 	{
 		super(new ImageIcon(module.getIcon().getScaledInstance(IMAGE_SIZE, IMAGE_SIZE, Image.SCALE_SMOOTH)));
 		
