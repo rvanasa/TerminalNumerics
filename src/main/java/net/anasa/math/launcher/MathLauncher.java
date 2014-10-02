@@ -9,17 +9,17 @@ import net.anasa.math.module.JarModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.module.provided.UIModule;
-import net.anasa.math.ui.TransformationComponent;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.Progress;
+import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.MessageComponent;
 import net.anasa.util.ui.SplashScreenComponent;
 import net.anasa.util.ui.WindowComponent;
 
 public class MathLauncher
 {
-	public MathLauncher(File dir) throws MathException
+	public MathLauncher(File dir, IComponent gui) throws MathException
 	{
 		try
 		{
@@ -49,7 +49,7 @@ public class MathLauncher
 							e.printStackTrace();
 						}
 					});
-					new WindowComponent("Graph Interface", new TransformationComponent()).display();
+					new WindowComponent("Math", gui).display();
 				}
 				catch(Exception e)
 				{
