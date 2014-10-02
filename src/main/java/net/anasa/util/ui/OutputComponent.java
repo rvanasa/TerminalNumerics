@@ -27,7 +27,7 @@ public class OutputComponent extends UIComponent<JTextArea> implements ISwingCom
 		return getHandle().getText();
 	}
 	
-	public void message(String message)
+	public void append(String message)
 	{
 		getHandle().append(message + '\n');
 		getHandle().setCaretPosition(getText().length());

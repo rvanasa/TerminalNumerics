@@ -6,13 +6,12 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
+import net.anasa.util.Mapping;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.DataConform.IConformHandler;
@@ -20,7 +19,7 @@ import net.anasa.util.data.format.IDataFormat;
 import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.AbstractProperties.KVPair;
 
-public abstract class AbstractProperties implements Iterable<KVPair>
+abstract class AbstractProperties implements Iterable<KVPair>
 {
 	protected static final String DOT = ".";
 	
@@ -70,9 +69,9 @@ public abstract class AbstractProperties implements Iterable<KVPair>
 		return new InnerProperties(this, id);
 	}
 	
-	public HashMap<String, Properties> getInnerProps()
+	public Mapping<String, Properties> getInnerProps()
 	{
-		HashMap<String, Properties> map = new LinkedHashMap<>();
+		Mapping<String, Properties> map = new Mapping<>();
 		
 		for(String key : getKeys())
 		{
@@ -459,24 +458,6 @@ public abstract class AbstractProperties implements Iterable<KVPair>
 		public String toString()
 		{
 			return key + SPLITTER + " " + value;
-		}
-	}
-	
-	public static class PropertiesException extends FormatException
-	{
-		public PropertiesException(String message)
-		{
-			super(message);
-		}
-		
-		public PropertiesException(Throwable e)
-		{
-			super(e);
-		}
-		
-		public PropertiesException(String message, Throwable e)
-		{
-			super(message, e);
 		}
 	}
 }

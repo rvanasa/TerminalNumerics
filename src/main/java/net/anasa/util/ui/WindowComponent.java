@@ -3,6 +3,7 @@ package net.anasa.util.ui;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
@@ -10,6 +11,9 @@ import javax.swing.WindowConstants;
 
 import net.anasa.util.Listing;
 import net.anasa.util.math.Vector2;
+import net.anasa.util.ui.event.IUIListener;
+import net.anasa.util.ui.event.WindowCloseEvent;
+
 
 public class WindowComponent extends UIParentComponent<JFrame>
 {
@@ -47,16 +51,25 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		
 		WINDOWS.add(this);
 		
-		getHandle().addWindowStateListener((event) -> {
-			if(event.getNewState() == WindowEvent.WINDOW_CLOSED)
+		getHandle().addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosed(WindowEvent event)
 			{
-				WINDOWS.remove(this);
+				getEvents().dispatch(new WindowCloseEvent(WindowComponent.this));
+				
+				WINDOWS.remove(WindowComponent.this);
 				if(WINDOWS.isEmpty())
 				{
 					System.exit(0);
 				}
 			}
 		});
+	}
+	
+	public void addCloseListener(IUIListener<WindowCloseEvent> listener)
+	{
+		getEvents().register(WindowCloseEvent.class, listener);
 	}
 	
 	public void setContent(IParentComponent content)

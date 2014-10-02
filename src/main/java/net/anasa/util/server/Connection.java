@@ -50,13 +50,20 @@ public class Connection
 				}
 				catch(IOException e)
 				{
-					Debug.err("Error occurred in connection thread (" + this + ")");
-					e.printStackTrace();
+					if(isAlive())
+					{
+						Debug.err("Error occurred in connection thread (" + this + ")");
+						e.printStackTrace();
+					}
+					else
+					{
+						Debug.log(e.getMessage());
+					}
 				}
 			}
 		}).start();
 	}
-
+	
 	public EventDispatcher getEventDispatcher()
 	{
 		return events;
@@ -66,17 +73,17 @@ public class Connection
 	{
 		getEventDispatcher().register(listener);
 	}
-
+	
 	protected Socket getSocket()
 	{
 		return socket;
 	}
-
+	
 	public BufferedReader getInput()
 	{
 		return input;
 	}
-
+	
 	public BufferedWriter getOutput()
 	{
 		return output;

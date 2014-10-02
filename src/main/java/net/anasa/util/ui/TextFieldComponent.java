@@ -1,5 +1,6 @@
 package net.anasa.util.ui;
 
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import net.anasa.util.ICallback;
@@ -28,8 +29,12 @@ public class TextFieldComponent extends UIActionComponent<JTextField> implements
 	
 	public TextFieldComponent(int width, ITextCallback callback, String value)
 	{
-		super(new JTextField(width));
-		
+		this(width, callback, value, false);
+	}
+	
+	public TextFieldComponent(int width, ITextCallback callback, String value, boolean password)
+	{
+		super(password ? new JPasswordField(width) : new JTextField(width));
 		
 		if(callback != null)
 		{
@@ -38,7 +43,7 @@ public class TextFieldComponent extends UIActionComponent<JTextField> implements
 		
 		setValue(value);
 	}
-
+	
 	@Override
 	protected void setupActionCallback(ICallback callback)
 	{

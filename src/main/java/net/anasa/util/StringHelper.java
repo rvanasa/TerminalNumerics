@@ -32,6 +32,11 @@ public final class StringHelper
 		return b != null && !b.isEmpty() && a == b.charAt(0);
 	}
 	
+	public static String join(String delimiter, Listing<?> values)
+	{
+		return join(delimiter, values.getValues());
+	}
+	
 	public static String join(String delimiter, Collection<?> values)
 	{
 		return join(delimiter, values.toArray());

@@ -1,4 +1,4 @@
-package net.anasa.command;
+package net.anasa.util.command;
 
 public interface ICommand
 {

@@ -1,4 +1,4 @@
-package net.anasa.command;
+package net.anasa.util.command;
 
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
@@ -58,7 +58,8 @@ public class PropertyCommand implements ICommand
 		}
 		catch(FormatException e)
 		{
-			return "Invalid arguments: " + data + " (" + e.getMessage() + ")";
+			e.printStackTrace();
+			return e.getMessage();
 		}
 	}
 	

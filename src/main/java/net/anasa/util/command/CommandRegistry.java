@@ -1,15 +1,10 @@
-package net.anasa.command;
+package net.anasa.util.command;
 
 import net.anasa.util.Mapping;
 
 public class CommandRegistry implements ICommand
 {
 	private final Mapping<String, ICommand> commands = new Mapping<>();
-	
-	public CommandRegistry()
-	{
-		
-	}
 	
 	public Mapping<String, ICommand> getCommands()
 	{
@@ -18,14 +13,16 @@ public class CommandRegistry implements ICommand
 	
 	public void add(String name, ICommand command)
 	{
-		getCommands().put(name, command);
+		for(String parse : name.split("\\|"))
+		{
+			getCommands().put(parse, command);
+		}
 	}
 	
 	@Override
 	public boolean isValid(String data)
 	{
-		ICommand command = getCommands().get(getName(data));
-		return command != null && command.isValid(getArgs(data));
+		return getCommand(data) != null;
 	}
 	
 	@Override
@@ -33,12 +30,20 @@ public class CommandRegistry implements ICommand
 	{
 		if(isValid(data))
 		{
-			return getCommands().get(getName(data)).run(getArgs(data));
+			return getCommand(data).run(getArgs(data));
 		}
 		else
 		{
-			return "Invalid command syntax: " + data;
+			return "Invalid command: " + data;
 		}
+	}
+	
+	public ICommand getCommand(String data)
+	{
+		String name = getName(data);
+		ICommand command = getCommands().getFirst((key) -> key.matches(name));
+		
+		return (command != null && command.isValid(getArgs(data))) ? command : null;
 	}
 	
 	private String getName(String data)

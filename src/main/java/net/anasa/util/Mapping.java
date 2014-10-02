@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+import net.anasa.util.Listing.IListCondition;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.DataConform.IConformHandler;
 
@@ -30,6 +31,19 @@ public class Mapping<K, V>
 	public V get(K key)
 	{
 		return getMap().get(key);
+	}
+	
+	public V getFirst(IListCondition<K> condition)
+	{
+		for(K key : getKeys())
+		{
+			if(condition.isValid(key))
+			{
+				return get(key);
+			}
+		}
+		
+		return null;
 	}
 	
 	public V get(K key, V def)
@@ -70,6 +84,16 @@ public class Mapping<K, V>
 	public Collection<V> getValues()
 	{
 		return getMap().values();
+	}
+	
+	public boolean containsKey(K key)
+	{
+		return getMap().containsKey(key);
+	}
+	
+	public boolean containsValue(V value)
+	{
+		return getMap().containsValue(value);
 	}
 	
 	public int size()

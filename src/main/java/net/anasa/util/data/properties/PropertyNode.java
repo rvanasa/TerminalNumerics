@@ -3,7 +3,6 @@ package net.anasa.util.data.properties;
 import net.anasa.util.Debug;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.format.IDataFormat;
-import net.anasa.util.data.properties.AbstractProperties.PropertiesException;
 
 public class PropertyNode<T>
 {

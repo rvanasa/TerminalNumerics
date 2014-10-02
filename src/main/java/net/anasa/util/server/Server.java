@@ -41,8 +41,15 @@ public class Server implements IEventListener
 				}
 				catch(IOException e)
 				{
-					Debug.log("Error occurred on server connection listener thread (" + e + ")");
-					e.printStackTrace();
+					if(!getSocket().isClosed())
+					{
+						Debug.log("Error occurred on server connection listener thread (" + e + ")");
+						e.printStackTrace();
+					}
+					else
+					{
+						Debug.log(e.getMessage());
+					}
 				}
 			}
 		}).start();
@@ -96,25 +103,34 @@ public class Server implements IEventListener
 		return getSocket().isBound() && !getSocket().isClosed();
 	}
 	
+	public void close() throws IOException
+	{
+		getSocket().close();
+	}
+	
+	public void sendMessage(Connection connection, String message)
+	{
+		try
+		{
+			connection.sendMessage(message);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	public void sendMessage(String message)
 	{
 		for(Connection connection : getConnections())
 		{
-			try
-			{
-				connection.sendMessage(message);
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
+			sendMessage(connection, message);
 		}
 	}
 	
 	@EventListener
 	public void onMessage(ServerMessageEvent event)
 	{
-		Debug.log("[" + event.getConnection().getAddress() + "] " + event.getLine());
 		getEventDispatcher().dispatch(event);
 	}
 }
