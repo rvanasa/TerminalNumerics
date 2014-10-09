@@ -10,9 +10,6 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-	<modules>
-		<module>anasa-util</module>
-	</modules>
 	<build>
 		<plugins>
 			<plugin>
