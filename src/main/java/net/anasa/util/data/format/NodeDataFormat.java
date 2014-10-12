@@ -4,7 +4,7 @@ import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
 
-public abstract class NodeDataFormat<T> implements IDataFormat<T>
+public abstract class NodeDataFormat<T> implements IFormat<T>
 {
 	private static final String START = "[", END = "]";
 	
@@ -78,18 +78,18 @@ public abstract class NodeDataFormat<T> implements IDataFormat<T>
 	
 	public class FormatNode<E>
 	{
-		private final IDataFormat<E> format;
+		private final IFormat<E> format;
 		
 		private E value;
 		
-		public FormatNode(IDataFormat<E> format)
+		public FormatNode(IFormat<E> format)
 		{
 			nodes.add(this);
 			
 			this.format = format;
 		}
 		
-		public IDataFormat<E> getFormat()
+		public IFormat<E> getFormat()
 		{
 			return format;
 		}

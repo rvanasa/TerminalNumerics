@@ -28,7 +28,7 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 	public void init()
 	{
 		getContext().getComponents().register("panel", (props) -> setup(props, new PanelComponent()));
-		getContext().getComponents().register("label", (props) -> setup(props, new LabelComponent(props.getString("message"), new ImageIcon(new URL(props.getString("image"))))));
+		getContext().getComponents().register("label", (props) -> setup(props, new LabelComponent(props.getString("text"), new ImageIcon(new URL(props.getString("image"))))));
 		getContext().getComponents().register("progress", (props) -> setup(props, new ProgressBarComponent(props.getString("key"))));
 		getContext().getComponents().register("button", (props) -> setup(props, new ButtonComponent(props.getString("text"), getContext().getActions().getByID(props.getString("action")))));
 	}

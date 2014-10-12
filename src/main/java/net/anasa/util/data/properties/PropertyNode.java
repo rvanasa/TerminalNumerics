@@ -2,7 +2,7 @@ package net.anasa.util.data.properties;
 
 import net.anasa.util.Debug;
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 
 public class PropertyNode<T>
 {
@@ -10,14 +10,14 @@ public class PropertyNode<T>
 	
 	private final String key;
 	private final T def;
-	private final IDataFormat<T> format;
+	private final IFormat<T> format;
 	
-	public PropertyNode(Properties props, String key, IDataFormat<T> format)
+	public PropertyNode(Properties props, String key, IFormat<T> format)
 	{
 		this(props, key, null, format);
 	}
 	
-	public PropertyNode(Properties props, String key, T def, IDataFormat<T> format)
+	public PropertyNode(Properties props, String key, T def, IFormat<T> format)
 	{
 		this.props = props;
 		
@@ -31,7 +31,7 @@ public class PropertyNode<T>
 		return props;
 	}
 	
-	public IDataFormat<T> getFormat()
+	public IFormat<T> getFormat()
 	{
 		return format;
 	}

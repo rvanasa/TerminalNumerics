@@ -4,21 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 
 public class DirectoryHandler<T> implements IHandler<HashMap<String, T>>
 {
 	private final File dir;
-	private final IDataFormat<T> format;
+	private final IFormat<T> format;
 	
 	private final String extension;
 	
-	public DirectoryHandler(File dir, IDataFormat<T> format)
+	public DirectoryHandler(File dir, IFormat<T> format)
 	{
 		this(dir, format, null);
 	}
 	
-	public DirectoryHandler(File dir, IDataFormat<T> format, String extension)
+	public DirectoryHandler(File dir, IFormat<T> format, String extension)
 	{
 		this.dir = dir;
 		this.format = format;
@@ -31,7 +31,7 @@ public class DirectoryHandler<T> implements IHandler<HashMap<String, T>>
 		return dir;
 	}
 
-	public IDataFormat<T> getFormat()
+	public IFormat<T> getFormat()
 	{
 		return format;
 	}

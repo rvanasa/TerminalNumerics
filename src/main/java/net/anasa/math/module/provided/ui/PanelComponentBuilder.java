@@ -2,17 +2,17 @@ package net.anasa.math.module.provided.ui;
 
 import java.awt.Color;
 
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 import net.anasa.util.math.Vector2;
 import net.anasa.util.ui.PanelComponent;
 
 public class PanelComponentBuilder extends ComponentBuilder<PanelComponent>
 {
-	ComponentAspect<Integer> background = new ComponentAspect<>("background", IDataFormat.INT, 0xFFFFFF);
-	ComponentAspect<Integer> foreground = new ComponentAspect<>("foreground", IDataFormat.INT, 0xFFFFFF);
+	ComponentAspect<Integer> background = new ComponentAspect<>("background", IFormat.INT, 0xFFFFFF);
+	ComponentAspect<Integer> foreground = new ComponentAspect<>("foreground", IFormat.INT, 0xFFFFFF);
 	
-	ComponentAspect<Double> width = new ComponentAspect<>("width", IDataFormat.DOUBLE, 64D);
-	ComponentAspect<Double> height = new ComponentAspect<>("height", IDataFormat.DOUBLE, 64D);
+	ComponentAspect<Double> width = new ComponentAspect<>("width", IFormat.DOUBLE, 64D);
+	ComponentAspect<Double> height = new ComponentAspect<>("height", IFormat.DOUBLE, 64D);
 	
 	@Override
 	public PanelComponent build(AspectData data)

@@ -1,9 +1,9 @@
 package net.anasa.util.data.properties;
 
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 
-public class PropFormat<T> implements IDataFormat<T>
+public class PropFormat<T> implements IFormat<T>
 {
 	private final String linefeed;
 	private final IPropConform<T> handler;

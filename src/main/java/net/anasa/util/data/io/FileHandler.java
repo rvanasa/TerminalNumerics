@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 
 public class FileHandler<T> implements IHandler<T>
 {
 	private final File file;
-	private final IDataFormat<T> format;
+	private final IFormat<T> format;
 	
-	public FileHandler(File file, IDataFormat<T> format)
+	public FileHandler(File file, IFormat<T> format)
 	{
 		this.file = file;
 		this.format = format;
@@ -26,7 +26,7 @@ public class FileHandler<T> implements IHandler<T>
 		return file;
 	}
 
-	public IDataFormat<T> getFormat()
+	public IFormat<T> getFormat()
 	{
 		return format;
 	}
@@ -47,7 +47,12 @@ public class FileHandler<T> implements IHandler<T>
 			String data = "";
 			while(reader.ready())
 			{
-				data += reader.readLine() + '\n';
+				if(!data.isEmpty())
+				{
+					data += '\n';
+				}
+				
+				data += reader.readLine();
 			}
 			
 			return getFormat().getFrom(data);

@@ -162,6 +162,11 @@ public final class StringHelper
 		return ret;
 	}
 	
+	public static String s(int amount)
+	{
+		return amount == 1 ? "" : "s";
+	}
+	
 	public interface INestingSettings
 	{
 		public Character getCorresponding(char open);

@@ -2,7 +2,7 @@ package net.anasa.math.module.provided.ui;
 
 import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 import net.anasa.util.ui.IComponent;
 
 public abstract class ComponentBuilder<T extends IComponent>
@@ -19,10 +19,10 @@ public abstract class ComponentBuilder<T extends IComponent>
 	public class ComponentAspect<A>
 	{
 		private final String name;
-		private final IDataFormat<A> format;
+		private final IFormat<A> format;
 		private final A def;
 		
-		public ComponentAspect(String name, IDataFormat<A> format, A def)
+		public ComponentAspect(String name, IFormat<A> format, A def)
 		{
 			this.name = name;
 			this.format = format;
@@ -36,7 +36,7 @@ public abstract class ComponentBuilder<T extends IComponent>
 			return name;
 		}
 
-		public IDataFormat<A> getFormat()
+		public IFormat<A> getFormat()
 		{
 			return format;
 		}

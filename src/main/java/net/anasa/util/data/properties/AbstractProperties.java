@@ -15,7 +15,7 @@ import net.anasa.util.Mapping;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.DataConform.IConformHandler;
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.AbstractProperties.KVPair;
 
@@ -166,7 +166,7 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public int getInt(String key) throws PropertiesException
 	{
-		return get(key, IDataFormat.INT);
+		return get(key, IFormat.INT);
 	}
 	
 	public int getInt(String key, int def)
@@ -183,7 +183,7 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public double getDouble(String key) throws NumberFormatException, PropertiesException
 	{
-		return get(key, IDataFormat.DOUBLE);
+		return get(key, IFormat.DOUBLE);
 	}
 	
 	public double getDouble(String key, double def)
@@ -200,7 +200,7 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public float getFloat(String key) throws NumberFormatException, PropertiesException
 	{
-		return get(key, IDataFormat.FLOAT);
+		return get(key, IFormat.FLOAT);
 	}
 	
 	public float getFloat(String key, float def)
@@ -217,7 +217,7 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public boolean getBoolean(String key) throws PropertiesException
 	{
-		return get(key, IDataFormat.BOOLEAN);
+		return get(key, IFormat.BOOLEAN);
 	}
 	
 	public boolean getBoolean(String key, boolean def)

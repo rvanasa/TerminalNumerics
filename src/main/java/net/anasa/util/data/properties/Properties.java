@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.format.IDataFormat;
+import net.anasa.util.data.format.IFormat;
 
 public class Properties extends AbstractProperties
 {
-	public static final IDataFormat<Properties> FORMAT = new IDataFormat<Properties>()
+	public static final IFormat<Properties> FORMAT = new IFormat<Properties>()
 	{
 		@Override
 		public Properties getFrom(String data) throws FormatException
