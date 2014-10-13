@@ -33,13 +33,28 @@ public class Mapping<K, V>
 		return getMap().get(key);
 	}
 	
-	public V getFirst(IListCondition<K> condition)
+	public V getFirst(IMapCondition<K, V> condition)
+	{
+		for(K key : getKeys())
+		{
+			V value = get(key);
+			
+			if(condition.isValid(key, value))
+			{
+				return value;
+			}
+		}
+		
+		return null;
+	}
+	
+	public K getFirstKey(IListCondition<K> condition)
 	{
 		for(K key : getKeys())
 		{
 			if(condition.isValid(key))
 			{
-				return get(key);
+				return key;
 			}
 		}
 		
@@ -133,6 +148,11 @@ public class Mapping<K, V>
 		}
 		
 		return this;
+	}
+	
+	public interface IMapCondition<K, V>
+	{
+		public boolean isValid(K key, V value);
 	}
 	
 	public interface IMapAction<K, V>

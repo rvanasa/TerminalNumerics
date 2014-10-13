@@ -1,5 +1,7 @@
 package net.anasa.util.command;
 
+import java.util.regex.Pattern;
+
 import net.anasa.util.Mapping;
 
 public class CommandRegistry implements ICommand
@@ -13,7 +15,7 @@ public class CommandRegistry implements ICommand
 	
 	public void add(String name, ICommand command)
 	{
-		for(String parse : name.split("\\|"))
+		for(String parse : name.split(Pattern.quote("|")))
 		{
 			getCommands().put(parse, command);
 		}
@@ -41,7 +43,7 @@ public class CommandRegistry implements ICommand
 	public ICommand getCommand(String data)
 	{
 		String name = getName(data);
-		ICommand command = getCommands().getFirst((key) -> key.matches(name));
+		ICommand command = getCommands().getFirst((key, value) -> key.matches(name));
 		
 		return (command != null && command.isValid(getArgs(data))) ? command : null;
 	}
