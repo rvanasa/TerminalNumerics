@@ -47,7 +47,7 @@ public class EventDispatcher
 		{
 			IEventListener listener = buffer.getListener();
 			
-			if(listener.isAlive())
+			if(listener.isListening())
 			{
 				for(Method method : buffer.getListeners(event.getClass()))
 				{
@@ -76,12 +76,12 @@ public class EventDispatcher
 	
 	public void clean()
 	{
-		getListeners().filter((buffer) -> buffer.getListener().isAlive());
+		getListeners().filter((buffer) -> buffer.getListener().isListening());
 	}
 	
 	public interface IEventListener
 	{
-		public boolean isAlive();
+		public boolean isListening();
 		
 		public default void onFailEvent(IEvent event, Throwable e)
 		{

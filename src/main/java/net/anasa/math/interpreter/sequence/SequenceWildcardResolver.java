@@ -1,7 +1,7 @@
 package net.anasa.math.interpreter.sequence;
 
-import net.anasa.math.sequence.SequenceToken;
 import net.anasa.math.sequence.SequenceNesting;
+import net.anasa.math.sequence.SequenceToken;
 import net.anasa.util.Listing;
 import net.anasa.util.resolver.ResolverException;
 import net.anasa.util.resolver.logic.IResolver;

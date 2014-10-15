@@ -26,7 +26,7 @@ public class Server implements IEventListener
 		Debug.log("Server started on port " + getPort());
 		
 		new Thread(() -> {
-			while(isAlive())
+			while(isListening())
 			{
 				getConnections().forEach((connection) -> {
 					if(!connection.isAlive())
@@ -98,7 +98,7 @@ public class Server implements IEventListener
 	}
 	
 	@Override
-	public boolean isAlive()
+	public boolean isListening()
 	{
 		return getSocket().isBound() && !getSocket().isClosed();
 	}

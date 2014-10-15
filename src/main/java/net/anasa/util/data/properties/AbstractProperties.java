@@ -17,14 +17,13 @@ import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.DataConform.IConformHandler;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.io.IOHelper;
-import net.anasa.util.data.properties.AbstractProperties.KVPair;
 
 abstract class AbstractProperties implements Iterable<KVPair>
 {
 	protected static final String DOT = ".";
 	
-	private static final String SPLITTER = ":";
-	private static final String COMMENT = "#";
+	protected static final String SPLITTER = ":";
+	protected static final String COMMENT = "#";
 	
 	protected abstract String getValue(String key);
 	
@@ -422,42 +421,5 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	public Iterator<KVPair> iterator()
 	{
 		return new ArrayList<>(Arrays.asList(getKVPairs())).iterator();
-	}
-	
-	public static class KVPair
-	{
-		private final String key, value;
-		
-		public <T> KVPair(String key, T value, IConformHandler<T, String> conform) throws FormatException
-		{
-			this(key, conform.getFrom(value));
-		}
-		
-		public KVPair(String key, Object value)
-		{
-			this(key, String.valueOf(value));
-		}
-		
-		public KVPair(String key, String value)
-		{
-			this.key = key;
-			this.value = value;
-		}
-		
-		public String getKey()
-		{
-			return key;
-		}
-		
-		public String getValue()
-		{
-			return value;
-		}
-		
-		@Override
-		public String toString()
-		{
-			return key + SPLITTER + " " + value;
-		}
 	}
 }

@@ -1,5 +1,6 @@
 package net.anasa.util.data.xml;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,7 +41,7 @@ public class XmlStructure
 		}
 	}
 	
-	public static class XmlException extends Exception
+	public static class XmlException extends IOException
 	{
 		public XmlException(String message)
 		{
