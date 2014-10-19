@@ -43,7 +43,7 @@ public class PropertyCommand implements ICommand
 		
 		Properties props = new Properties();
 		
-		props.set("data", StringHelper.join(data));
+		props.set("_", StringHelper.join(data));
 		
 		for(int i = 0; i < getArgs().length; i++)
 		{

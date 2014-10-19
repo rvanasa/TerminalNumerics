@@ -14,7 +14,7 @@ public interface IFormat<T> extends IConformHandler<String, T>
 	@Override
 	public abstract T getFrom(String data) throws FormatException;
 	
-	public default IConformHandler<T, String> reverse()
+	public default IConformHandler<T, String> reversed()
 	{
 		return (data) -> getFormatted(data);
 	}

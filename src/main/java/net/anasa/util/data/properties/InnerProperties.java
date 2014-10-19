@@ -1,7 +1,8 @@
 package net.anasa.util.data.properties;
 
 import java.util.Collection;
-import java.util.HashMap;
+
+import net.anasa.util.Mapping;
 
 public class InnerProperties extends Properties
 {
@@ -24,9 +25,9 @@ public class InnerProperties extends Properties
 		return id;
 	}
 	
-	private HashMap<String, String> compileMap()
+	private Mapping<String, String> compileMap()
 	{
-		HashMap<String, String> map = new HashMap<>();
+		Mapping<String, String> map = new Mapping<>();
 		
 		for(KVPair kv : getParent())
 		{
@@ -60,13 +61,13 @@ public class InnerProperties extends Properties
 	@Override
 	public Collection<String> getKeys()
 	{
-		return compileMap().keySet();
+		return compileMap().getKeys();
 	}
 	
 	@Override
 	public Collection<String> getValues()
 	{
-		return compileMap().values();
+		return compileMap().getValues();
 	}
 	
 	@Override

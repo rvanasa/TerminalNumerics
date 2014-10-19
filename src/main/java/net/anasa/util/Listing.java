@@ -36,7 +36,7 @@ public class Listing<E> implements Iterable<E>
 	{
 		if(values != null)
 		{
-			getValues().addAll(values);
+			addAll(values);
 		}
 	}
 	
@@ -146,6 +146,19 @@ public class Listing<E> implements Iterable<E>
 		return -1;
 	}
 	
+	public boolean check(IListCondition<E> condition)
+	{
+		for(E element : this)
+		{
+			if(!condition.isValid(element))
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	public int count(IListCondition<E> condition)
 	{
 		int ct = 0;
@@ -212,12 +225,12 @@ public class Listing<E> implements Iterable<E>
 		return this;
 	}
 	
-	public Listing<E> addAll(Listing<E> list)
+	public Listing<E> addAll(E[] elements)
 	{
-		return addAll(list.getValues());
+		return addAll(Arrays.asList(elements));
 	}
 	
-	public Listing<E> addAll(Collection<E> elements)
+	public Listing<E> addAll(Iterable<E> elements)
 	{
 		for(E element : elements)
 		{

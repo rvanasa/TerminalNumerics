@@ -88,13 +88,13 @@ public class Properties extends AbstractProperties
 			set(pair);
 		}
 	}
-
+	
 	@Override
 	protected String getValue(String key)
 	{
 		return map.get(key);
 	}
-
+	
 	@Override
 	protected void putValue(String key, String value)
 	{
@@ -106,13 +106,13 @@ public class Properties extends AbstractProperties
 	{
 		map.remove(key);
 	}
-
+	
 	@Override
 	public Collection<String> getKeys()
 	{
 		return map.keySet();
 	}
-
+	
 	@Override
 	public Collection<String> getValues()
 	{

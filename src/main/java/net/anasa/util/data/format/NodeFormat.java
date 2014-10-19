@@ -4,7 +4,7 @@ import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
 
-public abstract class NodeDataFormat<T> implements IFormat<T>
+public abstract class NodeFormat<T> implements IFormat<T>
 {
 	private static final String START = "[", END = "]";
 	
@@ -12,12 +12,12 @@ public abstract class NodeDataFormat<T> implements IFormat<T>
 	
 	private final Listing<FormatNode<?>> nodes = new Listing<FormatNode<?>>();
 	
-	public NodeDataFormat(String splitter)
+	public NodeFormat(String splitter)
 	{
 		this.splitter = splitter;
 	}
 	
-	public NodeDataFormat()
+	public NodeFormat()
 	{
 		this(";");
 	}
@@ -26,7 +26,7 @@ public abstract class NodeDataFormat<T> implements IFormat<T>
 	{
 		return splitter;
 	}
-
+	
 	public abstract void save(T data);
 	
 	public abstract T load();
@@ -34,6 +34,11 @@ public abstract class NodeDataFormat<T> implements IFormat<T>
 	@Override
 	public String getFormatted(T data) throws FormatException
 	{
+		if(data == null)
+		{
+			return null;
+		}
+		
 		save(data);
 		
 		String ret = "";
@@ -56,7 +61,11 @@ public abstract class NodeDataFormat<T> implements IFormat<T>
 	@Override
 	public T getFrom(String data) throws FormatException
 	{
-		if(data == null || !(data.startsWith(START) && data.endsWith(END)))
+		if(data == null)
+		{
+			return null;
+		}
+		else if(!(data.startsWith(START) && data.endsWith(END)))
 		{
 			throw new FormatException("Invalid data format: " + data);
 		}
@@ -93,7 +102,7 @@ public abstract class NodeDataFormat<T> implements IFormat<T>
 		{
 			return format;
 		}
-
+		
 		public E getValue()
 		{
 			return value;

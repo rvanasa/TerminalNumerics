@@ -282,10 +282,10 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public boolean setIfNonexistant(KVPair kv)
 	{
-		return setIfNonexistant(kv.getKey(), kv.getValue());
+		return setDefault(kv.getKey(), kv.getValue());
 	}
 	
-	public boolean setIfNonexistant(String key, Object value)
+	public boolean setDefault(String key, Object value)
 	{
 		if(!hasKey(key))
 		{

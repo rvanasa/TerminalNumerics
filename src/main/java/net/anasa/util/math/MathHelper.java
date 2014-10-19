@@ -22,24 +22,29 @@ public final class MathHelper
 		return getRandom().nextInt(n);
 	}
 	
-	public static float random(float n)
+	public static float randomF()
 	{
-		return getRandom().nextFloat() * n;
+		return getRandom().nextFloat();
 	}
 	
-	public static double random(double n)
+	public static float randomF(float n)
 	{
-		return getRandom().nextDouble() * n;
+		return randomF() * n;
 	}
 	
-	public static float random()
+	public static double randomD()
 	{
-		return random(1F);
+		return getRandom().nextDouble();
+	}
+	
+	public static double randomD(double n)
+	{
+		return randomD() * n;
 	}
 	
 	public static double randomRadian()
 	{
-		return random(2 * Math.PI);
+		return randomD(2 * Math.PI);
 	}
 	
 	public static int randomDegree()
@@ -47,19 +52,19 @@ public final class MathHelper
 		return random(360);
 	}
 	
-	public static double random(double a, double b)
+	public static double randomD(double a, double b)
 	{
-		return random(Math.abs(a - b)) + Math.min(a, b);
+		return randomD(Math.abs(a - b)) + Math.min(a, b);
 	}
 	
-	public static float random(float a, float b)
+	public static float randomF(float a, float b)
 	{
-		return (float)random((double)a, (double)b);
+		return randomF(Math.abs(a - b)) + Math.min(a, b);
 	}
 	
 	public static int random(int a, int b)
 	{
-		return (int)random((double)a, (double)b);
+		return random(Math.abs(a - b)) + Math.min(a, b);
 	}
 	
 	public static <T> T random(List<T> list)

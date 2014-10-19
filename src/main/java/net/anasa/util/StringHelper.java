@@ -82,6 +82,16 @@ public final class StringHelper
 		return original.substring(left, original.length() - right);
 	}
 	
+	public static String space(String data, int minLength)
+	{
+		for(int i = data.length(); i < minLength; i++)
+		{
+			data += " ";
+		}
+		
+		return data;
+	}
+	
 	public static String capitalize(String value)
 	{
 		if(value == null || value.isEmpty())

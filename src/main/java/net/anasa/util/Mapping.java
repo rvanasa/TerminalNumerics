@@ -2,14 +2,17 @@ package net.anasa.util;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.anasa.util.Listing.IListCondition;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.DataConform.IConformHandler;
 
-public class Mapping<K, V>
+public class Mapping<K, V> implements Iterable<Pair<K, V>>
 {
 	private final HashMap<K, V> map = new LinkedHashMap<>();
 	
@@ -18,7 +21,7 @@ public class Mapping<K, V>
 		
 	}
 	
-	public HashMap<K, V> getMap()
+	public Map<K, V> getMap()
 	{
 		return map;
 	}
@@ -91,6 +94,11 @@ public class Mapping<K, V>
 		getMap().remove(key);
 	}
 	
+	public void clear()
+	{
+		getMap().clear();
+	}
+	
 	public Set<K> getKeys()
 	{
 		return getMap().keySet();
@@ -116,6 +124,11 @@ public class Mapping<K, V>
 		return getMap().size();
 	}
 	
+	public Listing<Pair<K, V>> getEntries()
+	{
+		return new Listing<>(getMap().entrySet()).conform((entry) -> new EntryPair(entry));
+	}
+	
 	@Override
 	public String toString()
 	{
@@ -126,6 +139,12 @@ public class Mapping<K, V>
 	public boolean equals(Object obj)
 	{
 		return getMap().equals(obj);
+	}
+
+	@Override
+	public Iterator<Pair<K, V>> iterator()
+	{
+		return getEntries().iterator();
 	}
 	
 	public <T> Mapping<K, T> conform(IConformHandler<V, T> handler) throws FormatException
@@ -142,12 +161,34 @@ public class Mapping<K, V>
 	
 	public Mapping<K, V> forEach(IMapAction<K, V> action)
 	{
-		for(K key : getKeys())
+		for(Pair<K, V> entry : getEntries())
 		{
-			action.act(key, get(key));
+			action.act(entry.getKey(), entry.getValue());
 		}
 		
 		return this;
+	}
+	
+	private class EntryPair implements Pair<K, V>
+	{
+		private final Entry<K, V> entry;
+		
+		public EntryPair(Entry<K, V> entry)
+		{
+			this.entry = entry;
+		}
+		
+		@Override
+		public K getKey()
+		{
+			return entry.getKey();
+		}
+
+		@Override
+		public V getValue()
+		{
+			return entry.getValue();
+		}
 	}
 	
 	public interface IMapCondition<K, V>
