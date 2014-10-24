@@ -6,7 +6,6 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 import net.anasa.math.module.AbstractModule;
-import net.anasa.math.module.IModuleDelegate;
 import net.anasa.math.module.Version;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.properties.Properties;
@@ -17,7 +16,7 @@ import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.ProgressBarComponent;
 import net.anasa.util.ui.UIComponent;
 
-public class UIModule extends AbstractModule implements IModuleDelegate
+public class UIModule extends AbstractModule
 {
 	public UIModule()
 	{
