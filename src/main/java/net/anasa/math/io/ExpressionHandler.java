@@ -16,7 +16,7 @@ public class ExpressionHandler implements IHandler<IExpression>
 	
 	public ExpressionHandler(IHandler<String> handler)
 	{
-		this(handler, new SequenceParser());
+		this(handler, SequenceParser.EXPRESSION);
 	}
 	
 	public ExpressionHandler(IHandler<String> handler, IMathParser parser)

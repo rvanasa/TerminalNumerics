@@ -56,7 +56,12 @@ public class SequenceToken implements ICacheEntry<SequenceToken>
 		FUNCTION,
 		VARIABLE,
 		OPEN_PARENTHESIS,
-		CLOSE_PARENTHESIS;
+		CLOSE_PARENTHESIS,
+		EQUALS,
+		GREATER_THAN,
+		LESS_THAN,
+		GREATER_THAN_EQUAL,
+		LESS_THAN_EQUAL;
 
 		@Override
 		public boolean matches(Listing<SequenceToken> data)

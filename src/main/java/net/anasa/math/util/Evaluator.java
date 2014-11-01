@@ -8,7 +8,7 @@ import net.anasa.util.Listing;
 
 public class Evaluator
 {
-	private static final SequenceParser PARSER = new SequenceParser();
+	private static final SequenceParser PARSER = SequenceParser.EXPRESSION;
 	
 	public static IExpression evaluate(String data) throws MathException
 	{

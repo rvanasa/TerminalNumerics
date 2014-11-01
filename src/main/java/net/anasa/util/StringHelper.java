@@ -172,7 +172,7 @@ public final class StringHelper
 		return ret;
 	}
 	
-	public static String s(int amount)
+	public static String s(double amount)
 	{
 		return amount == 1 ? "" : "s";
 	}

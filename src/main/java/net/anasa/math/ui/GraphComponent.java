@@ -51,6 +51,8 @@ public class GraphComponent extends PanelComponent
 	private final Listing<Graph> graphs = new Listing<Graph>().setHandle(new CopyOnWriteArrayList<>());
 	private final GraphView view;
 	
+	private SequenceParser parser;
+	
 	private final PanelComponent graphPanel;
 	
 	private final SliderComponent scaleSlider;
@@ -116,6 +118,16 @@ public class GraphComponent extends PanelComponent
 		return view;
 	}
 	
+	public SequenceParser getParser()
+	{
+		return parser;
+	}
+	
+	public void setParser(SequenceParser parser)
+	{
+		this.parser = parser;
+	}
+	
 	public Listing<Graph> getGraphs()
 	{
 		return graphs;
@@ -171,11 +183,10 @@ public class GraphComponent extends PanelComponent
 	{
 		try
 		{
-			SequenceParser parser = new SequenceParser();
 			addGraphs(new Listing<>(data.split(";")).filter((item) -> !item.trim().isEmpty()).conform((item) -> {
 				try
 				{
-					return parser.getSequence(item);
+					return getParser().getSequence(item);
 				}
 				catch(Exception e)
 				{

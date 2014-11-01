@@ -14,36 +14,44 @@ import net.anasa.util.resolver.ResolverException;
 
 public class SequenceParser implements IMathParser
 {
+	public static final SequenceParser EXPRESSION = new SequenceParser()
+			.add(new RegexTokenBuilder("\\(", TokenType.OPEN_PARENTHESIS))
+			.add(new RegexTokenBuilder("\\)", TokenType.CLOSE_PARENTHESIS))
+			.add(new RegexTokenBuilder("=", TokenType.EQUALS))
+			.add(new RegexTokenBuilder("<=", TokenType.LESS_THAN_EQUAL))
+			.add(new RegexTokenBuilder(">=", TokenType.GREATER_THAN_EQUAL))
+			.add(new RegexTokenBuilder("<", TokenType.LESS_THAN))
+			.add(new RegexTokenBuilder(">", TokenType.LESS_THAN_EQUAL))
+			.add(new TokenBuilder(TokenType.FUNCTION, (data) -> {
+				for(FunctionType type : FunctionType.values())
+				{
+					if(type.getName().startsWith(data.toLowerCase()))
+					{
+						return true;
+					}
+				}
+				
+				return false;
+			}))
+			.add(new TokenBuilder(TokenType.OPERATOR, (data) -> OperatorType.isOperator(data)))
+			.add(new TokenBuilder(TokenType.NUMBER, (data) -> {
+				for(ConstantType type : ConstantType.values())
+				{
+					if(type.getName().startsWith(data.toLowerCase()))
+					{
+						return true;
+					}
+				}
+				
+				return NumberHelper.isDouble(data);
+			}))
+			.add(new RegexTokenBuilder("[a-zA-Z_]*", TokenType.VARIABLE));
+	
 	private final Listing<ITokenBuilder> builders = new Listing<>();
 	
-	public SequenceParser()
+	private SequenceParser()
 	{
-		add(new RegexTokenBuilder("\\(", TokenType.OPEN_PARENTHESIS));
-		add(new RegexTokenBuilder("\\)", TokenType.CLOSE_PARENTHESIS));
-		add(new TokenBuilder(TokenType.FUNCTION, (data) -> {
-			for(FunctionType type : FunctionType.values())
-			{
-				if(type.getName().startsWith(data.toLowerCase()))
-				{
-					return true;
-				}
-			}
-			
-			return false;
-		}));
-		add(new TokenBuilder(TokenType.OPERATOR, (data) -> OperatorType.isOperator(data)));
-		add(new TokenBuilder(TokenType.NUMBER, (data) -> {
-			for(ConstantType type : ConstantType.values())
-			{
-				if(type.getName().startsWith(data.toLowerCase()))
-				{
-					return true;
-				}
-			}
-			
-			return NumberHelper.isDouble(data);
-		}));
-		add(new RegexTokenBuilder("[a-zA-Z_]*", TokenType.VARIABLE));
+		
 	}
 	
 	public Listing<ITokenBuilder> getBuilders()
@@ -51,9 +59,11 @@ public class SequenceParser implements IMathParser
 		return builders;
 	}
 	
-	private void add(ITokenBuilder builder)
+	private SequenceParser add(ITokenBuilder builder)
 	{
 		getBuilders().add(builder);
+		
+		return this;
 	}
 	
 	@Override
