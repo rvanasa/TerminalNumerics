@@ -3,11 +3,11 @@ package net.anasa.util.resolver.logic;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
+import net.anasa.util.resolver.IToken;
 import net.anasa.util.resolver.ResolverCache;
-import net.anasa.util.resolver.ResolverCache.ICacheEntry;
 import net.anasa.util.resolver.ResolverException;
 
-public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IResolver<I, T>
+public abstract class ComplexResolver<T> implements IResolver<T>
 {
 	private static boolean DEBUG = false;
 	
@@ -15,7 +15,7 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 	
 	private final Listing<Consumer<?>> consumers = new Listing<>();
 	
-	private final ResolverCache<I, T> cache = new ResolverCache<>();
+	private final ResolverCache<T> cache = new ResolverCache<>();
 	
 	public ComplexResolver(String id)
 	{
@@ -39,13 +39,13 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 		return consumers;
 	}
 	
-	public ResolverCache<I, T> getCache()
+	public ResolverCache<T> getCache()
 	{
 		return cache;
 	}
 	
 	@Override
-	public boolean matches(Listing<I> data)
+	public boolean matches(Listing<IToken> data)
 	{
 		boolean debug = DEBUG;
 		
@@ -73,7 +73,7 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 	}
 	
 	@Override
-	public T resolve(Listing<I> data) throws ResolverException
+	public T resolve(Listing<IToken> data) throws ResolverException
 	{
 		T cache = getCache().get(data);
 		if(cache != null)
@@ -88,7 +88,7 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 		return getCache().cache(data, resolve(storage));
 	}
 	
-	private ConsumerStorage resolveConsumer(int c, Listing<I> data, ConsumerStorage storage) throws ResolverException
+	private ConsumerStorage resolveConsumer(int c, Listing<IToken> data, ConsumerStorage storage) throws ResolverException
 	{
 		Consumer<?> consumer = getConsumers().get(c);
 		
@@ -112,7 +112,7 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 			
 			for(int i = 1; i < data.size(); i++)
 			{
-				Listing<I> sub = data.subList(0, i);
+				Listing<IToken> sub = data.subList(0, i);
 				
 				boolean match = consumer.matches(sub);
 				debug("check c = " + c + " consumer = " + consumer + " i = " + i + " sub = " + sub + " match = " + match);
@@ -136,7 +136,7 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 		throw new ResolverException("Could not resolve consumer: " + consumer + " c = " + c + " data = " + data + " storage = " + storage);
 	}
 	
-	private <K> void updateStorage(Consumer<K> consumer, Listing<I> data, ConsumerStorage storage) throws ResolverException
+	private <K> void updateStorage(Consumer<K> consumer, Listing<IToken> data, ConsumerStorage storage) throws ResolverException
 	{
 		storage.set(consumer, consumer.resolve(data));
 	}
@@ -153,28 +153,28 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 	
 	public class Consumer<K>
 	{
-		private final ResolverCache<I, K> cache = new ResolverCache<>();
+		private final ResolverCache<K> cache = new ResolverCache<>();
 		
-		private final IResolver<I, K> resolver;
+		private final IResolver<K> resolver;
 		
-		public Consumer(IResolver<I, K> resolver)
+		public Consumer(IResolver<K> resolver)
 		{
 			this.resolver = resolver;
 			
 			getConsumers().add(this);
 		}
 		
-		public ResolverCache<I, K> getCache()
+		public ResolverCache<K> getCache()
 		{
 			return cache;
 		}
 		
-		public IResolver<I, K> getResolver()
+		public IResolver<K> getResolver()
 		{
 			return resolver;
 		}
 		
-		public boolean matches(Listing<I> data)
+		public boolean matches(Listing<IToken> data)
 		{
 			if(getCache().isCached(data))
 			{
@@ -184,7 +184,7 @@ public abstract class ComplexResolver<I extends ICacheEntry<I>, T> implements IR
 			return getResolver().matches(data);
 		}
 		
-		public K resolve(Listing<I> data) throws ResolverException
+		public K resolve(Listing<IToken> data) throws ResolverException
 		{
 			K cache = getCache().get(data);
 			if(cache != null)

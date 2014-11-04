@@ -10,7 +10,6 @@ import net.anasa.math.MathNumber;
 import net.anasa.math.graph.Graph;
 import net.anasa.math.graph.GraphView;
 import net.anasa.math.interpreter.SequenceParser;
-import net.anasa.math.sequence.SequenceToken;
 import net.anasa.math.ui.event.GraphEvent;
 import net.anasa.math.util.Evaluator;
 import net.anasa.util.Bounds;
@@ -20,6 +19,7 @@ import net.anasa.util.Mapping;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.math.MathHelper;
 import net.anasa.util.math.Vector2;
+import net.anasa.util.resolver.IToken;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.SliderComponent;
@@ -150,18 +150,18 @@ public class GraphComponent extends PanelComponent
 		getPanel().redraw();
 	}
 	
-	public void addGraph(Listing<SequenceToken> data)
+	public void addGraph(Listing<IToken> data)
 	{
-		addGraphs(new Listing<Listing<SequenceToken>>(data));
+		addGraphs(new Listing<Listing<IToken>>(data));
 	}
 	
-	public void addGraphs(Listing<Listing<SequenceToken>> data)
+	public void addGraphs(Listing<Listing<IToken>> data)
 	{
 		Checks.checkNotNull(data, "data cannot be null");
 		
 		new Thread(() -> {
 			clearGraphs();
-			for(Listing<SequenceToken> sequence : data)
+			for(Listing<IToken> sequence : data)
 			{
 				try
 				{

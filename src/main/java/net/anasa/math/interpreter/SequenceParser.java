@@ -6,10 +6,10 @@ import net.anasa.math.expression.FunctionType;
 import net.anasa.math.expression.IExpression;
 import net.anasa.math.expression.OperatorType;
 import net.anasa.math.interpreter.sequence.ExpressionInterpreter;
-import net.anasa.math.sequence.SequenceToken;
 import net.anasa.math.sequence.SequenceToken.TokenType;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
+import net.anasa.util.resolver.IToken;
 import net.anasa.util.resolver.ResolverException;
 
 public class SequenceParser implements IMathParser
@@ -21,7 +21,7 @@ public class SequenceParser implements IMathParser
 			.add(new RegexTokenBuilder("<=", TokenType.LESS_THAN_EQUAL))
 			.add(new RegexTokenBuilder(">=", TokenType.GREATER_THAN_EQUAL))
 			.add(new RegexTokenBuilder("<", TokenType.LESS_THAN))
-			.add(new RegexTokenBuilder(">", TokenType.LESS_THAN_EQUAL))
+			.add(new RegexTokenBuilder(">", TokenType.GREATER_THAN))
 			.add(new TokenBuilder(TokenType.FUNCTION, (data) -> {
 				for(FunctionType type : FunctionType.values())
 				{
@@ -72,7 +72,7 @@ public class SequenceParser implements IMathParser
 		return getFrom(getSequence(data));
 	}
 	
-	public IExpression getFrom(Listing<SequenceToken> data) throws MathException
+	public IExpression getFrom(Listing<IToken> data) throws MathException
 	{
 		try
 		{
@@ -85,15 +85,15 @@ public class SequenceParser implements IMathParser
 		}
 	}
 	
-	public Listing<SequenceToken> getSequence(String data) throws MathException
+	public Listing<IToken> getSequence(String data) throws MathException
 	{
-		Listing<SequenceToken> tokens = new Listing<>();
+		Listing<IToken> tokens = new Listing<>();
 		parseStep(data, tokens);
 		
 		return tokens;
 	}
 	
-	private void parseStep(String data, Listing<SequenceToken> tokens) throws MathException
+	private void parseStep(String data, Listing<IToken> tokens) throws MathException
 	{
 		if(data.isEmpty())
 		{

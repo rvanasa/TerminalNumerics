@@ -18,6 +18,7 @@ import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
 import net.anasa.util.StringHelper.NestingException;
+import net.anasa.util.resolver.IToken;
 import net.anasa.util.resolver.ParserResolver;
 import net.anasa.util.resolver.ResolverException;
 import net.anasa.util.resolver.logic.ComplexResolver;
@@ -26,14 +27,14 @@ import net.anasa.util.resolver.logic.ParserMatchResolver;
 
 public class ExpressionInterpreter
 {
-	private final ParserResolver<SequenceToken, IExpression> parser = new ParserResolver<>();
+	private final ParserResolver<IExpression> parser = new ParserResolver<>();
 	
 	public ExpressionInterpreter()
 	{
-		add(new ComplexResolver<SequenceToken, IExpression>("multiply")
+		add(new ComplexResolver<IExpression>("multiply")
 		{
-			Consumer<Listing<SequenceToken>> a = new Consumer<>(new ParserMatchResolver<>(getParser()));
-			Consumer<Listing<SequenceToken>> b = new Consumer<>(new ParserMatchResolver<>(getParser()));
+			Consumer<Listing<IToken>> a = new Consumer<>(new ParserMatchResolver<>(getParser()));
+			Consumer<Listing<IToken>> b = new Consumer<>(new ParserMatchResolver<>(getParser()));
 			
 			@Override
 			public IExpression resolve(ConsumerStorage storage) throws ResolverException
@@ -51,7 +52,7 @@ public class ExpressionInterpreter
 			}
 			
 			@Override
-			public IExpression resolve(SequenceToken item) throws ResolverException
+			public IExpression resolve(IToken item) throws ResolverException
 			{
 				String data = item.getData();
 				
@@ -75,31 +76,31 @@ public class ExpressionInterpreter
 			}
 			
 			@Override
-			public IExpression resolve(SequenceToken item) throws ResolverException
+			public IExpression resolve(IToken item) throws ResolverException
 			{
 				return new VariableExpression(item.getData());
 			}
 		});
 		
-		add(new IResolver<SequenceToken, IExpression>()
+		add(new IResolver<IExpression>()
 		{
 			@Override
-			public boolean matches(Listing<SequenceToken> data)
+			public boolean matches(Listing<IToken> data)
 			{
-				return data.size() >= 2 && data.get(0).getType() == TokenType.OPEN_PARENTHESIS && data.get(data.size() - 1).getType() == TokenType.CLOSE_PARENTHESIS;
+				return data.size() >= 2 && TokenType.OPEN_PARENTHESIS.isType(data.get(0).getType()) && TokenType.CLOSE_PARENTHESIS.isType(data.get(data.size() - 1).getType());
 			}
 			
 			@Override
-			public IExpression resolve(Listing<SequenceToken> data) throws ResolverException
+			public IExpression resolve(Listing<IToken> data) throws ResolverException
 			{
 				return getParser().resolve(data.shear(1, 1));
 			}
 		});
 		
-		add(new IResolver<SequenceToken, IExpression>()
+		add(new IResolver<IExpression>()
 		{
 			@Override
-			public boolean matches(Listing<SequenceToken> data)
+			public boolean matches(Listing<IToken> data)
 			{
 				try
 				{
@@ -113,18 +114,18 @@ public class ExpressionInterpreter
 			}
 			
 			@Override
-			public IExpression resolve(Listing<SequenceToken> data) throws ResolverException
+			public IExpression resolve(Listing<IToken> data) throws ResolverException
 			{
 				try
 				{
-					Checks.check(SequenceNesting.isNestingValid(data) && SequenceNesting.stripNesting(data).contains((item) -> item.getType() == TokenType.OPERATOR),
+					Checks.check(SequenceNesting.isNestingValid(data) && SequenceNesting.stripNesting(data).contains((item) -> TokenType.OPERATOR.isType(item.getType())),
 							new ResolverException("Invalid operator input data: " + data));
 					
-					SequenceToken splitter = null;
+					IToken splitter = null;
 					
-					for(SequenceToken item : SequenceNesting.stripNesting(data))
+					for(IToken item : SequenceNesting.stripNesting(data))
 					{
-						if(item.getType() == TokenType.OPERATOR)
+						if(TokenType.OPERATOR.isType(item.getType()))
 						{
 							OperatorType op = OperatorType.get(item.getData());
 							
@@ -151,7 +152,7 @@ public class ExpressionInterpreter
 			}
 		});
 		
-		add(new ComplexResolver<SequenceToken, IExpression>("function")
+		add(new ComplexResolver<IExpression>("function")
 		{
 			Consumer<IFunction> function = new Consumer<>(new ITypeResolver<IFunction>()
 			{
@@ -162,7 +163,7 @@ public class ExpressionInterpreter
 				}
 				
 				@Override
-				public IFunction resolve(SequenceToken item) throws ResolverException
+				public IFunction resolve(IToken item) throws ResolverException
 				{
 					return FunctionType.get(item.getData());
 				}
@@ -177,7 +178,7 @@ public class ExpressionInterpreter
 			}
 		});
 		
-		add(new ComplexResolver<SequenceToken, IExpression>("negative")
+		add(new ComplexResolver<IExpression>("negative")
 		{
 			Consumer<OperatorType> negative = new Consumer<>(new ITypeResolver<OperatorType>()
 			{
@@ -188,13 +189,13 @@ public class ExpressionInterpreter
 				}
 				
 				@Override
-				public boolean matches(SequenceToken item)
+				public boolean matches(IToken item)
 				{
 					return StringHelper.equals(OperatorType.SUBTRACT.getSignature(), item.getData());
 				}
 				
 				@Override
-				public OperatorType resolve(SequenceToken item) throws ResolverException
+				public OperatorType resolve(IToken item) throws ResolverException
 				{
 					return OperatorType.SUBTRACT;
 				}
@@ -210,19 +211,19 @@ public class ExpressionInterpreter
 		});
 	}
 	
-	private <T extends IResolver<SequenceToken, IExpression>> T add(T resolver)
+	private <T extends IResolver<IExpression>> T add(T resolver)
 	{
 		getParser().add(resolver);
 		
 		return resolver;
 	}
 	
-	public ParserResolver<SequenceToken, IExpression> getParser()
+	public ParserResolver<IExpression> getParser()
 	{
 		return parser;
 	}
 	
-	public IExpression getFrom(Listing<SequenceToken> data) throws ResolverException
+	public IExpression getFrom(Listing<IToken> data) throws ResolverException
 	{
 		return getParser().resolve(data);
 	}

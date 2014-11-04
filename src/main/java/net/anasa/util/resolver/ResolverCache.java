@@ -4,25 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.anasa.util.Listing;
-import net.anasa.util.resolver.ResolverCache.ICacheEntry;
 
-public class ResolverCache<I extends ICacheEntry<I>, T>
+public class ResolverCache<T>
 {
-	private final Map<Listing<I>, T> map = new HashMap<>();
+	private final Map<Listing<IToken>, T> map = new HashMap<>();
 	
-	public Map<Listing<I>, T> getMap()
+	public Map<Listing<IToken>, T> getMap()
 	{
 		return map;
 	}
 	
-	public boolean isCached(Listing<I> data)
+	public boolean isCached(Listing<IToken> data)
 	{
 		return get(data) != null;
 	}
 	
-	public T get(Listing<I> data)
+	public T get(Listing<IToken> data)
 	{
-		loop: for(Listing<I> list : getMap().keySet())
+		loop: for(Listing<IToken> list : getMap().keySet())
 		{
 			if(list.size() == data.size())
 			{
@@ -41,14 +40,9 @@ public class ResolverCache<I extends ICacheEntry<I>, T>
 		return null;
 	}
 	
-	public T cache(Listing<I> data, T value)
+	public T cache(Listing<IToken> data, T value)
 	{
 		getMap().putIfAbsent(data, value);
 		return value;
-	}
-	
-	public interface ICacheEntry<I>
-	{
-		public boolean isEquivalent(I other);
 	}
 }

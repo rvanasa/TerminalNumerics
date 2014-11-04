@@ -1,39 +1,38 @@
 package net.anasa.util.resolver;
 
 import net.anasa.util.Listing;
-import net.anasa.util.resolver.ResolverCache.ICacheEntry;
 import net.anasa.util.resolver.logic.IResolver;
 
-public class ParserResolver<I extends ICacheEntry<I>, T> implements IResolver<I, T>
+public class ParserResolver<T> implements IResolver<T>
 {
-	private final ResolverCache<I, T> cache = new ResolverCache<>();
+	private final ResolverCache<T> cache = new ResolverCache<>();
 	
-	private final Listing<IResolver<I, T>> resolvers = new Listing<>();
+	private final Listing<IResolver<T>> resolvers = new Listing<>();
 	
 	public ParserResolver()
 	{
 		
 	}
 	
-	public ResolverCache<I, T> getCache()
+	public ResolverCache<T> getCache()
 	{
 		return cache;
 	}
 
-	public Listing<IResolver<I, T>> getResolvers()
+	public Listing<IResolver<T>> getResolvers()
 	{
 		return resolvers;
 	}
 	
-	public void add(IResolver<I, T> resolver)
+	public void add(IResolver<T> resolver)
 	{
 		getResolvers().add(resolver);
 	}
 	
 	@Override
-	public boolean matches(Listing<I> data)
+	public boolean matches(Listing<IToken> data)
 	{
-		for(IResolver<I, T> resolver : getResolvers())
+		for(IResolver<T> resolver : getResolvers())
 		{
 			if(resolver.matches(data))
 			{
@@ -45,7 +44,7 @@ public class ParserResolver<I extends ICacheEntry<I>, T> implements IResolver<I,
 	}
 	
 	@Override
-	public T resolve(Listing<I> data) throws ResolverException
+	public T resolve(Listing<IToken> data) throws ResolverException
 	{
 		T cache = getCache().get(data);
 		if(cache != null)
@@ -53,7 +52,7 @@ public class ParserResolver<I extends ICacheEntry<I>, T> implements IResolver<I,
 			return cache;
 		}
 		
-		for(IResolver<I, T> resolver : getResolvers())
+		for(IResolver<T> resolver : getResolvers())
 		{
 			if(resolver.matches(data))
 			{

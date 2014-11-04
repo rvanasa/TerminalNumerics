@@ -3,8 +3,8 @@ package net.anasa.math.util;
 import net.anasa.math.MathException;
 import net.anasa.math.expression.IExpression;
 import net.anasa.math.interpreter.SequenceParser;
-import net.anasa.math.sequence.SequenceToken;
 import net.anasa.util.Listing;
+import net.anasa.util.resolver.IToken;
 
 public class Evaluator
 {
@@ -27,7 +27,7 @@ public class Evaluator
 		}
 	}
 	
-	public static IExpression evaluate(Listing<SequenceToken> data) throws MathException
+	public static IExpression evaluate(Listing<IToken> data) throws MathException
 	{
 		return PARSER.getFrom(data);
 	}

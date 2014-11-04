@@ -1,37 +1,38 @@
 package net.anasa.math.interpreter.sequence;
 
-import net.anasa.math.sequence.SequenceToken;
 import net.anasa.math.sequence.SequenceToken.TokenType;
 import net.anasa.util.Listing;
+import net.anasa.util.StringHelper;
+import net.anasa.util.resolver.IToken;
 import net.anasa.util.resolver.ResolverException;
 import net.anasa.util.resolver.logic.IResolver;
 
-public interface ITypeResolver<K> extends IResolver<SequenceToken, K>
+public interface ITypeResolver<K> extends IResolver<K>
 {
 	public TokenType getType();
 	
 	@Override
-	public default boolean matches(Listing<SequenceToken> data)
+	public default boolean matches(Listing<IToken> data)
 	{
 		if(data.size() != 1)
 		{
 			return false;
 		}
 		
-		SequenceToken item = data.get(0);
-		return item.getType() == getType() && matches(item);
+		IToken item = data.get(0);
+		return StringHelper.equals(getType().name(), item.getType()) && matches(item);
 	}
 	
-	public default boolean matches(SequenceToken item)
+	public default boolean matches(IToken item)
 	{
 		return true;
 	}
 	
 	@Override
-	public default K resolve(Listing<SequenceToken> data) throws ResolverException
+	public default K resolve(Listing<IToken> data) throws ResolverException
 	{
 		return resolve(data.get(0));
 	}
 	
-	public K resolve(SequenceToken item) throws ResolverException;
+	public K resolve(IToken item) throws ResolverException;
 }

@@ -1,12 +1,11 @@
 package net.anasa.math.sequence;
 
 import net.anasa.util.Listing;
-import net.anasa.util.StringHelper;
-import net.anasa.util.resolver.ResolverCache.ICacheEntry;
+import net.anasa.util.resolver.IToken;
 import net.anasa.util.resolver.ResolverException;
 import net.anasa.util.resolver.logic.IResolver;
 
-public class SequenceToken implements ICacheEntry<SequenceToken>
+public class SequenceToken implements IToken
 {
 	private final TokenType type;
 	private final String data;
@@ -22,9 +21,15 @@ public class SequenceToken implements ICacheEntry<SequenceToken>
 		this.data = data;
 	}
 	
-	public TokenType getType()
+	public TokenType getTypeValue()
 	{
 		return type;
+	}
+	
+	@Override
+	public String getType()
+	{
+		return getTypeValue().name();
 	}
 	
 	public boolean hasData()
@@ -32,15 +37,10 @@ public class SequenceToken implements ICacheEntry<SequenceToken>
 		return getData() != null;
 	}
 	
+	@Override
 	public String getData()
 	{
 		return data;
-	}
-
-	@Override
-	public boolean isEquivalent(SequenceToken other)
-	{
-		return getType() == other.getType() && StringHelper.equals(getData(), other.getData());
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class SequenceToken implements ICacheEntry<SequenceToken>
 		return "(" + getType() + (hasData() ? " : " + getData() : "") + ")";
 	}
 	
-	public enum TokenType implements IResolver<SequenceToken, SequenceToken>
+	public enum TokenType implements IResolver<IToken>
 	{
 		NUMBER,
 		OPERATOR,
@@ -62,17 +62,27 @@ public class SequenceToken implements ICacheEntry<SequenceToken>
 		LESS_THAN,
 		GREATER_THAN_EQUAL,
 		LESS_THAN_EQUAL;
-
+		
 		@Override
-		public boolean matches(Listing<SequenceToken> data)
+		public boolean matches(Listing<IToken> data)
 		{
-			return data.size() == 1 && data.get(0).getType() == this;
+			return data.size() == 1 && isType(data.get(0).getType());
+		}
+		
+		public boolean isType(String type)
+		{
+			return name().equals(type);
 		}
 
 		@Override
-		public SequenceToken resolve(Listing<SequenceToken> data) throws ResolverException
+		public IToken resolve(Listing<IToken> data) throws ResolverException
 		{
 			return data.get(0);
+		}
+		
+		public static TokenType getFrom(String type)
+		{
+			return valueOf(type);
 		}
 	}
 }

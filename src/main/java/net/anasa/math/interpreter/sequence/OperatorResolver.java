@@ -1,9 +1,9 @@
 package net.anasa.math.interpreter.sequence;
 
 import net.anasa.math.expression.OperatorType;
-import net.anasa.math.sequence.SequenceToken;
 import net.anasa.math.sequence.SequenceToken.TokenType;
 import net.anasa.util.Checks;
+import net.anasa.util.resolver.IToken;
 import net.anasa.util.resolver.ResolverException;
 
 public class OperatorResolver implements ITypeResolver<OperatorType>
@@ -15,7 +15,7 @@ public class OperatorResolver implements ITypeResolver<OperatorType>
 	}
 	
 	@Override
-	public OperatorType resolve(SequenceToken item) throws ResolverException
+	public OperatorType resolve(IToken item) throws ResolverException
 	{
 		return Checks.checkNotNull(OperatorType.get(item.getData()), new ResolverException("Invalid operator: " + item.getData()));
 	}
