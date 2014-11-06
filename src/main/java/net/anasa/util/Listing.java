@@ -76,6 +76,11 @@ public class Listing<E> implements Iterable<E>
 		return null;
 	}
 	
+	public Listing<E> getAll(IListCondition<E> condition)
+	{
+		return new Listing<>(this).filter(condition);
+	}
+	
 	public E getOrDefault(int index, E def)
 	{
 		return (index < 0 || index >= size() || get(index) == null) ? def : get(index);
@@ -247,17 +252,17 @@ public class Listing<E> implements Iterable<E>
 	
 	public Listing<E> filter(IListCondition<E> condition)
 	{
-		Collection<E> sweep = new HashSet<>();
+		Collection<E> filter = new HashSet<>();
 		
 		for(E element : this)
 		{
 			if(!condition.isValid(element))
 			{
-				sweep.add(element);
+				filter.add(element);
 			}
 		}
 		
-		getValues().removeAll(sweep);
+		getValues().removeAll(filter);
 		
 		return this;
 	}

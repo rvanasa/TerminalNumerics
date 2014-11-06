@@ -98,11 +98,11 @@ abstract class AbstractProperties implements Iterable<KVPair>
 				int index = NumberHelper.getInteger(id);
 				list.set(index, inner);
 			}
-			else
-			{
-				list.add(inner);
-			}
-		});
+				else
+				{
+					list.add(inner);
+				}
+			});
 		
 		return list;
 	}
