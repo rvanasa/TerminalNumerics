@@ -2,13 +2,10 @@ package net.anasa.math.module.app;
 
 import java.awt.Image;
 
-import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.Version;
-import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.standard.IStandard;
 import net.anasa.math.util.UI;
-import net.anasa.util.Checks;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
 
@@ -94,10 +91,7 @@ public class App implements IApp
 	{
 		try
 		{
-			IComponentEntry entry = getContext().getComponents().getByID(getLaunchComponentID());
-			Checks.checkNotNull(entry, new ModuleException("Component entry does not exist: " + getLaunchComponentID()));
-			
-			return entry.getComponent(getLaunchConfig());
+			return getContext().getComponents().create(getLaunchComponentID(), getLaunchConfig());
 		}
 		catch(Exception e)
 		{

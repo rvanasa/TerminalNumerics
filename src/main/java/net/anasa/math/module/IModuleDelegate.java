@@ -3,18 +3,12 @@ package net.anasa.math.module;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.util.ICallback;
-import net.anasa.util.ui.IComponent;
 
 public interface IModuleDelegate
 {
 	public default void init() throws Exception
 	{
 		
-	}
-	
-	public default IComponent getPrimaryComponent() throws ModuleException
-	{
-		return null;
 	}
 	
 	public default ModuleContext getContext()

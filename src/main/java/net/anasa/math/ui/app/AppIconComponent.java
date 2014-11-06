@@ -36,7 +36,7 @@ public class AppIconComponent extends LabelComponent
 		setBorder(2, 2);
 		
 		setContextMenu(new ContextMenuComponent(new MenuOption[] {
-				new MenuOption("Launch app", () -> launchApp()),
+				new MenuOption("Launch app", this::launchApp),
 				new MenuOption("View info", () -> new WindowComponent(app.getName(), new AppInfoComponent(app)).display()),
 		}));
 	}

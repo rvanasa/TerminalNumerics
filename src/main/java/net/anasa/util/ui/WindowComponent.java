@@ -14,7 +14,6 @@ import net.anasa.util.math.Vector2;
 import net.anasa.util.ui.event.IUIListener;
 import net.anasa.util.ui.event.WindowCloseEvent;
 
-
 public class WindowComponent extends UIParentComponent<JFrame>
 {
 	private static final Listing<WindowComponent> WINDOWS = new Listing<>();

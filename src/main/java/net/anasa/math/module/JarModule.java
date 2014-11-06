@@ -1,13 +1,10 @@
 package net.anasa.math.module;
 
-import java.awt.Image;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
-
-import javax.imageio.ImageIO;
 
 import net.anasa.util.Checks;
 import net.anasa.util.data.properties.Properties;
@@ -20,8 +17,6 @@ public class JarModule implements IModule
 	private final Version version;
 	private final String name;
 	private final String description;
-	
-	private final Image icon;
 	
 	private final IModuleDelegate delegate;
 	
@@ -38,8 +33,11 @@ public class JarModule implements IModule
 			name = props.getString("name");
 			description = props.getString("description", null);
 			
-			ZipEntry entry = jar.getEntry(props.getString("icon", "icon.png"));
-			icon = entry != null ? ImageIO.read(jar.getInputStream(entry)) : null;
+			// ZipEntry iconEntry = jar.getEntry(props.getString("icon",
+			// "icon.png"));
+			// icon = iconEntry != null ?
+			// ImageIO.read(jar.getInputStream(iconEntry)) :
+			// null;
 			
 			URLClassLoader loader = new URLClassLoader(new URL[] {new URL("jar:file:" + file.getPath() + "!/")});
 			
@@ -78,11 +76,6 @@ public class JarModule implements IModule
 	public String getDescription()
 	{
 		return description;
-	}
-	
-	public Image getIcon()
-	{
-		return icon;
 	}
 	
 	@Override

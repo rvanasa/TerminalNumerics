@@ -5,7 +5,7 @@ import net.anasa.util.Checks;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
 
-public class ComponentRegistry extends AbstractRegistry<IComponentEntry>
+public class ComponentRegistry extends LookupRegistry<IComponentEntry>
 {
 	public IComponent create(String id, Properties props) throws ModuleException
 	{
@@ -14,24 +14,18 @@ public class ComponentRegistry extends AbstractRegistry<IComponentEntry>
 			props = new Properties();
 		}
 		
-		Checks.checkNotNull(id, "Component id cannot be null");
+		Checks.checkNotNull(id, "Component ID cannot be null");
 		
 		IComponentEntry entry = getByID(id);
+		Checks.checkNotNull(entry, new ModuleException("Invalid component: " + id));
 		
-		if(entry != null)
+		try
 		{
-			try
-			{
-				return entry.getComponent(props);
-			}
-			catch(Exception e)
-			{
-				throw new ModuleException("Failed to construct component with properties: " + props, e);
-			}
+			return entry.getComponent(props);
 		}
-		else
+		catch(Exception e)
 		{
-			throw new ModuleException("Invalid component: " + id);
+			throw new ModuleException("Failed to construct component with properties: " + props, e);
 		}
 	}
 }

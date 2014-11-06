@@ -1,18 +1,18 @@
 package net.anasa.math.module.context;
 
 import net.anasa.util.Checks;
-import net.anasa.util.Mapping;
+import net.anasa.util.Lookup;
 
-abstract class AbstractRegistry<T> implements IRegistry<T>
+abstract class LookupRegistry<T> implements IRegistry<T>
 {
-	private final Mapping<String, T> entries = new Mapping<>();
+	private final Lookup<T> entries = new Lookup<>();
 	
-	public AbstractRegistry()
+	public LookupRegistry()
 	{
 		
 	}
 	
-	public Mapping<String, T> getEntries()
+	public Lookup<T> getEntries()
 	{
 		return entries;
 	}
@@ -25,7 +25,7 @@ abstract class AbstractRegistry<T> implements IRegistry<T>
 
 	public void register(String id, T entry)
 	{
-		Checks.checkNotNull(id, "Entry id cannot be null");
+		Checks.checkNotNull(id, "Entry ID cannot be null");
 		Checks.checkNotNull(entry, "Entry cannot be null");
 		
 		getEntries().put(id.toLowerCase(), entry);
