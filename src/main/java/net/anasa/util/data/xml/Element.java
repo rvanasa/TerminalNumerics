@@ -3,6 +3,7 @@ package net.anasa.util.data.xml;
 import java.util.Arrays;
 
 import net.anasa.util.Listing;
+import net.anasa.util.StringHelper;
 import net.anasa.util.data.xml.XmlStructure.XmlException;
 
 import org.w3c.dom.Attr;
@@ -70,6 +71,11 @@ public class Element
 	public Element[] getElements()
 	{
 		return elements;
+	}
+	
+	public Element[] getElements(String name)
+	{
+		return new Listing<>(getElements()).filter((element) -> StringHelper.equals(element.getName(), name)).toArray(Element.class);
 	}
 	
 	public boolean isParentElement()
