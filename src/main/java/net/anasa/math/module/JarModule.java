@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import net.anasa.util.Checks;
 import net.anasa.util.data.properties.Properties;
 
-public class JarModule implements IModule, IUserModule
+public class JarModule implements IModule
 {
 	private final Properties props;
 	
@@ -38,7 +38,8 @@ public class JarModule implements IModule, IUserModule
 			name = props.getString("name");
 			description = props.getString("description", null);
 			
-			icon = ImageIO.read(jar.getInputStream(jar.getEntry(props.getString("icon", "icon.png"))));
+			ZipEntry entry = jar.getEntry(props.getString("icon", "icon.png"));
+			icon = entry != null ? ImageIO.read(jar.getInputStream(entry)) : null;
 			
 			URLClassLoader loader = new URLClassLoader(new URL[] {new URL("jar:file:" + file.getPath() + "!/")});
 			
@@ -79,7 +80,6 @@ public class JarModule implements IModule, IUserModule
 		return description;
 	}
 	
-	@Override
 	public Image getIcon()
 	{
 		return icon;

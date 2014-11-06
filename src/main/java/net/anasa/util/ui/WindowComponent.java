@@ -139,7 +139,10 @@ public class WindowComponent extends UIParentComponent<JFrame>
 	
 	public void display()
 	{
-		pack();
+		if(!getHandle().isPreferredSizeSet())
+		{
+			pack();
+		}
 		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		setPosition(new Vector2(screen.getWidth() / 2 - getSize().getX() / 2 - 20, screen.getHeight() / 2 - getSize().getY() / 2 - 20));

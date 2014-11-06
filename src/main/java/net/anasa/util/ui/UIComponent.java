@@ -34,6 +34,8 @@ public abstract class UIComponent<T extends Component> implements IComponent
 	
 	private final T handle;
 	
+	private ContextMenuComponent contextMenu;
+	
 	public UIComponent(T handle)
 	{
 		this.handle = handle;
@@ -43,6 +45,10 @@ public abstract class UIComponent<T extends Component> implements IComponent
 			@Override
 			public void mouseReleased(MouseEvent event)
 			{
+				if(event.getButton() == 3 && getContextMenu() != null)
+				{
+					getContextMenu().display(UIComponent.this, new Vector2(event.getX(), event.getY()));
+				}
 			}
 			
 			@Override
@@ -82,6 +88,16 @@ public abstract class UIComponent<T extends Component> implements IComponent
 	public T getHandle()
 	{
 		return handle;
+	}
+	
+	public ContextMenuComponent getContextMenu()
+	{
+		return contextMenu;
+	}
+	
+	public void setContextMenu(ContextMenuComponent contextMenu)
+	{
+		this.contextMenu = contextMenu;
 	}
 	
 	public int getWidth()

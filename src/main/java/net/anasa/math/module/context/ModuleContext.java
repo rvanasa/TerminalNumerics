@@ -6,20 +6,19 @@ import net.anasa.util.Debug;
 
 public class ModuleContext
 {
-	public static final String PROGRESS_MODULE = "moduleProgress";
-	
 	private static final ModuleContext INSTANCE = new ModuleContext();
 	
 	public static ModuleContext getInstance()
 	{
 		return INSTANCE;
 	}
-	
+
 	private final ModuleRegistry modules = new ModuleRegistry();
+	private final AppRegistry apps = new AppRegistry();
 	private final ComponentRegistry components = new ComponentRegistry();
 	private final ActionRegistry actions = new ActionRegistry();
 	
-	private ModuleContext()
+	public ModuleContext()
 	{
 		
 	}
@@ -27,6 +26,11 @@ public class ModuleContext
 	public ModuleRegistry getModules()
 	{
 		return modules;
+	}
+	
+	public AppRegistry getApps()
+	{
+		return apps;
 	}
 	
 	public ComponentRegistry getComponents()

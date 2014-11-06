@@ -9,6 +9,11 @@ public class ComponentRegistry extends AbstractRegistry<IComponentEntry>
 {
 	public IComponent create(String id, Properties props) throws ModuleException
 	{
+		if(props == null)
+		{
+			props = new Properties();
+		}
+		
 		Checks.checkNotNull(id, "Component id cannot be null");
 		
 		IComponentEntry entry = getByID(id);

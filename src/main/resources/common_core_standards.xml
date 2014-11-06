@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Possible alternative to the Properties file -->
+<standards>
+	<standard id="K">
+		<name>Kindergarten</name>
+		<concepts>
+			<concept number="1">
+				<description>representing and comparing whole numbers</description>
+			</concept>
+			<concept number="2">
+				<description>describing shapes and space</description>
+			</concept>
+		</concepts>
+	</standard>
+</standards>

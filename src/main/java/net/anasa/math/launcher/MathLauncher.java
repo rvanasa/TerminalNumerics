@@ -19,6 +19,8 @@ import net.anasa.util.ui.WindowComponent;
 
 public class MathLauncher
 {
+	private static final String PROGRESS_MODULE = "moduleProgress";
+	
 	public MathLauncher(File dir, IComponent gui) throws MathException
 	{
 		try
@@ -32,15 +34,15 @@ public class MathLauncher
 			
 			getModuleContext().addModule(new UIModule());
 			
-			Progress.start(ModuleContext.PROGRESS_MODULE, files.size());
+			Progress.start(PROGRESS_MODULE, files.size());
 			
-			new SplashScreenComponent(new ImageIcon(), ModuleContext.PROGRESS_MODULE, () -> {
+			new SplashScreenComponent(new ImageIcon(), PROGRESS_MODULE, () -> {
 				try
 				{
 					files.forEach((file) -> {
 						try
 						{
-							Progress.increment(ModuleContext.PROGRESS_MODULE);
+							Progress.increment(PROGRESS_MODULE);
 							getModuleContext().addModule(new JarModule(file));
 						}
 						catch(ModuleException e)
