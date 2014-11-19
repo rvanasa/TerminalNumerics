@@ -26,4 +26,10 @@ public abstract class UIParentComponent<T extends Container> extends UIComponent
 			getHandle().add(component.getHandle());
 		}
 	}
+	
+	@Override
+	public void removeComponents()
+	{
+		getHandle().removeAll();
+	}
 }

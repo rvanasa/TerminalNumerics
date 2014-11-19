@@ -38,6 +38,24 @@ public final class NumberHelper
 		}
 	}
 	
+	public static float getFloat(String data)
+	{
+		return Float.parseFloat(data);
+	}
+	
+	public static boolean isFloat(String data)
+	{
+		try
+		{
+			getFloat(data);
+			return true;
+		}
+		catch(NumberFormatException e)
+		{
+			return false;
+		}
+	}
+	
 	public static byte getByte(String data)
 	{
 		return Byte.decode(data);

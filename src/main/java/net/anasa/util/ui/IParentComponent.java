@@ -10,4 +10,6 @@ public interface IParentComponent extends IComponent
 	public void setComponent(IComponent component, String pos);
 	
 	public void addComponent(IComponent component);
+	
+	public void removeComponents();
 }

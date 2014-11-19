@@ -1,6 +1,8 @@
 package net.anasa.util.data.format;
 
 import net.anasa.util.Checks;
+import net.anasa.util.NumberHelper;
+import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.DataConform.IConformHandler;
 
@@ -8,7 +10,7 @@ public interface IFormat<T> extends IConformHandler<String, T>
 {
 	public default String getFormatted(T data) throws FormatException
 	{
-		return String.valueOf(data);
+		return StringHelper.getOrNull(data);
 	}
 	
 	@Override
@@ -24,9 +26,9 @@ public interface IFormat<T> extends IConformHandler<String, T>
 	public static final IFormat<Integer> INT = (data) -> {
 		try
 		{
-			return Integer.decode(data);
+			return NumberHelper.getInteger(data);
 		}
-		catch(NumberFormatException e)
+		catch(Exception e)
 		{
 			throw new FormatException(e);
 		}
@@ -35,9 +37,9 @@ public interface IFormat<T> extends IConformHandler<String, T>
 	public static final IFormat<Double> DOUBLE = (data) -> {
 		try
 		{
-			return Double.parseDouble(data);
+			return NumberHelper.getDouble(data);
 		}
-		catch(NumberFormatException e)
+		catch(Exception e)
 		{
 			throw new FormatException(e);
 		}
@@ -46,9 +48,9 @@ public interface IFormat<T> extends IConformHandler<String, T>
 	public static final IFormat<Float> FLOAT = (data) -> {
 		try
 		{
-			return Float.parseFloat(data);
+			return NumberHelper.getFloat(data);
 		}
-		catch(NumberFormatException e)
+		catch(Exception e)
 		{
 			throw new FormatException(e);
 		}

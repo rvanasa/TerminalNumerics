@@ -2,21 +2,21 @@ package net.anasa.util.data.xml;
 
 import org.w3c.dom.Attr;
 
-public class Attribute
+public class XmlAttribute
 {
-	public static Attribute get(Attr attr)
+	public static XmlAttribute get(Attr attr)
 	{
 		if(attr == null)
 		{
 			return null;
 		}
 		
-		return new Attribute(attr.getName(), attr.getNodeValue());
+		return new XmlAttribute(attr.getName(), attr.getNodeValue());
 	}
 	
 	private final String key, value;
 	
-	public Attribute(String key, String value)
+	public XmlAttribute(String key, String value)
 	{
 		this.key = key;
 		this.value = value;

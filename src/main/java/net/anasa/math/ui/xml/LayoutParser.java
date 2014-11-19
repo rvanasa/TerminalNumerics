@@ -9,10 +9,10 @@ import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.properties.Properties;
-import net.anasa.util.data.xml.Attribute;
-import net.anasa.util.data.xml.Element;
-import net.anasa.util.data.xml.XmlStructure;
-import net.anasa.util.data.xml.XmlStructure.XmlException;
+import net.anasa.util.data.xml.XmlAttribute;
+import net.anasa.util.data.xml.XmlElement;
+import net.anasa.util.data.xml.XmlFile;
+import net.anasa.util.data.xml.XmlFile.XmlException;
 
 public class LayoutParser
 {
@@ -25,7 +25,7 @@ public class LayoutParser
 			LayoutType type = LayoutType.valueOf(StringHelper.upperCase(element.getAttribute("type")));
 			Checks.checkNotNull(type, new FormatException("Invalid layout type: " + element.getAttribute("type")));
 			LayoutNode node = new LayoutNode(type.getLayout(getProps(element)));
-			for(Element child : element.getElements())
+			for(XmlElement child : element.getElements())
 			{
 				node.add(getFrom(child), child.getAttribute("pos"));
 			}
@@ -43,7 +43,7 @@ public class LayoutParser
 		return builders;
 	}
 	
-	protected ILayoutNode getFrom(Element element) throws FormatException
+	protected ILayoutNode getFrom(XmlElement element) throws FormatException
 	{
 		ILayoutBuilder builder = getBuilders().getFirst((parse) -> parse.isValid(element));
 		Checks.checkNotNull(builder, new FormatException("Could not find builder for element: " + element.getName()));
@@ -55,7 +55,7 @@ public class LayoutParser
 	{
 		try
 		{
-			XmlStructure xml = XmlStructure.read(stream);
+			XmlFile xml = XmlFile.read(stream);
 			
 			return getFrom(xml.getBaseElement());
 		}
@@ -65,21 +65,21 @@ public class LayoutParser
 		}
 	}
 	
-	private Properties getProps(Element element)
+	private Properties getProps(XmlElement element)
 	{
 		return getProps(element, new Properties());
 	}
 	
-	private Properties getProps(Element element, Properties parent)
+	private Properties getProps(XmlElement element, Properties parent)
 	{
 		Properties props = new Properties();
 		
-		for(Attribute attribute : element.getAttributes())
+		for(XmlAttribute attribute : element.getAttributes())
 		{
 			props.set(attribute.getKey(), attribute.getValue());
 		}
 		
-		for(Element child : element.getElements())
+		for(XmlElement child : element.getElements())
 		{
 			if(child.hasIDAttribute())
 			{

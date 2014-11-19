@@ -34,7 +34,11 @@ public class FileHandler<T> implements IHandler<T>
 	@Override
 	public T read() throws IOException
 	{
-		getFile().getParentFile().mkdirs();
+		if(getFile().getParentFile() != null)
+		{
+			getFile().getParentFile().mkdirs();
+		}
+		
 		getFile().createNewFile();
 		
 		if(!getFile().isFile())

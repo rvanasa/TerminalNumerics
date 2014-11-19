@@ -16,6 +16,6 @@ public final class UI
 	public static void sendError(String message, Exception e)
 	{
 		e.printStackTrace();
-		sendError(message + " (" + e + "");
+		sendError(message + " (" + e + ")");
 	}
 }

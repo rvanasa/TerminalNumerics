@@ -7,21 +7,21 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
-public class XmlStructure
+public class XmlFile
 {
-	private final Element baseElement;
+	private final XmlElement baseElement;
 	
-	private XmlStructure(Element baseElement) throws XmlException
+	private XmlFile(XmlElement baseElement) throws XmlException
 	{
 		this.baseElement = baseElement;
 	}
 	
-	public Element getBaseElement()
+	public XmlElement getBaseElement()
 	{
 		return baseElement;
 	}
 	
-	public static XmlStructure read(InputStream stream) throws XmlException
+	public static XmlFile read(InputStream stream) throws XmlException
 	{
 		if(stream == null)
 		{
@@ -33,7 +33,7 @@ public class XmlStructure
 			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
 			doc.getDocumentElement().normalize();
 			
-			return new XmlStructure(Element.get(doc.getDocumentElement()));
+			return new XmlFile(XmlElement.get(doc.getDocumentElement()));
 		}
 		catch(Exception e)
 		{

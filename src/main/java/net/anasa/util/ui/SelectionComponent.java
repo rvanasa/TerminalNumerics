@@ -8,7 +8,7 @@ import net.anasa.util.ICallback;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 
-public class SelectionComponent<T> extends UIActionComponent<JComboBox<String>> implements IInputComponent<T>
+public class SelectionComponent<T> extends UIActionComponent<JComboBox<String>> implements IInputComponent<T>, ISwingComponent
 {
 	private final Listing<T> values = new Listing<>();
 	
@@ -17,6 +17,16 @@ public class SelectionComponent<T> extends UIActionComponent<JComboBox<String>> 
 	public SelectionComponent()
 	{
 		this((item) -> StringHelper.getOrNull(item));
+	}
+	
+	public SelectionComponent(Listing<T> values)
+	{
+		this(values, (value) -> String.valueOf(value));
+	}
+	
+	public SelectionComponent(T[] values)
+	{
+		this(new Listing<>(values));
 	}
 	
 	public SelectionComponent(Listing<T> values, IDisplayConform<T> displayConform)
@@ -32,7 +42,7 @@ public class SelectionComponent<T> extends UIActionComponent<JComboBox<String>> 
 		
 		this.displayConform = displayConform;
 		
-		getHandle().setFocusable(false);
+		setFocusable(false);
 	}
 	
 	@Override

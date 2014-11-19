@@ -137,7 +137,7 @@ abstract class AbstractProperties implements Iterable<KVPair>
 		}
 		catch(FormatException e)
 		{
-			throw new PropertiesException(e);
+			throw new PropertiesException(e.getMessage());
 		}
 	}
 	
@@ -313,10 +313,7 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public void clear()
 	{
-		for(String key : getKeys())
-		{
-			remove(key);
-		}
+		getKeys().clear();
 	}
 	
 	public boolean tryRead(InputStream stream)

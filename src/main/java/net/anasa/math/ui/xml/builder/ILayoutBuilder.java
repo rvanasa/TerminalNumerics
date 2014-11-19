@@ -2,11 +2,11 @@ package net.anasa.math.ui.xml.builder;
 
 import net.anasa.math.ui.xml.ILayoutNode;
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.xml.Element;
+import net.anasa.util.data.xml.XmlElement;
 
 public interface ILayoutBuilder
 {
-	public boolean isValid(Element element);
+	public boolean isValid(XmlElement element);
 	
-	public ILayoutNode getFrom(Element element) throws FormatException;
+	public ILayoutNode getFrom(XmlElement element) throws FormatException;
 }

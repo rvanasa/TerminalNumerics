@@ -43,8 +43,11 @@ public final class EnumHelper
 	{
 		try
 		{
-			return getFrom(clazz, name);
-		}catch(FormatException e)
+			T value = getFrom(clazz, name);
+			
+			return value != null ? value : def;
+		}
+		catch(FormatException e)
 		{
 			return def;
 		}

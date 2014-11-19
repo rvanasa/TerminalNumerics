@@ -4,23 +4,23 @@ import java.util.Arrays;
 
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
-import net.anasa.util.data.xml.XmlStructure.XmlException;
+import net.anasa.util.data.xml.XmlFile.XmlException;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-public class Element
+public class XmlElement
 {
-	public static Element get(org.w3c.dom.Element element) throws XmlException
+	public static XmlElement get(org.w3c.dom.Element element) throws XmlException
 	{
 		if(element == null)
 		{
 			return null;
 		}
 		
-		Listing<Element> elements = new Listing<>();
-		Listing<Attribute> attributes = new Listing<>();
+		Listing<XmlElement> elements = new Listing<>();
+		Listing<XmlAttribute> attributes = new Listing<>();
 		
 		NamedNodeMap attrs = element.getAttributes();
 		
@@ -32,7 +32,7 @@ public class Element
 			{
 				Attr attr = (Attr)item;
 				
-				attributes.add(Attribute.get(attr));
+				attributes.add(XmlAttribute.get(attr));
 			}
 		}
 		
@@ -42,20 +42,20 @@ public class Element
 			{
 				if(node instanceof org.w3c.dom.Element)
 				{
-					elements.add(Element.get((org.w3c.dom.Element)node));
+					elements.add(XmlElement.get((org.w3c.dom.Element)node));
 				}
 			}
 		}
 		
-		return new Element(element.getNodeName(), elements.toArray(Element.class), attributes.toArray(Attribute.class), element.getTextContent());
+		return new XmlElement(element.getNodeName(), elements.toArray(XmlElement.class), attributes.toArray(XmlAttribute.class), element.getTextContent());
 	}
 	
 	private final String name;
-	private final Element[] elements;
-	private final Attribute[] attributes;
+	private final XmlElement[] elements;
+	private final XmlAttribute[] attributes;
 	private final String data;
 	
-	public Element(String name, Element[] elements, Attribute[] attributes, String data)
+	public XmlElement(String name, XmlElement[] elements, XmlAttribute[] attributes, String data)
 	{
 		this.name = name;
 		this.elements = elements;
@@ -68,14 +68,14 @@ public class Element
 		return name;
 	}
 	
-	public Element[] getElements()
+	public XmlElement[] getElements()
 	{
 		return elements;
 	}
 	
-	public Element[] getElements(String name)
+	public XmlElement[] getElements(String name)
 	{
-		return new Listing<>(getElements()).filter((element) -> StringHelper.equals(element.getName(), name)).toArray(Element.class);
+		return new Listing<>(getElements()).filter((element) -> StringHelper.equals(element.getName(), name)).toArray(XmlElement.class);
 	}
 	
 	public boolean isParentElement()
@@ -83,7 +83,7 @@ public class Element
 		return getElements().length > 0;
 	}
 	
-	public Attribute[] getAttributes()
+	public XmlAttribute[] getAttributes()
 	{
 		return attributes;
 	}
@@ -98,9 +98,9 @@ public class Element
 		return !(isParentElement() || getData() == null || getData().isEmpty());
 	}
 	
-	public Element getElement(String name)
+	public XmlElement getElement(String name)
 	{
-		for(Element element : elements)
+		for(XmlElement element : elements)
 		{
 			if(element.getName().equalsIgnoreCase(name))
 			{
@@ -113,7 +113,7 @@ public class Element
 	
 	public String getAttribute(String name)
 	{
-		for(Attribute attr : attributes)
+		for(XmlAttribute attr : attributes)
 		{
 			if(attr.getKey().equalsIgnoreCase(name))
 			{

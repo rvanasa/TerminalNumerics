@@ -12,9 +12,14 @@ public final class Checks
 		}
 	}
 	
-	public static <T> T checkNotNull(T object, String message) throws NullPointerException
+	public static <T> T checkNotNull(T object) throws NullPointerException
 	{
 		return checkNotNull(object, new NullPointerException());
+	}
+	
+	public static <T> T checkNotNull(T object, String message) throws NullPointerException
+	{
+		return checkNotNull(object, new NullPointerException(message));
 	}
 	
 	public static <T, E extends Throwable> T checkNotNull(T object, E e) throws E
@@ -31,7 +36,7 @@ public final class Checks
 		return object;
 	}
 	
-	public static <T, R, E extends Throwable> R checkInstance(T object, Class<R> clazz, E e) throws E
+	public static <T, R, E extends Throwable> R checkInstanceOf(T object, Class<R> clazz, E e) throws E
 	{
 		checkNotNull(clazz, e);
 		check(clazz.isInstance(object), e);
