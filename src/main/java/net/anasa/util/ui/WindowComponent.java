@@ -1,5 +1,6 @@
 package net.anasa.util.ui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -7,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import net.anasa.util.Listing;
@@ -16,6 +18,19 @@ import net.anasa.util.ui.event.WindowCloseEvent;
 
 public class WindowComponent extends UIParentComponent<JFrame>
 {
+	public static final WindowComponent getParentWindow(IComponent component)
+	{
+		if(component == null)
+		{
+			return null;
+		}
+		else
+		{
+			Component root = SwingUtilities.getRoot(component.getHandle());
+			return WINDOWS.getFirst((window) -> window.getHandle() == root);
+		}
+	}
+	
 	private static final Listing<WindowComponent> WINDOWS = new Listing<>();
 	
 	public WindowComponent()

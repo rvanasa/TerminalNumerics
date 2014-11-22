@@ -1,9 +1,13 @@
 package net.anasa.util.ui;
 
+import java.awt.event.KeyAdapter;
+
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import net.anasa.util.ICallback;
+import net.anasa.util.ui.event.IUIListener;
+import net.anasa.util.ui.event.KeyEvent;
 
 public class TextFieldComponent extends UIActionComponent<JTextField> implements IInputComponent<String>, ISwingComponent
 {
@@ -41,6 +45,15 @@ public class TextFieldComponent extends UIActionComponent<JTextField> implements
 			addActionListener(() -> callback.call(getValue()));
 		}
 		
+		getHandle().addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent event)
+			{
+				getEvents().dispatch(new KeyEvent(TextFieldComponent.this, event.getKeyChar()));
+			}
+		});
+		
 		setValue(value);
 	}
 	
@@ -48,6 +61,11 @@ public class TextFieldComponent extends UIActionComponent<JTextField> implements
 	protected void setupActionCallback(ICallback callback)
 	{
 		getHandle().addActionListener((event) -> callback.call());
+	}
+	
+	public void addKeyListener(IUIListener<KeyEvent> listener)
+	{
+		getEvents().register(KeyEvent.class, listener);
 	}
 	
 	public int getColumns()

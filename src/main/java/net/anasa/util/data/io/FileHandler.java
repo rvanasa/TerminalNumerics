@@ -79,4 +79,10 @@ public class FileHandler<T> implements IHandler<T>
 			throw new IOException(e);
 		}
 	}
+	
+	@Override
+	public String toString()
+	{
+		return getFile().getAbsolutePath();
+	}
 }

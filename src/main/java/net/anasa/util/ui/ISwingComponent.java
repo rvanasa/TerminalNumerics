@@ -4,6 +4,7 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 public interface ISwingComponent extends IComponent
@@ -13,12 +14,17 @@ public interface ISwingComponent extends IComponent
 	
 	public default void setBorder(int x, int y)
 	{
-		getHandle().setBorder(BorderFactory.createEmptyBorder(y, x, y, x));
+		setBorder(BorderFactory.createEmptyBorder(y, x, y, x));
 	}
 	
 	public default void setBorder(String text)
 	{
-		getHandle().setBorder(BorderFactory.createTitledBorder(null, text, TitledBorder.CENTER, TitledBorder.TOP, new Font(Font.DIALOG, Font.PLAIN, 11)));
+		setBorder(BorderFactory.createTitledBorder(null, text, TitledBorder.CENTER, TitledBorder.TOP, new Font(Font.DIALOG, Font.PLAIN, 11)));
+	}
+	
+	public default void setBorder(Border border)
+	{
+		getHandle().setBorder(border);
 	}
 	
 	public default void setToolTipText(String text)

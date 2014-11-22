@@ -3,10 +3,11 @@ package net.anasa.util.data.io;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import net.anasa.util.data.format.IFormat;
 
-public class DirectoryHandler<T> implements IHandler<HashMap<String, T>>
+public class DirectoryHandler<T> implements IDirectoryHandler<String, T>
 {
 	private final File dir;
 	private final IFormat<T> format;
@@ -47,7 +48,7 @@ public class DirectoryHandler<T> implements IHandler<HashMap<String, T>>
 	}
 
 	@Override
-	public HashMap<String, T> read() throws IOException
+	public Map<String, T> read() throws IOException
 	{
 		getDir().mkdirs();
 		
@@ -56,20 +57,13 @@ public class DirectoryHandler<T> implements IHandler<HashMap<String, T>>
 			throw new IOException("Invalid directory: " + getDir());
 		}
 		
-		HashMap<String, T> map = new HashMap<String, T>();
+		Map<String, T> map = new HashMap<>();
 		
 		for(File file : getDir().listFiles())
 		{
-			if(file.isFile() && file.getName().endsWith(getExtension()))
+			if(file.isFile() && (!hasExtension() || file.getName().endsWith(getExtension())))
 			{
-				String name = file.getName();
-				
-				if(hasExtension())
-				{
-					name = name.substring(0, name.length() - getExtension().length());
-				}
-				
-				map.put(name, new FileHandler<>(file, getFormat()).read());
+				map.put(getKey(file), new FileHandler<>(file, getFormat()).read());
 			}
 		}
 		
@@ -77,16 +71,42 @@ public class DirectoryHandler<T> implements IHandler<HashMap<String, T>>
 	}
 	
 	@Override
-	public void write(HashMap<String, T> data) throws IOException
+	public void write(Map<String, T> data) throws IOException
 	{
 		getDir().mkdirs();
 		
 		for(String key : data.keySet())
 		{
-			File file = new File(getDir(), hasExtension() ? key + getExtension() : key);
-			file.createNewFile();
-			
-			new FileHandler<>(file, getFormat()).write(data.get(key));
+			new FileHandler<>(getFile(key), getFormat()).write(data.get(key));
 		}
+	}
+	
+	public String getKey(File file)
+	{
+		String name = file.getName();
+		
+		if(hasExtension())
+		{
+			name = name.substring(0, name.length() - getExtension().length());
+		}
+		
+		return name;
+	}
+	
+	public File getFile(String key)
+	{
+		return new File(getDir(), hasExtension() ? key + getExtension() : key);
+	}
+	
+	@Override
+	public IHandler<T> getHandler(String key)
+	{
+		return new FileHandler<>(getFile(key), getFormat());
+	}
+	
+	@Override
+	public String toString()
+	{
+		return getDir().getAbsolutePath();
 	}
 }

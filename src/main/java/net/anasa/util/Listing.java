@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -116,6 +117,13 @@ public class Listing<E> implements Iterable<E>
 	public E removeLast()
 	{
 		return getValues().remove(size() - 1);
+	}
+	
+	public Listing<E> sort(Comparator<E> comparator)
+	{
+		getValues().sort(comparator);
+		
+		return this;
 	}
 	
 	public Listing<E> shear(int first, int last)

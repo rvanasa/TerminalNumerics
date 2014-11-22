@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.UIManager;
 
@@ -40,7 +40,7 @@ public abstract class UIComponent<T extends Component> implements IComponent
 	{
 		this.handle = handle;
 		
-		handle.addMouseListener(new MouseListener()
+		handle.addMouseListener(new MouseAdapter()
 		{
 			@Override
 			public void mouseReleased(MouseEvent event)
@@ -49,21 +49,6 @@ public abstract class UIComponent<T extends Component> implements IComponent
 				{
 					getContextMenu().display(UIComponent.this, new Vector2(event.getX(), event.getY()));
 				}
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent event)
-			{
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent event)
-			{
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent event)
-			{
 			}
 			
 			@Override
