@@ -3,6 +3,7 @@ package net.anasa.math.module;
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
+import net.anasa.math.util.UI;
 import net.anasa.util.ICallback;
 
 public interface IModuleDelegate
@@ -29,6 +30,13 @@ public interface IModuleDelegate
 	
 	public default void addApp(String id, IApp app)
 	{
-		getContext().getApps().register(app);
+		try
+		{
+			getContext().addApp(app);
+		}
+		catch(ModuleException e)
+		{
+			UI.sendError("Failed to load app with ID: " + app.getID(), e);
+		}
 	}
 }

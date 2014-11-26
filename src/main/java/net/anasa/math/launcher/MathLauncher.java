@@ -10,7 +10,7 @@ import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.XmlAppLoader;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.module.provided.UIModule;
-import net.anasa.util.Debug;
+import net.anasa.math.util.UI;
 import net.anasa.util.Listing;
 import net.anasa.util.Progress;
 import net.anasa.util.data.xml.XmlFile;
@@ -53,8 +53,7 @@ public class MathLauncher
 						}
 						catch(Exception e)
 						{
-							Debug.err("Failed to load module from file: " + file.getName());
-							e.printStackTrace();
+							UI.sendError("Failed to load module from file: " + file.getName(), e);
 						}
 					});
 					
@@ -67,8 +66,7 @@ public class MathLauncher
 						}
 						catch(Exception e)
 						{
-							Debug.err("Failed to load app from file: " + file.getName());
-							e.printStackTrace();
+							UI.sendError("Failed to load app from file: " + file.getName(), e);
 						}
 					});
 					

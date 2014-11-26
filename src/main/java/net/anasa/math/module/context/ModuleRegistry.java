@@ -24,6 +24,7 @@ public class ModuleRegistry implements IRegistry<IModule>
 	public void register(IModule module) throws ModuleException
 	{
 		Checks.checkNotNull(module, new ModuleException("Module cannot be null"));
+		Checks.check(getModules().check((entry) -> !StringHelper.equals(module.getID(), entry.getID())), new ModuleException("Duplicate module ID: " + module.getID()));
 		
 		getModules().add(module);
 		Debug.log("Loaded module: " + module.getName() + " " + module.getVersion());

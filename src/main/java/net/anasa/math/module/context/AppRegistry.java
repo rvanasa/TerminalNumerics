@@ -1,6 +1,8 @@
 package net.anasa.math.module.context;
 
+import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.IApp;
+import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
@@ -19,13 +21,11 @@ public class AppRegistry implements IRegistry<IApp>
 		return apps;
 	}
 	
-	public void register(IApp app)
+	public void register(IApp app) throws ModuleException
 	{
-		if(app == null)
-		{
-			return;
-		}
-
+		Checks.checkNotNull(app, new ModuleException("App cannot be null"));
+		Checks.check(getApps().check((entry) -> !StringHelper.equals(app.getID(), entry.getID())), new ModuleException("Duplicate app ID: " + app.getID()));
+		
 		Debug.log("Loaded app: " + app.getName() + " " + app.getVersion());
 		getApps().add(app);
 	}

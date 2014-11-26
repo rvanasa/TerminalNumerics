@@ -21,6 +21,7 @@ public class LayoutParser
 	public LayoutParser()
 	{
 		add(new AbstractBuilder("component", (element) -> new ComponentNode(element.getIDAttribute(), getProps(element))));
+		add(new AbstractBuilder("app", (element) -> new AppNode(element.getIDAttribute())));
 		add(new AbstractBuilder("layout", (element) -> {
 			LayoutType type = LayoutType.valueOf(StringHelper.upperCase(element.getAttribute("type")));
 			Checks.checkNotNull(type, new FormatException("Invalid layout type: " + element.getAttribute("type")));

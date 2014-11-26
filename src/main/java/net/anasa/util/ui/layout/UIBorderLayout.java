@@ -2,6 +2,7 @@ package net.anasa.util.ui.layout;
 
 import java.awt.BorderLayout;
 
+import net.anasa.util.EnumHelper;
 import net.anasa.util.Mapping;
 import net.anasa.util.StringHelper;
 import net.anasa.util.ui.IComponent;
@@ -69,7 +70,7 @@ public class UIBorderLayout extends UILayout<BorderLayout>
 	@Override
 	public void set(String pos, IComponent component)
 	{
-		set(BorderPosition.valueOf(StringHelper.upperCase(pos)), component);
+		set(EnumHelper.getFrom(BorderPosition.class, StringHelper.upperCase(pos), BorderPosition.CENTER), component);
 	}
 	
 	public void set(BorderPosition pos, IComponent component)

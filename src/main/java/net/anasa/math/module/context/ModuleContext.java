@@ -42,7 +42,7 @@ public class ModuleContext
 		return apps;
 	}
 
-	public IApp addApp(IApp app)
+	public IApp addApp(IApp app) throws ModuleException
 	{
 		getApps().register(app);
 		return app;

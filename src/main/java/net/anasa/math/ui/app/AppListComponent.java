@@ -1,5 +1,7 @@
 package net.anasa.math.ui.app;
 
+import javax.swing.BorderFactory;
+
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.util.UI;
@@ -38,6 +40,7 @@ public class AppListComponent extends PanelComponent
 		setSize(400, 400);
 		
 		appPanel = new PanelComponent();
+		appPanel.setBorder(BorderFactory.createEtchedBorder());
 		
 		filterBar = new TextFieldComponent();
 		filterBar.addKeyListener((event) -> updateApps());
