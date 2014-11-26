@@ -28,11 +28,11 @@ public class ComponentNode implements ILayoutNode
 	}
 	
 	@Override
-	public IComponent compile() throws FormatException
+	public IComponent compile(ModuleContext context) throws FormatException
 	{
 		try
 		{
-			return ModuleContext.getInstance().getComponents().create(getID(), getProps());
+			return context.getComponents().create(getID(), getProps());
 		}
 		catch(ModuleException e)
 		{

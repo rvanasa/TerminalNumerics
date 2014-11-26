@@ -3,7 +3,6 @@ package net.anasa.math.module.provided.ui;
 import java.awt.Color;
 
 import net.anasa.util.data.format.IFormat;
-import net.anasa.util.math.Vector2;
 import net.anasa.util.ui.PanelComponent;
 
 public class PanelComponentBuilder extends ComponentBuilder<PanelComponent>
@@ -21,7 +20,7 @@ public class PanelComponentBuilder extends ComponentBuilder<PanelComponent>
 		
 		panel.setBackground(new Color(data.getValue(background)));
 		panel.setForeground(new Color(data.getValue(foreground)));
-		panel.setSize(new Vector2(data.getValue(width), data.getValue(height)));
+		panel.setSize(data.getValue(width), data.getValue(height));
 		
 		return panel;
 	}

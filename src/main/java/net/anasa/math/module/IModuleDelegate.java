@@ -1,5 +1,6 @@
 package net.anasa.math.module;
 
+import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.util.ICallback;
@@ -24,5 +25,10 @@ public interface IModuleDelegate
 	public default void addAction(String id, ICallback callback)
 	{
 		getContext().getActions().register(id, callback);
+	}
+	
+	public default void addApp(String id, IApp app)
+	{
+		getContext().getApps().register(app);
 	}
 }

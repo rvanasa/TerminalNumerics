@@ -42,7 +42,7 @@ public class AppListEntryComponent extends PanelComponent
 		layout.set(BorderPosition.CENTER, details);
 		layout.apply(this);
 		
-		getHandle().setBorder(BorderFactory.createEtchedBorder());
+		setBorder(BorderFactory.createEtchedBorder());
 		getHandle().setMinimumSize(new Dimension(100, 40));
 		getHandle().setMaximumSize(new Dimension(400, 40));
 	}

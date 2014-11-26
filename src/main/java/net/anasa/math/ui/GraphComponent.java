@@ -18,7 +18,6 @@ import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.math.MathHelper;
-import net.anasa.util.math.Vector2;
 import net.anasa.util.resolver.IToken;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
@@ -79,7 +78,7 @@ public class GraphComponent extends PanelComponent
 		graphPanel.addDrawListener((event) -> updateGraphPanel(event.getGraphics()));
 		
 		graphPanel.setBackground(BG_COLOR);
-		graphPanel.setSize(new Vector2(SIZE, SIZE));
+		graphPanel.setSize(SIZE, SIZE);
 		
 		scaleSlider = new SliderComponent(0, 154, 40);
 		scaleSlider.addActionListener((event) -> redraw());

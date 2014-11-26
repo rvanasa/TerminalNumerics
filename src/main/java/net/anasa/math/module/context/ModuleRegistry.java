@@ -3,6 +3,7 @@ package net.anasa.math.module.context;
 import net.anasa.math.module.IModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.util.Checks;
+import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 
@@ -25,6 +26,7 @@ public class ModuleRegistry implements IRegistry<IModule>
 		Checks.checkNotNull(module, new ModuleException("Module cannot be null"));
 		
 		getModules().add(module);
+		Debug.log("Loaded module: " + module.getName() + " " + module.getVersion());
 		
 		try
 		{

@@ -111,16 +111,6 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		getHandle().setLocation((int)position.getX(), (int)position.getY());
 	}
 	
-	public Vector2 getMinSize()
-	{
-		return new Vector2(getHandle().getMinimumSize().getWidth(), getHandle().getMinimumSize().getHeight());
-	}
-	
-	public void setMinSize(Vector2 size)
-	{
-		getHandle().setMinimumSize(new Dimension((int)size.getX(), (int)size.getY()));
-	}
-	
 	public void setAlwaysOnTop(boolean alwaysOnTop)
 	{
 		getHandle().setAlwaysOnTop(alwaysOnTop);

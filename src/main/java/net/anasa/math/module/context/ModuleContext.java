@@ -2,7 +2,10 @@ package net.anasa.math.module.context;
 
 import net.anasa.math.module.IModule;
 import net.anasa.math.module.ModuleException;
+import net.anasa.math.module.app.IApp;
+import net.anasa.math.standard.IStandard;
 import net.anasa.util.Debug;
+import net.anasa.util.data.DataConform.FormatException;
 
 public class ModuleContext
 {
@@ -28,9 +31,21 @@ public class ModuleContext
 		return modules;
 	}
 	
+	public IModule addModule(IModule module) throws ModuleException
+	{
+		getModules().register(module);
+		return module;
+	}
+	
 	public AppRegistry getApps()
 	{
 		return apps;
+	}
+
+	public IApp addApp(IApp app)
+	{
+		getApps().register(app);
+		return app;
 	}
 	
 	public ComponentRegistry getComponents()
@@ -43,10 +58,9 @@ public class ModuleContext
 		return actions;
 	}
 	
-	public IModule addModule(IModule module) throws ModuleException
+	public IStandard getStandard(String data) throws FormatException
 	{
-		getModules().register(module);
-		Debug.log("Loaded module: " + module.getName() + " " + module.getVersion());
-		return module;
+		Debug.warn("Standards NYI (" + data + ")");
+		return null;
 	}
 }

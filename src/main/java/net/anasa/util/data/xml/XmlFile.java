@@ -1,5 +1,8 @@
 package net.anasa.util.data.xml;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,6 +22,18 @@ public class XmlFile
 	public XmlElement getBaseElement()
 	{
 		return baseElement;
+	}
+	
+	public static XmlFile read(File file) throws XmlException
+	{
+		try
+		{
+			return read(new FileInputStream(file));
+		}
+		catch(FileNotFoundException e)
+		{
+			throw new XmlException(e);
+		}
 	}
 	
 	public static XmlFile read(InputStream stream) throws XmlException

@@ -1,5 +1,6 @@
 package net.anasa.math.ui.xml;
 
+import net.anasa.math.module.context.ModuleContext;
 import net.anasa.util.Mapping;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.ui.IComponent;
@@ -33,13 +34,13 @@ public class LayoutNode implements ILayoutNode
 	}
 
 	@Override
-	public IComponent compile() throws FormatException
+	public IComponent compile(ModuleContext context) throws FormatException
 	{
 		PanelComponent panel = new PanelComponent();
 		
 		for(ILayoutNode node : getPositions().getKeys())
 		{
-			getLayout().set(getPositions().get(node), node.compile());
+			getLayout().set(getPositions().get(node), node.compile(context));
 		}
 		
 		getLayout().apply(panel);

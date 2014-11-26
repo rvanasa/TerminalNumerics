@@ -43,7 +43,7 @@ public class LayoutParser
 		return builders;
 	}
 	
-	protected ILayoutNode getFrom(XmlElement element) throws FormatException
+	public ILayoutNode getFrom(XmlElement element) throws FormatException
 	{
 		ILayoutBuilder builder = getBuilders().getFirst((parse) -> parse.isValid(element));
 		Checks.checkNotNull(builder, new FormatException("Could not find builder for element: " + element.getName()));

@@ -102,7 +102,47 @@ public abstract class UIComponent<T extends Component> implements IComponent
 	
 	public void setSize(Vector2 size)
 	{
-		getHandle().setPreferredSize(new Dimension((int)size.getX(), (int)size.getY()));
+		setSize(size.getX(), size.getY());
+	}
+	
+	public void setSize(double x, double y)
+	{
+		getHandle().setPreferredSize(new Dimension((int)x, (int)y));
+	}
+	
+	public void setCurrentSize(double x, double y)
+	{
+		getHandle().setSize(new Dimension((int)x, (int)y));
+	}
+	
+	public Vector2 getMinSize()
+	{
+		return new Vector2(getHandle().getMinimumSize().getWidth(), getHandle().getMinimumSize().getHeight());
+	}
+	
+	public void setMinSize(Vector2 size)
+	{
+		setMinSize(size.getX(), size.getY());
+	}
+	
+	public void setMinSize(double x, double y)
+	{
+		getHandle().setMinimumSize(new Dimension((int)x, (int)y));
+	}
+	
+	public Vector2 getMaxSize()
+	{
+		return new Vector2(getHandle().getMaximumSize().getWidth(), getHandle().getMaximumSize().getHeight());
+	}
+	
+	public void setMaxSize(Vector2 size)
+	{
+		setMaxSize(size.getX(), size.getY());
+	}
+	
+	public void setMaxSize(double x, double y)
+	{
+		getHandle().setMaximumSize(new Dimension((int)x, (int)y));
 	}
 	
 	public Color getBackground()

@@ -7,7 +7,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 
 import net.anasa.util.ICallback;
-import net.anasa.util.math.Vector2;
 
 public abstract class NumberFieldComponent<T> extends UIActionComponent<JSpinner> implements IInputComponent<T>, ISwingComponent
 {
@@ -41,7 +40,7 @@ public abstract class NumberFieldComponent<T> extends UIActionComponent<JSpinner
 	
 	public void setWidth(int width)
 	{
-		setSize(new Vector2(width, 20));
+		setSize(width, 20);
 	}
 	
 	@SuppressWarnings("unchecked")
