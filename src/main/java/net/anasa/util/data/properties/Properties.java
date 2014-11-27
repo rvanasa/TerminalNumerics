@@ -88,6 +88,24 @@ public class Properties extends AbstractProperties
 	}
 	
 	@Override
+	public String getKey()
+	{
+		return null;
+	}
+	
+	@Override
+	public String getValue()
+	{
+		return null;
+	}
+	
+	@Override
+	public void setValue(String value)
+	{
+		
+	}
+	
+	@Override
 	protected String getValue(String key)
 	{
 		return map.get(key);

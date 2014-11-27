@@ -10,7 +10,6 @@ import net.anasa.math.standard.StandardGrade;
 import net.anasa.math.standard.StandardModel;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
-import net.anasa.util.Pair;
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.properties.Properties;
@@ -36,17 +35,17 @@ public final class StateStandards
 	{
 		Listing<IStandardGrade> gradeLevels = new Listing<>();
 		IStandardModel model = new StandardModel(props.getString("model").toUpperCase(), props.getString("type", "math"), gradeLevels);
-		for(Pair<String, Properties> gradeData : props.getInner("standards").getInnerProps())
+		for(Properties gradeData : props.getInner("standards").getInnerProps().getValues())
 		{
 			Listing<IStandardDomain> domains = new Listing<>();
-			IStandardGrade gradeLevel = new StandardGrade(model, gradeData.getKey().toUpperCase(), props.getInner("standards").getString(gradeData.getKey()), domains);
-			for(Pair<String, Properties> domainData : gradeData.getValue().getInnerProps())
+			IStandardGrade gradeLevel = new StandardGrade(model, gradeData.getKey().toUpperCase(), gradeData.getValue(), domains);
+			for(Properties domainData : gradeData.getInnerProps().getValues())
 			{
 				Listing<IStandard> standards = new Listing<>();
-				IStandardDomain domain = new StandardDomain(gradeLevel, domainData.getKey().toUpperCase(), gradeData.getValue().getString(domainData.getKey()), standards);
-				for(String standardID : domainData.getValue().getKeys())
+				IStandardDomain domain = new StandardDomain(gradeLevel, domainData.getKey().toUpperCase(), domainData.getValue(), standards);
+				for(String standardID : domainData.getKeys())
 				{
-					standards.add(new Standard(domain, standardID.toUpperCase(), domainData.getValue().getString(standardID)));
+					standards.add(new Standard(domain, standardID.toUpperCase(), domainData.getString(standardID)));
 				}
 				
 				domains.add(domain);
@@ -60,13 +59,15 @@ public final class StateStandards
 	
 	public static IStandard getStandard(String data) throws FormatException
 	{
+		data = data.trim();
+		
 		String state = data.substring(0, data.indexOf(" "));
 		String itemData = data.substring(data.indexOf(" ") + 1);
 		
 		IStandardModel model = Checks.checkNotNull(getModelFromState(state), new FormatException("Standard model is not registered: " + state));
 		String[] items = itemData.split("\\.", 3);
 		
-		Checks.check(items.length == 3, new FormatException("Invalid standard format: " + data + " (should be '[grade].[domain].[standard]')"));
+		Checks.check(items.length == 3, new FormatException("Invalid standard format: " + data + " (should be '[model] [grade].[domain].[standard]')"));
 		
 		IStandardGrade grade = Checks.checkNotNull(model.getGradeByID(items[0]), new FormatException("Invalid standard grade level: " + items[0]));
 		IStandardDomain domain = Checks.checkNotNull(grade.getDomainByID(items[1]), new FormatException("Invalid standard domain: " + items[1]));

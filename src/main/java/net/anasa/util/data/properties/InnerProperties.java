@@ -41,6 +41,24 @@ public class InnerProperties extends Properties
 	}
 	
 	@Override
+	public String getKey()
+	{
+		return getID().substring(getID().lastIndexOf(DOT) + 1);
+	}
+	
+	@Override
+	public String getValue()
+	{
+		return getParent().getString(getID(), null);
+	}
+	
+	@Override
+	public void setValue(String value)
+	{
+		getParent().set(getID(), value);
+	}
+	
+	@Override
 	protected String getValue(String key)
 	{
 		return getParent().getValue(getID() + DOT + key);
@@ -79,6 +97,6 @@ public class InnerProperties extends Properties
 	@Override
 	public String toString()
 	{
-		return getID() + "::" + compileMap().toString();
+		return getID() + " : " + compileMap().toString();
 	}
 }

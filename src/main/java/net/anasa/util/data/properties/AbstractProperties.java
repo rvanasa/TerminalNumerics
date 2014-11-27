@@ -24,6 +24,12 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	protected static final String SPLITTER = ":";
 	protected static final String COMMENT = "#";
+
+	public abstract String getKey();
+
+	public abstract String getValue();
+	
+	public abstract void setValue(String value);
 	
 	protected abstract String getValue(String key);
 	
@@ -375,23 +381,45 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	{
 		Checks.checkNotNull(data, new PropertiesException("Cannot parse null string"));
 		
+		Listing<String> inner = new Listing<>();
+		
 		for(String line : data.split(linefeed))
 		{
-			if(!line.startsWith(COMMENT))
+			line = line.trim();
+			
+			if(!line.startsWith(COMMENT) && !line.isEmpty())
 			{
-				if(line.length() > 0)
+				if(line.contains(SPLITTER))
 				{
-					if(line.contains(SPLITTER))
+					String key = line.substring(0, line.indexOf(SPLITTER)).trim();
+					String value = line.substring(line.indexOf(SPLITTER) + SPLITTER.length()).trim();
+					
+					if(key.isEmpty())
 					{
-						String key = line.substring(0, line.indexOf(SPLITTER)).trim();
-						String value = line.substring(line.indexOf(SPLITTER) + SPLITTER.length()).trim();
-						
-						set(key, value);
+						setValue(value);
 					}
 					else
 					{
-						throw new PropertiesException("Line does not contain splitter: " + SPLITTER);
+						String prefix = "";
+						for(String pre : inner)
+						{
+							prefix += pre + ".";
+						}
+						
+						set(prefix + key, value);
 					}
+				}
+				else if(line.endsWith("{"))
+				{
+					inner.add(line.substring(0, line.length() - 1).trim());
+				}
+				else if(line.equals("}") && !inner.isEmpty())
+				{
+					inner.removeLast();
+				}
+				else
+				{
+					throw new PropertiesException("Invalid Properties line format: " + line);
 				}
 			}
 		}

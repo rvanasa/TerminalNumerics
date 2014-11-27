@@ -189,6 +189,12 @@ public class Mapping<K, V> implements Iterable<Pair<K, V>>
 		{
 			return entry.getValue();
 		}
+		
+		@Override
+		public String toString()
+		{
+			return getKey() + ": " + getValue();
+		}
 	}
 	
 	public interface IMapCondition<K, V>
