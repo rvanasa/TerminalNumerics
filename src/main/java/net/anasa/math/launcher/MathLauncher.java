@@ -83,15 +83,7 @@ public class MathLauncher
 				}
 			});
 			
-			ITask task = new ComplexTask(loadModules, loadStandards, loadApps, new Task("Waiting a bit", () -> {
-				try
-				{
-					Thread.sleep(2000);
-				}
-				catch(Exception e)
-				{
-				}
-			}));
+			ITask task = new ComplexTask(loadModules, loadStandards, loadApps));
 			
 			new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Math Software", gui.getValue()).display()).display();
 		}
