@@ -7,6 +7,7 @@ import net.anasa.math.expression.IExpression;
 import net.anasa.math.expression.OperatorType;
 import net.anasa.math.interpreter.sequence.ExpressionResolver;
 import net.anasa.math.sequence.SequenceToken.TokenType;
+import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.resolver.IToken;
@@ -89,6 +90,8 @@ public class SequenceParser implements IMathParser
 	{
 		Listing<IToken> tokens = new Listing<>();
 		parseStep(data, tokens);
+		
+		Debug.log(tokens);
 		
 		return tokens;
 	}

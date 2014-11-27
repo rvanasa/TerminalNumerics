@@ -1,9 +1,6 @@
 package net.anasa.math.sequence;
 
-import net.anasa.util.Listing;
 import net.anasa.util.resolver.IToken;
-import net.anasa.util.resolver.ResolverException;
-import net.anasa.util.resolver.logic.IResolver;
 
 public class SequenceToken implements IToken
 {
@@ -46,10 +43,10 @@ public class SequenceToken implements IToken
 	@Override
 	public String toString()
 	{
-		return "(" + getType() + (hasData() ? " : " + getData() : "") + ")";
+		return "(" + getType() + (hasData() ? ":'" + getData() + "'" : "") + ")";
 	}
 	
-	public enum TokenType implements IResolver<IToken>
+	public enum TokenType
 	{
 		NUMBER,
 		OPERATOR,
@@ -63,21 +60,9 @@ public class SequenceToken implements IToken
 		GREATER_THAN_EQUAL,
 		LESS_THAN_EQUAL;
 		
-		@Override
-		public boolean matches(Listing<IToken> data)
-		{
-			return data.size() == 1 && isType(data.get(0).getType());
-		}
-		
 		public boolean isType(String type)
 		{
 			return name().equals(type);
-		}
-
-		@Override
-		public IToken resolve(Listing<IToken> data) throws ResolverException
-		{
-			return data.get(0);
 		}
 		
 		public static TokenType getFrom(String type)

@@ -12,7 +12,7 @@ public interface ITypeResolver<K> extends IResolver<K>
 	public TokenType getType();
 	
 	@Override
-	public default boolean matches(Listing<IToken> data)
+	default boolean matches(Listing<IToken> data)
 	{
 		if(data.size() != 1)
 		{
@@ -23,13 +23,13 @@ public interface ITypeResolver<K> extends IResolver<K>
 		return StringHelper.equals(getType().name(), item.getType()) && matches(item);
 	}
 	
-	public default boolean matches(IToken item)
+	default boolean matches(IToken item)
 	{
 		return true;
 	}
 	
 	@Override
-	public default K resolve(Listing<IToken> data) throws ResolverException
+	default K resolve(Listing<IToken> data) throws ResolverException
 	{
 		return resolve(data.get(0));
 	}

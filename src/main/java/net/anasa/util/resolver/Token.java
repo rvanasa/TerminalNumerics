@@ -10,16 +10,27 @@ public class Token implements IToken
 		this.type = type;
 		this.data = data;
 	}
-
+	
 	@Override
 	public String getType()
 	{
 		return type;
 	}
-
+	
+	public boolean hasData()
+	{
+		return getData() != null;
+	}
+	
 	@Override
 	public String getData()
 	{
 		return data;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "(" + getType() + (hasData() ? ":'" + getData() + "'" : "") + ")";
 	}
 }

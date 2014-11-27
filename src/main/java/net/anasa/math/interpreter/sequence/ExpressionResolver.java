@@ -25,7 +25,7 @@ import net.anasa.util.resolver.logic.ComplexResolver;
 import net.anasa.util.resolver.logic.IResolver;
 import net.anasa.util.resolver.logic.ParserMatchResolver;
 
-public class ExpressionResolver implements IResolver<IExpression>
+public class ExpressionResolver
 {
 	private final ParserResolver<IExpression> parser = new ParserResolver<>();
 	
@@ -82,18 +82,20 @@ public class ExpressionResolver implements IResolver<IExpression>
 			}
 		});
 		
-		add(new IResolver<IExpression>()
+		add(new ComplexResolver<IExpression>("parenthesis")
 		{
-			@Override
-			public boolean matches(Listing<IToken> data)
+			Consumer<IExpression> expression;
+			
 			{
-				return data.size() >= 2 && TokenType.OPEN_PARENTHESIS.isType(data.get(0).getType()) && TokenType.CLOSE_PARENTHESIS.isType(data.get(data.size() - 1).getType());
+				new Consumer<>(new TypeResolver(TokenType.OPEN_PARENTHESIS));
+				expression = new Consumer<>(getParser());
+				new Consumer<>(new TypeResolver(TokenType.OPEN_PARENTHESIS));
 			}
 			
 			@Override
-			public IExpression resolve(Listing<IToken> data) throws ResolverException
+			public IExpression resolve(ConsumerStorage storage) throws ResolverException
 			{
-				return getParser().resolve(data.shear(1, 1));
+				return storage.get(expression);
 			}
 		});
 		
@@ -223,13 +225,11 @@ public class ExpressionResolver implements IResolver<IExpression>
 		return parser;
 	}
 	
-	@Override
 	public IExpression resolve(Listing<IToken> data) throws ResolverException
 	{
 		return getParser().resolve(data);
 	}
-
-	@Override
+	
 	public boolean matches(Listing<IToken> data)
 	{
 		return getParser().matches(data);

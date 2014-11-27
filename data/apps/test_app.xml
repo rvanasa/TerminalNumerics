@@ -5,6 +5,6 @@
 	<description>Test app for testing purposes testing test.</description>
 	<standards>CCSS 3.NBT.A.1, CCSS 3.NF.A.2.B</standards>
 	<layout type="border">
-		<component pos="center" id="graph" display="(x-4)(x+2)" />
+		<component pos="center" id="graph" display="x(x)" />
 	</layout>
 </app>

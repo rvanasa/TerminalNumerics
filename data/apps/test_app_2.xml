@@ -4,7 +4,7 @@
 	<version>0</version>
 	<description>Another test app for testing tests.</description>
 	<layout type="border">
-		<component id="label" pos="top" text="I'm Hedwig, and can therefore fly!" />
+		<component id="label" pos="top" text="Test graph input interface" />
 		<component id="graph_input" pos="center" />
 		<component id="button" pos="bottom" text="Close Window" action="close" />
 	</layout>

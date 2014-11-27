@@ -3,13 +3,15 @@ package net.anasa.util.resolver.logic;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
+import net.anasa.util.StringHelper;
 import net.anasa.util.resolver.IToken;
 import net.anasa.util.resolver.ResolverCache;
 import net.anasa.util.resolver.ResolverException;
 
 public abstract class ComplexResolver<T> implements IResolver<T>
 {
-	private static boolean DEBUG = false;
+	private static boolean DEBUG = true;
+	private static int DEBUG_INDENT = 0;
 	
 	private final String id;
 	
@@ -49,10 +51,10 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 	{
 		boolean debug = DEBUG;
 		
-//		if(debug)
-//		{
-//			DEBUG = false;
-//		}
+		// if(debug)
+		// {
+		// DEBUG = false;
+		// }
 		
 		try
 		{
@@ -75,17 +77,25 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 	@Override
 	public T resolve(Listing<IToken> data) throws ResolverException
 	{
-		T cache = getCache().get(data);
-		if(cache != null)
+		indent(1);
+		try
 		{
-			return cache;
+			T cache = getCache().get(data);
+			if(cache != null)
+			{
+				return cache;
+			}
+			
+			debug("!! start data: " + data);
+			ConsumerStorage storage = resolveConsumer(0, data, new ConsumerStorage());
+			debug("!! end" + "\n\n");
+			
+			return getCache().cache(data, resolve(storage));
 		}
-		
-		debug("!! start data: " + data);
-		ConsumerStorage storage = resolveConsumer(0, data, new ConsumerStorage());
-		debug("!! end" + "\n\n");
-		
-		return getCache().cache(data, resolve(storage));
+		finally
+		{
+			indent(-1);
+		}
 	}
 	
 	private ConsumerStorage resolveConsumer(int c, Listing<IToken> data, ConsumerStorage storage) throws ResolverException
@@ -118,11 +128,15 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 				debug("check c = " + c + " consumer = " + consumer + " i = " + i + " sub = " + sub + " match = " + match);
 				if(match)
 				{
-					if(i == data.size() - 1 || next.matches(data.subList(i)))
+					if(i >= data.size() - 1 || next.matches(data.subList(i)))
 					{
 						debug("passthrough i = " + i + " sub = " + sub + " post = " + data.subList(i + 1));
 						updateStorage(consumer, sub, storage);
 						return resolveConsumer(c + 1, data.subList(i), storage);
+					}
+					else
+					{
+						debug("match next slide i = " + i + " sub = " + sub);
 					}
 				}
 				else
@@ -141,11 +155,16 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 		storage.set(consumer, consumer.resolve(data));
 	}
 	
+	private void indent(int amount)
+	{
+		DEBUG_INDENT += amount;
+	}
+	
 	private void debug(String message)
 	{
 		if(DEBUG)
 		{
-			Debug.log("[" + getID() + "] " + message);
+			Debug.log(StringHelper.space(DEBUG_INDENT * 2) +"[" + getID() + "] " + message);
 		}
 	}
 	

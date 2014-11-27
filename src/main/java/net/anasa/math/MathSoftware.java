@@ -3,6 +3,7 @@ package net.anasa.math;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Date;
 
 import net.anasa.math.launcher.MathLauncher;
@@ -21,8 +22,25 @@ public final class MathSoftware
 		
 		try
 		{
+			File logFile = new File(settingsFile.getParent(), "logs/log.txt");
+			
+			if(settingsFile.exists() && settingsFile.length() > 1024 * 1000)
+			{
+				int ct = 0;
+				File destination;
+				do
+				{
+					ct++;
+					destination = new File(logFile.getParent(), "log." + ct + ".txt");
+				}
+				while(destination.exists());
+				
+				Files.move(logFile.toPath(), destination.toPath());
+				logFile.createNewFile();
+			}
+			
 			Debug.registerListener((message, type) -> {
-				try(FileWriter output = new FileWriter(new File(settingsFile.getParent(), "log.txt"), true))
+				try(FileWriter output = new FileWriter(logFile, true))
 				{
 					output.write(message + '\n');
 					output.flush();

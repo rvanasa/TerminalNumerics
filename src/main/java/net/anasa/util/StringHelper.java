@@ -92,6 +92,17 @@ public final class StringHelper
 		return data;
 	}
 	
+	public static String space(int length)
+	{
+		String data = "";
+		for(int i = 0; i < length; i++)
+		{
+			data += " ";
+		}
+		
+		return data;
+	}
+	
 	public static String capitalize(String value)
 	{
 		if(value == null || value.isEmpty())
