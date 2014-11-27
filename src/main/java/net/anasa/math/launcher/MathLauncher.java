@@ -14,7 +14,6 @@ import net.anasa.math.module.provided.ui.UIModule;
 import net.anasa.math.util.StateStandards;
 import net.anasa.math.util.UI;
 import net.anasa.util.Listing;
-import net.anasa.util.Progress;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile;
 import net.anasa.util.logic.IValue;
@@ -38,8 +37,6 @@ public class MathLauncher
 		
 		try
 		{
-			Progress progress = new Progress();
-			
 			dir.mkdirs();
 			
 			loadDefaultModules();
@@ -50,7 +47,6 @@ public class MathLauncher
 				try
 				{
 					getModuleContext().addModule(new JarModule(file));
-					progress.increment();
 				}
 				catch(Exception e)
 				{
@@ -64,7 +60,6 @@ public class MathLauncher
 				try
 				{
 					StateStandards.loadModel(Properties.getFrom(new FileInputStream(file)));
-					progress.increment();
 				}
 				catch(Exception e)
 				{
@@ -80,7 +75,6 @@ public class MathLauncher
 					File imageFile = new File(file.getParent(), file.getName().replaceAll(".xml$", ".png"));
 					XmlAppLoader loader = new XmlAppLoader(getModuleContext(), !imageFile.isFile() ? null : new ImageIcon(imageFile.toURI().toURL()).getImage());
 					getModuleContext().addApp(loader.load(XmlFile.read(file).getBaseElement()));
-					progress.increment();
 				}
 				catch(Exception e)
 				{
@@ -90,10 +84,7 @@ public class MathLauncher
 			
 			ITask task = new ComplexTask(loadModules, loadStandards, loadApps);
 			
-			new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), progress, () -> {
-				task.processItems();
-				new WindowComponent("Math Software", gui.getValue()).display();
-			}).display();
+			new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task.start(), () -> new WindowComponent("Math Software", gui.getValue()).display()).display();
 		}
 		catch(Exception e)
 		{

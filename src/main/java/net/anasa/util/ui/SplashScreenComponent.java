@@ -9,7 +9,7 @@ import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 
 public class SplashScreenComponent extends WindowComponent
 {
-	public SplashScreenComponent(Icon icon, Progress progress, ICallback loading)
+	public SplashScreenComponent(Icon icon, Progress progress, ICallback complete)
 	{
 		// setAlwaysOnTop(true);
 		setFrameVisible(false);
@@ -20,7 +20,8 @@ public class SplashScreenComponent extends WindowComponent
 		layout.apply(this);
 		
 		new Thread(() -> {
-			loading.call();
+			while(!progress.isComplete());
+			complete.call();
 			close();
 		}).start();
 	}

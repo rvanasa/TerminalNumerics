@@ -1,6 +1,7 @@
 package net.anasa.util.task;
 
 import net.anasa.util.Listing;
+import net.anasa.util.Progress;
 
 public class ComplexTask implements ITask
 {
@@ -34,11 +35,11 @@ public class ComplexTask implements ITask
 	}
 
 	@Override
-	public void processItems()
+	public void processItems(Progress progress)
 	{
 		for(ITask task : getTasks())
 		{
-			task.processItems();
+			task.processItems(progress);
 		}
 	}
 }

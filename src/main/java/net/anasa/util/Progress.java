@@ -60,4 +60,10 @@ public class Progress
 	{
 		setValue(getMaxValue());
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "[" + getValue() + " / " + getMaxValue() + "]";
+	}
 }

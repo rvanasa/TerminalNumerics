@@ -3,6 +3,7 @@ package net.anasa.util.task;
 import java.util.Collection;
 
 import net.anasa.util.Listing;
+import net.anasa.util.Progress;
 
 public class Task<T> implements ITask
 {
@@ -48,11 +49,12 @@ public class Task<T> implements ITask
 	}
 	
 	@Override
-	public void processItems()
+	public void processItems(Progress progress)
 	{
 		for(T item : getItems())
 		{
 			getProcess().processItem(item);
+			progress.increment();
 		}
 	}
 }
