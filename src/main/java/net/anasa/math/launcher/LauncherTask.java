@@ -39,7 +39,8 @@ public class LauncherTask extends ComplexTask
 			}
 			catch(Exception e)
 			{
-				UI.sendError("Failed to load internal data", e);
+				UI.sendError("Failed to load internal data!", e);
+				System.exit(1);
 			}
 		}));
 		
