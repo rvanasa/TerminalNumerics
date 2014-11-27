@@ -22,6 +22,11 @@ public class ComplexTask implements ITask
 		return tasks;
 	}
 	
+	public void addTask(ITask task)
+	{
+		getTasks().add(task);
+	}
+	
 	@Override
 	public int getSize()
 	{
