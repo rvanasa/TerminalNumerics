@@ -6,14 +6,16 @@ public interface ITask
 {
 	public int getSize();
 	
-	public void processItems(Progress progress);
+	public void runTask(Progress progress);
+	
+	public String getName(Progress progress);
 	
 	default Progress start()
 	{
 		Progress progress = new Progress(getSize());
 		
 		new Thread(() -> {
-			processItems(progress);
+			runTask(progress);
 			progress.setComplete();
 		}).start();
 		

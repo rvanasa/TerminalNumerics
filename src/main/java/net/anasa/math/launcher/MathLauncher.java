@@ -19,6 +19,7 @@ import net.anasa.util.data.xml.XmlFile;
 import net.anasa.util.logic.IValue;
 import net.anasa.util.task.ComplexTask;
 import net.anasa.util.task.ITask;
+import net.anasa.util.task.ListTask;
 import net.anasa.util.task.Task;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.MessageComponent;
@@ -43,7 +44,7 @@ public class MathLauncher
 			
 			File modules = new File(dir, "modules");
 			modules.mkdir();
-			ITask loadModules = new Task<>("Loading modules", new Listing<>(modules.listFiles((path, name) -> name.endsWith(".jar"))), (file) -> {
+			ITask loadModules = new ListTask<>("Loading modules", new Listing<>(modules.listFiles((path, name) -> name.endsWith(".jar"))), (file) -> {
 				try
 				{
 					getModuleContext().addModule(new JarModule(file));
@@ -56,7 +57,7 @@ public class MathLauncher
 			
 			File standards = new File(dir, "standards");
 			standards.mkdir();
-			ITask loadStandards = new Task<>("Loading standards", new Listing<>(standards.listFiles()), (file) -> {
+			ITask loadStandards = new ListTask<>("Loading standards", new Listing<>(standards.listFiles()), (file) -> {
 				try
 				{
 					StateStandards.loadModel(Properties.getFrom(new FileInputStream(file)));
@@ -69,7 +70,7 @@ public class MathLauncher
 			
 			File apps = new File(dir, "apps");
 			apps.mkdir();
-			ITask loadApps = new Task<>("Loading apps", new Listing<>(apps.listFiles((path, name) -> name.endsWith(".xml"))), (file) -> {
+			ITask loadApps = new ListTask<>("Loading apps", new Listing<>(apps.listFiles((path, name) -> name.endsWith(".xml"))), (file) -> {
 				try
 				{
 					File imageFile = new File(file.getParent(), file.getName().replaceAll(".xml$", ".png"));
@@ -82,9 +83,17 @@ public class MathLauncher
 				}
 			});
 			
-			ITask task = new ComplexTask(loadModules, loadStandards, loadApps);
+			ITask task = new ComplexTask(loadModules, loadStandards, loadApps, new Task("Waiting a bit", () -> {
+				try
+				{
+					Thread.sleep(2000);
+				}
+				catch(Exception e)
+				{
+				}
+			}));
 			
-			new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task.start(), () -> new WindowComponent("Math Software", gui.getValue()).display()).display();
+			new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Math Software", gui.getValue()).display()).display();
 		}
 		catch(Exception e)
 		{

@@ -46,6 +46,11 @@ public class Progress
 		setValue(getValue() + 1);
 	}
 	
+	public void reset()
+	{
+		setValue(0);
+	}
+	
 	public boolean isEnabled()
 	{
 		return getValue() >= 0 && getMaxValue() > 0;

@@ -16,7 +16,7 @@ public class ComplexTask implements ITask
 	{
 		this.tasks = tasks;
 	}
-
+	
 	public Listing<ITask> getTasks()
 	{
 		return tasks;
@@ -33,13 +33,37 @@ public class ComplexTask implements ITask
 		
 		return size;
 	}
-
+	
 	@Override
-	public void processItems(Progress progress)
+	public void runTask(Progress progress)
 	{
 		for(ITask task : getTasks())
 		{
-			task.processItems(progress);
+			task.runTask(progress);
 		}
+	}
+	
+	public ITask getCurrentTask(Progress progress)
+	{
+		int value = progress.getValue();
+		int ct = 0;
+		for(ITask task : getTasks())
+		{
+			ct += task.getSize();
+			if(ct > value)
+			{
+				return task;
+			}
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public String getName(Progress progress)
+	{
+		ITask task = getCurrentTask(progress);
+		
+		return task == null ? null : task.getName(progress);
 	}
 }

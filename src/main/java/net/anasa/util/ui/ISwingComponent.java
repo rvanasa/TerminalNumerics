@@ -7,37 +7,47 @@ import javax.swing.JComponent;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-public interface ISwingComponent extends IComponent
+interface ISwingComponent extends IComponent
 {
 	@Override
 	public JComponent getHandle();
 	
-	public default void setBorder(int x, int y)
+	default Font getFont()
+	{
+		return getHandle().getFont();
+	}
+	
+	default void setFont(Font font)
+	{
+		getHandle().setFont(font);
+	}
+	
+	default void setBorder(int x, int y)
 	{
 		setBorder(BorderFactory.createEmptyBorder(y, x, y, x));
 	}
 	
-	public default void setBorder(String text)
+	default void setBorder(String text)
 	{
 		setBorder(text, new Font(Font.DIALOG, Font.PLAIN, 11));
 	}
 	
-	public default void setBorder(String text, Font font)
+	default void setBorder(String text, Font font)
 	{
 		setBorder(BorderFactory.createTitledBorder(null, text, TitledBorder.CENTER, TitledBorder.TOP, font));
 	}
 	
-	public default void setBorder(Border border)
+	default void setBorder(Border border)
 	{
 		getHandle().setBorder(border);
 	}
 	
-	public default void setToolTipText(String text)
+	default void setToolTipText(String text)
 	{
 		getHandle().setToolTipText(text);
 	}
 	
-	public default void setVisible(boolean visible)
+	default void setVisible(boolean visible)
 	{
 		getHandle().setVisible(visible);
 	}

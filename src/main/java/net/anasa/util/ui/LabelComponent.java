@@ -77,14 +77,4 @@ public class LabelComponent extends UIParentComponent<JLabel> implements ISwingC
 	{
 		getHandle().setIcon(icon);
 	}
-	
-	public Font getFont()
-	{
-		return getHandle().getFont();
-	}
-	
-	public void setFont(Font font)
-	{
-		getHandle().setFont(font);
-	}
 }

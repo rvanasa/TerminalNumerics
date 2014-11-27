@@ -1,60 +1,45 @@
 package net.anasa.util.task;
 
-import java.util.Collection;
-
-import net.anasa.util.Listing;
+import net.anasa.util.ICallback;
 import net.anasa.util.Progress;
 
-public class Task<T> implements ITask
+public class Task implements ITask
 {
 	private final String name;
 	
-	private final Collection<T> items;
+	private final ICallback callback;
 	
-	private final ITaskProcess<T> process;
-	
-	public Task(String name, Listing<T> items, ITaskProcess<T> process)
-	{
-		this(name, items.getValues(), process);
-	}
-	
-	public Task(String name, Collection<T> items, ITaskProcess<T> process)
+	public Task(String name, ICallback callback)
 	{
 		this.name = name;
-		
-		this.items = items;
-		
-		this.process = process;
+		this.callback = callback;
 	}
 	
 	public String getName()
 	{
 		return name;
 	}
-
-	public Collection<T> getItems()
+	
+	@Override
+	public String getName(Progress progress)
 	{
-		return items;
+		return getName();
 	}
 	
-	public ITaskProcess<T> getProcess()
+	public ICallback getCallback()
 	{
-		return process;
+		return callback;
 	}
 	
 	@Override
 	public int getSize()
 	{
-		return getItems().size();
+		return 1;
 	}
 	
 	@Override
-	public void processItems(Progress progress)
+	public void runTask(Progress progress)
 	{
-		for(T item : getItems())
-		{
-			getProcess().processItem(item);
-			progress.increment();
-		}
+		getCallback().call();
 	}
 }
