@@ -3,9 +3,9 @@ package net.anasa.math.module.provided.ui;
 import java.awt.Color;
 
 import net.anasa.util.data.format.IFormat;
-import net.anasa.util.ui.PanelComponent;
+import net.anasa.util.ui.UIComponent;
 
-public class PanelComponentBuilder extends ComponentBuilder<PanelComponent>
+public abstract class CommonComponentBuilder extends ComponentBuilder<UIComponent<?>>
 {
 	ComponentAspect<Integer> background = new ComponentAspect<>("background", IFormat.INT, 0xFFFFFF);
 	ComponentAspect<Integer> foreground = new ComponentAspect<>("foreground", IFormat.INT, 0xFFFFFF);
@@ -14,14 +14,16 @@ public class PanelComponentBuilder extends ComponentBuilder<PanelComponent>
 	ComponentAspect<Double> height = new ComponentAspect<>("height", IFormat.DOUBLE, 64D);
 	
 	@Override
-	public PanelComponent build(AspectData data)
+	public final UIComponent<?> build(AspectData data)
 	{
-		PanelComponent panel = new PanelComponent();
+		UIComponent<?> component = getComponent(data);
 		
-		panel.setBackground(new Color(data.getValue(background)));
-		panel.setForeground(new Color(data.getValue(foreground)));
-		panel.setSize(data.getValue(width), data.getValue(height));
+		component.setBackground(new Color(data.getValue(background)));
+		component.setForeground(new Color(data.getValue(foreground)));
+		component.setSize(data.getValue(width), data.getValue(height));
 		
-		return panel;
+		return component;
 	}
+	
+	public abstract UIComponent<?> getComponent(AspectData data);
 }

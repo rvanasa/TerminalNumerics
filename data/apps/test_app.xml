@@ -3,7 +3,7 @@
 	<name>Test App</name>
 	<version>0.1</version>
 	<description>Test app for testing purposes testing test.</description>
-	<standards></standards>
+	<standards>CCSS 3.NBT.1</standards>
 	<layout type="border">
 		<component pos="center" id="graph" graph="x^2(x + 1)" />
 	</layout>

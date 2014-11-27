@@ -2,8 +2,8 @@ package net.anasa.math.ui.xml;
 
 import java.io.InputStream;
 
-import net.anasa.math.ui.xml.builder.AbstractBuilder;
 import net.anasa.math.ui.xml.builder.ILayoutBuilder;
+import net.anasa.math.ui.xml.builder.LayoutBuilder;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
@@ -20,9 +20,9 @@ public class LayoutParser
 	
 	public LayoutParser()
 	{
-		add(new AbstractBuilder("component", (element) -> new ComponentNode(element.getIDAttribute(), getProps(element))));
-		add(new AbstractBuilder("app", (element) -> new AppNode(element.getIDAttribute())));
-		add(new AbstractBuilder("layout", (element) -> {
+		add(new LayoutBuilder("component", (element) -> new ComponentNode(element.getIDAttribute(), getProps(element))));
+		add(new LayoutBuilder("app", (element) -> new AppNode(element.getIDAttribute(), new Properties())));
+		add(new LayoutBuilder("layout", (element) -> {
 			LayoutType type = LayoutType.valueOf(StringHelper.upperCase(element.getAttribute("type")));
 			Checks.checkNotNull(type, new FormatException("Invalid layout type: " + element.getAttribute("type")));
 			LayoutNode node = new LayoutNode(type.getLayout(getProps(element)));
@@ -46,6 +46,8 @@ public class LayoutParser
 	
 	public ILayoutNode getFrom(XmlElement element) throws FormatException
 	{
+		Checks.checkNotNull(element, new FormatException("XML element cannot be null"));
+		
 		ILayoutBuilder builder = getBuilders().getFirst((parse) -> parse.isValid(element));
 		Checks.checkNotNull(builder, new FormatException("Could not find builder for element: " + element.getName()));
 		

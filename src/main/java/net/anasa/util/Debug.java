@@ -14,7 +14,7 @@ public final class Debug
 			public void print(String message)
 			{
 				super.print(message);
-				msg(message);
+				msg(message, MessageType.INFO);
 			}
 		});
 		
@@ -24,7 +24,7 @@ public final class Debug
 			public void print(String message)
 			{
 				super.print(message);
-				msg(message);
+				msg(message, MessageType.ERROR);
 			}
 		});
 	}
@@ -37,11 +37,11 @@ public final class Debug
 		}
 	}
 	
-	private static void msg(Object message)
+	private static void msg(Object message, MessageType type)
 	{
 		for(IDebugListener listener : LISTENERS)
 		{
-			listener.onMessage(String.valueOf(message));
+			listener.onMessage(String.valueOf(message), type);
 		}
 	}
 	
@@ -62,6 +62,12 @@ public final class Debug
 	
 	public interface IDebugListener
 	{
-		public void onMessage(String message);
+		public void onMessage(String message, MessageType type);
+	}
+	
+	public enum MessageType
+	{
+		INFO,
+		ERROR;
 	}
 }

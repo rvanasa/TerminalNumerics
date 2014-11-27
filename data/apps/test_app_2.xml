@@ -5,6 +5,7 @@
 	<description>Another test app for testing tests.</description>
 	<standards></standards>
 	<layout type="border">
-		<app id="test_app" />
+		<component id="label" text="Test label 1" position="top" />
+		<component id="button" text="Close" action="close" position="bottom" />
 	</layout>
 </app>

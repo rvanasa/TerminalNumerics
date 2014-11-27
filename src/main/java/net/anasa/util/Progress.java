@@ -1,85 +1,34 @@
 package net.anasa.util;
 
-public final class Progress
+public class Progress
 {
-	private static final Mapping<String, Progress> ITEMS = new Mapping<>();
-	
-	public static Progress start(String id, int max)
-	{
-		Progress item = new Progress(id, max);
-		ITEMS.put(item.getID(), item);
-		
-		return item;
-	}
-	
-	public static boolean complete(String id)
-	{
-		Progress item = get(id);
-		ITEMS.remove(id);
-		
-		if(item != null)
-		{
-			return item.isComplete();
-		}
-		
-		return false;
-	}
-	
-	public static boolean isComplete(String id)
-	{
-		return !ITEMS.hasKey(id);
-	}
-	
-	public static Progress get(String id)
-	{
-		return ITEMS.get(id);
-	}
-	
-	public static void set(String id, int progress)
-	{
-		Progress item = ITEMS.get(id);
-		if(item != null)
-		{
-			item.setValue(progress);
-		}
-	}
-	
-	public static void increment(String id)
-	{
-		Progress item = get(id);
-		if(item != null)
-		{
-			set(id, item.getValue() + 1);
-		}
-		
-		if(item.isComplete())
-		{
-			complete(id);
-		}
-	}
-	
-	private final String id;
-	
+	private int maxValue;
 	private int value;
-	private int max;
 	
-	private Progress(String id, int max)
+	public Progress()
 	{
-		this(id, 0, max);
+		this(0, 0);
 	}
 	
-	private Progress(String id, int value, int max)
+	public Progress(int maxValue)
 	{
-		this.id = id;
-		
+		this(maxValue, 0);
+	}
+	
+	public Progress(int maxValue, int value)
+	{
+		setMaxValue(maxValue);
 		setValue(value);
-		
-		this.max = max;
 	}
 	
-	public String getID()
+	public int getMaxValue()
 	{
-		return id;
+		return maxValue;
+	}
+	
+	public void setMaxValue(int maxValue)
+	{
+		this.maxValue = maxValue;
 	}
 	
 	public int getValue()
@@ -92,23 +41,23 @@ public final class Progress
 		this.value = value;
 	}
 	
-	public int getMax()
+	public void increment()
 	{
-		return max;
+		setValue(getValue() + 1);
 	}
 	
-	public void setMax(int max)
+	public boolean isEnabled()
 	{
-		this.max = max;
-	}
-	
-	public double getPercent()
-	{
-		return (double)getValue() / getMax();
+		return getValue() >= 0 && getMaxValue() > 0;
 	}
 	
 	public boolean isComplete()
 	{
-		return getValue() >= getMax();
+		return getValue() >= getMaxValue();
+	}
+	
+	public void setComplete()
+	{
+		setValue(getMaxValue());
 	}
 }

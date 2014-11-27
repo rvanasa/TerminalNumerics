@@ -3,7 +3,10 @@ package net.anasa.math.module.app;
 import java.awt.Image;
 
 import net.anasa.math.module.Version;
+import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.standard.IStandard;
+import net.anasa.math.util.UI;
+import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
 
 public class App implements IApp
@@ -16,9 +19,9 @@ public class App implements IApp
 	private final IStandard[] standards;
 	private final Image icon;
 	
-	private final IComponent launchComponent;
+	private final IComponentEntry launchComponent;
 	
-	public App(String id, Version version, String name, String description, IStandard[] standards, Image icon, IComponent launchComponent)
+	public App(String id, Version version, String name, String description, IStandard[] standards, Image icon, IComponentEntry launchComponent)
 	{
 		this.id = id;
 		this.version = version;
@@ -68,8 +71,16 @@ public class App implements IApp
 	}
 	
 	@Override
-	public IComponent getLaunchComponent()
+	public IComponent getLaunchComponent(Properties props)
 	{
-		return launchComponent;
+		try
+		{
+			return launchComponent.getComponent(props);
+		}
+		catch(Exception e)
+		{
+			UI.sendError("Failed to create launch component for app: " + getID(), e);
+			return null;
+		}
 	}
 }

@@ -3,10 +3,11 @@ package net.anasa.util.data.xml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import net.anasa.util.data.DataConform.FormatException;
 
 import org.w3c.dom.Document;
 
@@ -14,7 +15,7 @@ public class XmlFile
 {
 	private final XmlElement baseElement;
 	
-	private XmlFile(XmlElement baseElement) throws XmlException
+	public XmlFile(XmlElement baseElement) throws XmlException
 	{
 		this.baseElement = baseElement;
 	}
@@ -50,13 +51,17 @@ public class XmlFile
 			
 			return new XmlFile(XmlElement.get(doc.getDocumentElement()));
 		}
+		catch(XmlException e)
+		{
+			throw e;
+		}
 		catch(Exception e)
 		{
 			throw new XmlException(e);
 		}
 	}
 	
-	public static class XmlException extends IOException
+	public static class XmlException extends FormatException
 	{
 		public XmlException(String message)
 		{

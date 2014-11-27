@@ -1,34 +1,47 @@
 package net.anasa.math.module;
 
+import java.io.IOException;
+import java.net.URL;
+
+import net.anasa.math.MathSoftware;
 import net.anasa.math.module.app.IApp;
+import net.anasa.math.module.context.ActionRegistry.IComponentAction;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
+import net.anasa.math.ui.xml.LayoutParser;
 import net.anasa.math.util.UI;
-import net.anasa.util.ICallback;
+import net.anasa.util.Checks;
 
 public interface IModuleDelegate
 {
-	public default void init() throws Exception
+	default void init() throws Exception
 	{
 		
 	}
 	
-	public default ModuleContext getContext()
+	default ModuleContext getContext()
 	{
-		return ModuleContext.getInstance();
+		return MathSoftware.getContext();
 	}
 	
-	public default void addComponent(String id, IComponentEntry entry)
+	default void addComponent(String id, IComponentEntry entry)
 	{
 		getContext().getComponents().register(id, entry);
 	}
 	
-	public default void addAction(String id, ICallback callback)
+	default void addComponent(String id, URL layoutURL) throws IOException
 	{
-		getContext().getActions().register(id, callback);
+		Checks.checkNotNull(layoutURL, new IOException("layout file URL must not be null"));
+		
+		getContext().getComponents().register(id, (props) -> new LayoutParser().getFrom(layoutURL.openStream()).compile(getContext()));
 	}
 	
-	public default void addApp(String id, IApp app)
+	default void addAction(String id, IComponentAction action)
+	{
+		getContext().getActions().register(id, action);
+	}
+	
+	default void addApp(String id, IApp app)
 	{
 		try
 		{

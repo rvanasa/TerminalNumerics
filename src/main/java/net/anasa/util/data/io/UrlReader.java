@@ -25,7 +25,7 @@ public class UrlReader implements IReader<InputStream>
 	}
 
 	@Override
-	public InputStream read() throws IOException
+	public InputStream load() throws IOException
 	{
 		try
 		{

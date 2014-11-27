@@ -23,11 +23,6 @@ public class AppListComponent extends PanelComponent
 	
 	private IAppFilter appFilter;
 	
-	public AppListComponent()
-	{
-		this(ModuleContext.getInstance());
-	}
-	
 	public AppListComponent(ModuleContext context)
 	{
 		this(context.getApps().getApps());

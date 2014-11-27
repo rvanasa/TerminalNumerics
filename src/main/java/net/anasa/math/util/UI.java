@@ -9,7 +9,7 @@ public final class UI
 	{
 		Debug.err(message);
 		
-		MessageComponent ui = new MessageComponent("Error", message);
+		MessageComponent ui = new MessageComponent("Error Message", message);
 		ui.display();
 	}
 	

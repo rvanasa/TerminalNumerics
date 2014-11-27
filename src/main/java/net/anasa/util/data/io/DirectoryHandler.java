@@ -48,7 +48,7 @@ public class DirectoryHandler<T> implements IDirectoryHandler<String, T>
 	}
 
 	@Override
-	public Map<String, T> read() throws IOException
+	public Map<String, T> load() throws IOException
 	{
 		getDir().mkdirs();
 		
@@ -63,7 +63,7 @@ public class DirectoryHandler<T> implements IDirectoryHandler<String, T>
 		{
 			if(file.isFile() && (!hasExtension() || file.getName().endsWith(getExtension())))
 			{
-				map.put(getKey(file), new FileHandler<>(file, getFormat()).read());
+				map.put(getKey(file), new FileHandler<>(file, getFormat()).load());
 			}
 		}
 		

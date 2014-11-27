@@ -36,11 +36,11 @@ public class IOConformHandler<I, O> implements IHandler<O>
 	}
 	
 	@Override
-	public O read() throws IOException
+	public O load() throws IOException
 	{
 		try
 		{
-			return getConformIO().getFrom(getHandler().read());
+			return getConformIO().getFrom(getHandler().load());
 		}
 		catch(FormatException e)
 		{

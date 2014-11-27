@@ -73,9 +73,9 @@ public class XmlElement
 		return elements;
 	}
 	
-	public XmlElement[] getElements(String name)
+	public Listing<XmlElement> getElements(String name)
 	{
-		return new Listing<>(getElements()).filter((element) -> StringHelper.equals(element.getName(), name)).toArray(XmlElement.class);
+		return new Listing<>(getElements()).filter((element) -> StringHelper.equals(element.getName(), name));
 	}
 	
 	public boolean isParentElement()

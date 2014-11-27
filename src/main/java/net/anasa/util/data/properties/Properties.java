@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.format.IFormat;
@@ -16,10 +17,7 @@ public class Properties extends AbstractProperties
 		@Override
 		public Properties getFrom(String data) throws FormatException
 		{
-			Properties props = new Properties();
-			props.parse(data);
-			
-			return props;
+			return Properties.getFrom(data);
 		}
 		
 		@Override
@@ -37,19 +35,19 @@ public class Properties extends AbstractProperties
 		return props;
 	}
 	
-	public static Properties getFrom(InputStream stream) throws IOException
+	public static Properties getFrom(InputStream input) throws IOException
 	{
 		Properties props = new Properties();
-		props.read(stream);
+		props.read(input);
 		
 		return props;
 	}
 	
-	public static Properties getFrom(InputStream stream, Properties def)
+	public static Properties getFrom(InputStream input, Properties def)
 	{
 		try
 		{
-			return getFrom(stream);
+			return getFrom(input);
 		}
 		catch(IOException e)
 		{
@@ -71,7 +69,7 @@ public class Properties extends AbstractProperties
 	
 	private final HashMap<String, String> map = new LinkedHashMap<>();
 	
-	public Properties(HashMap<String, String> map)
+	public Properties(Map<String, String> map)
 	{
 		this.map.putAll(map);
 	}

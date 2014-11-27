@@ -1,0 +1,6 @@
+model: CCSS
+type: math
+
+standards.3: Grade 3
+standards.3.NBT: Use place value understanding and properties of operations to perform multi-digit arithmetic.
+standards.3.NBT.1: Use place value understanding to round whole numbers to the nearest 10 or 100.

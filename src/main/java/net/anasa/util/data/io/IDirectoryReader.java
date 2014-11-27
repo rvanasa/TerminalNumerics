@@ -13,6 +13,6 @@ public interface IDirectoryReader<K, V> extends IReader<Map<K, V>>
 	{
 		IReader<V> reader = getReader(key);
 		Checks.checkNotNull(reader, new IOException("Invalid directory key: " + key));
-		return reader.read();
+		return reader.load();
 	}
 }

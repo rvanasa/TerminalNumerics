@@ -4,6 +4,7 @@ import java.awt.Image;
 
 import net.anasa.math.module.Version;
 import net.anasa.math.standard.IStandard;
+import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
 
 public interface IApp
@@ -20,5 +21,5 @@ public interface IApp
 	
 	public Image getIcon();
 	
-	public IComponent getLaunchComponent();
+	public IComponent getLaunchComponent(Properties props);
 }

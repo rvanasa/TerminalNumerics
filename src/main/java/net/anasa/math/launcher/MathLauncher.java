@@ -1,6 +1,7 @@
 package net.anasa.math.launcher;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import javax.swing.ImageIcon;
 
@@ -9,12 +10,17 @@ import net.anasa.math.module.JarModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.XmlAppLoader;
 import net.anasa.math.module.context.ModuleContext;
-import net.anasa.math.module.provided.UIModule;
+import net.anasa.math.module.provided.ui.UIModule;
+import net.anasa.math.util.StateStandards;
 import net.anasa.math.util.UI;
 import net.anasa.util.Listing;
 import net.anasa.util.Progress;
+import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile;
 import net.anasa.util.logic.IValue;
+import net.anasa.util.task.ComplexTask;
+import net.anasa.util.task.ITask;
+import net.anasa.util.task.Task;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.MessageComponent;
 import net.anasa.util.ui.SplashScreenComponent;
@@ -22,60 +28,71 @@ import net.anasa.util.ui.WindowComponent;
 
 public class MathLauncher
 {
-	private static final String PROGRESS_MODULE = "moduleProgress";
+	private final ModuleContext context;
 	
-	public MathLauncher(File dir, IValue<IComponent> gui) throws MathException
+	public MathLauncher(ModuleContext context, IValue<IComponent> gui) throws MathException
 	{
+		this.context = context;
+		
+		File dir = context.getDirectory();
+		
 		try
 		{
+			Progress progress = new Progress();
+			
 			dir.mkdirs();
-			
-			File modules = new File(dir, "modules");
-			modules.mkdir();
-			Listing<File> moduleFiles = new Listing<>(modules.listFiles((path, name) -> name.endsWith(".jar")));
-			
-			File apps = new File(dir, "apps");
-			apps.mkdir();
-			Listing<File> appFiles = new Listing<>(apps.listFiles((path, name) -> name.endsWith(".xml")));
-			
-			Progress.start(PROGRESS_MODULE, moduleFiles.size() + appFiles.size());
 			
 			loadDefaultModules();
 			
-			new SplashScreenComponent(new ImageIcon(), PROGRESS_MODULE, () -> {
+			File modules = new File(dir, "modules");
+			modules.mkdir();
+			ITask loadModules = new Task<>("Loading modules", new Listing<>(modules.listFiles((path, name) -> name.endsWith(".jar"))), (file) -> {
 				try
 				{
-					moduleFiles.forEach((file) -> {
-						try
-						{
-							getModuleContext().addModule(new JarModule(file));
-							Progress.increment(PROGRESS_MODULE);
-						}
-						catch(Exception e)
-						{
-							UI.sendError("Failed to load module from file: " + file.getName(), e);
-						}
-					});
-					
-					appFiles.forEach((file) -> {
-						try
-						{
-							File imageFile = new File(file.getParent(), file.getName().replaceAll(".xml$", ".png"));
-							getModuleContext().addApp(XmlAppLoader.loadApp(getModuleContext(), XmlFile.read(file).getBaseElement(), !imageFile.isFile() ? null : new ImageIcon(imageFile.toURI().toURL()).getImage()));
-							Progress.increment(PROGRESS_MODULE);
-						}
-						catch(Exception e)
-						{
-							UI.sendError("Failed to load app from file: " + file.getName(), e);
-						}
-					});
-					
-					new WindowComponent("Math", gui.getValue()).display();
+					getModuleContext().addModule(new JarModule(file));
+					progress.increment();
 				}
 				catch(Exception e)
 				{
-					e.printStackTrace();
+					UI.sendError("Failed to load module from file: " + file.getName(), e);
 				}
+			});
+			
+			File standards = new File(dir, "standards");
+			standards.mkdir();
+			ITask loadStandards = new Task<>("Loading standards", new Listing<>(standards.listFiles()), (file) -> {
+				try
+				{
+					StateStandards.loadModel(Properties.getFrom(new FileInputStream(file)));
+					progress.increment();
+				}
+				catch(Exception e)
+				{
+					UI.sendError("Failed to load standard from file: " + file.getName(), e);
+				}
+			});
+			
+			File apps = new File(dir, "apps");
+			apps.mkdir();
+			ITask loadApps = new Task<>("Loading apps", new Listing<>(apps.listFiles((path, name) -> name.endsWith(".xml"))), (file) -> {
+				try
+				{
+					File imageFile = new File(file.getParent(), file.getName().replaceAll(".xml$", ".png"));
+					XmlAppLoader loader = new XmlAppLoader(getModuleContext(), !imageFile.isFile() ? null : new ImageIcon(imageFile.toURI().toURL()).getImage());
+					getModuleContext().addApp(loader.load(XmlFile.read(file).getBaseElement()));
+					progress.increment();
+				}
+				catch(Exception e)
+				{
+					UI.sendError("Failed to load app from file: " + file.getName(), e);
+				}
+			});
+			
+			ITask task = new ComplexTask(loadModules, loadStandards, loadApps);
+			
+			new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), progress, () -> {
+				task.processItems();
+				new WindowComponent("Math Software", gui.getValue()).display();
 			}).display();
 		}
 		catch(Exception e)
@@ -93,6 +110,6 @@ public class MathLauncher
 	
 	public ModuleContext getModuleContext()
 	{
-		return ModuleContext.getInstance();
+		return context;
 	}
 }

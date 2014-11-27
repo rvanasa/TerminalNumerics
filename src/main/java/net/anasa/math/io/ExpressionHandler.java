@@ -36,11 +36,11 @@ public class ExpressionHandler implements IHandler<IExpression>
 	}
 	
 	@Override
-	public IExpression read() throws IOException
+	public IExpression load() throws IOException
 	{
 		try
 		{
-			return getParser().getFrom(getHandler().read());
+			return getParser().getFrom(getHandler().load());
 		}
 		catch(MathException e)
 		{

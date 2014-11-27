@@ -4,5 +4,5 @@ import java.io.IOException;
 
 public interface IReader<T>
 {
-	public T read() throws IOException;
+	public T load() throws IOException;
 }

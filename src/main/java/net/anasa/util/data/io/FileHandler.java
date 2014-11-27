@@ -32,7 +32,7 @@ public class FileHandler<T> implements IHandler<T>
 	}
 
 	@Override
-	public T read() throws IOException
+	public T load() throws IOException
 	{
 		if(getFile().getParentFile() != null)
 		{

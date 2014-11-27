@@ -1,10 +1,18 @@
 package net.anasa.math.standard;
 
-public interface IStandard
+import net.anasa.util.StringHelper;
+
+public interface IStandard extends IStandardNode
 {
-	public String getName();
+	public IStandardDomain getDomain();
 	
-	public int getNumber();
+	public String getDescription();
 	
-	public IStandardCategory getCategory();
+	default String getName()
+	{
+		IStandardGrade grade = getDomain().getGrade();
+		IStandardModel model = grade.getModel();
+		
+		return model.getID() + " " + StringHelper.join(".", grade.getID(), getDomain().getID(), getID());
+	}
 }

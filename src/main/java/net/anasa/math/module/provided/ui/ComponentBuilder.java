@@ -1,11 +1,13 @@
 package net.anasa.math.module.provided.ui;
 
+import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.format.IFormat;
+import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
 
-public abstract class ComponentBuilder<T extends IComponent>
+public abstract class ComponentBuilder<T extends IComponent> implements IComponentEntry
 {
 	private final Listing<ComponentAspect<?>> aspects = new Listing<>();
 	
@@ -15,6 +17,12 @@ public abstract class ComponentBuilder<T extends IComponent>
 	}
 	
 	public abstract T build(AspectData data);
+	
+	@Override
+	public IComponent getComponent(Properties props) throws Exception
+	{
+		return build(new AspectData(props, this));
+	}
 	
 	public class ComponentAspect<A>
 	{

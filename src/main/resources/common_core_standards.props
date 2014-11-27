@@ -1,9 +1,0 @@
-# test file, not currently in use, implementation of the IStandard and IStandardCategory model in 'net.anasa.math.standard'
-# should reflect the Common Core Standards of Mathematics: http://www.corestandards.org/Math/Practice/
-
-kindergarten.id: K
-kindergarten.concepts.1: representing and comparing whole numbers, initially with sets of objects
-kindergarten.concepts.2: describing shapes and space
-
-# and so on...
-# I'll try and fill this out once I know what information we'll need for each category.
