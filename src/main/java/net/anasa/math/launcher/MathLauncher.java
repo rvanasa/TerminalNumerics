@@ -20,7 +20,6 @@ import net.anasa.util.logic.IValue;
 import net.anasa.util.task.ComplexTask;
 import net.anasa.util.task.ITask;
 import net.anasa.util.task.ListTask;
-import net.anasa.util.task.Task;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.MessageComponent;
 import net.anasa.util.ui.SplashScreenComponent;
@@ -83,7 +82,7 @@ public class MathLauncher
 				}
 			});
 			
-			ITask task = new ComplexTask(loadModules, loadStandards, loadApps));
+			ITask task = new ComplexTask(loadModules, loadStandards, loadApps);
 			
 			new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Math Software", gui.getValue()).display()).display();
 		}
