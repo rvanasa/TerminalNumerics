@@ -25,11 +25,11 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	protected static final String SPLITTER = ":";
 	protected static final String COMMENT = "#";
 
-	public abstract String getKey();
+	public abstract String getKey() throws PropertiesException;
 
-	public abstract String getValue();
+	public abstract String getValue() throws PropertiesException;
 	
-	public abstract void setValue(String value);
+	public abstract void setValue(String value) throws PropertiesException;
 	
 	protected abstract String getValue(String key);
 	

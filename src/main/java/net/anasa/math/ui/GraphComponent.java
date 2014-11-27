@@ -50,17 +50,17 @@ public class GraphComponent extends PanelComponent
 	private final Listing<Graph> graphs = new Listing<Graph>().setHandle(new CopyOnWriteArrayList<>());
 	private final GraphView view;
 	
-	private SequenceParser parser;
-	
 	private final PanelComponent graphPanel;
 	
 	private final SliderComponent scaleSlider;
+	
+	private SequenceParser parser;
 	
 	public GraphComponent(String data)
 	{
 		this();
 		
-		addGraphs(data);
+		updateGraphs(data);
 	}
 	
 	public GraphComponent(Graph... graphs)
@@ -79,6 +79,8 @@ public class GraphComponent extends PanelComponent
 		
 		graphPanel.setBackground(BG_COLOR);
 		graphPanel.setSize(SIZE, SIZE);
+		
+		setParser(SequenceParser.EXPRESSION);
 		
 		scaleSlider = new SliderComponent(0, 154, 40);
 		scaleSlider.addActionListener((event) -> redraw());
@@ -167,7 +169,7 @@ public class GraphComponent extends PanelComponent
 					Graph graph = new Graph(Evaluator.evaluate(sequence));
 					addGraph(graph);
 					
-					getEvents().dispatch(new GraphEvent(GraphComponent.this, graph));
+					getEvents().dispatch(new GraphEvent(this, graph));
 				}
 				catch(Exception e)
 				{
@@ -178,8 +180,13 @@ public class GraphComponent extends PanelComponent
 		}).start();
 	}
 	
-	public void addGraphs(String data)
+	public void updateGraphs(String data)
 	{
+		if(getParser() == null)
+		{
+			return;
+		}
+		
 		try
 		{
 			addGraphs(new Listing<>(data.split(";")).filter((item) -> !item.trim().isEmpty()).conform((item) -> {
@@ -189,12 +196,14 @@ public class GraphComponent extends PanelComponent
 				}
 				catch(Exception e)
 				{
+					e.printStackTrace();
 					throw new FormatException(e);
 				}
 			}));
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			clearGraphs();
 		}
 	}
@@ -202,7 +211,7 @@ public class GraphComponent extends PanelComponent
 	public void setGraph(String data)
 	{
 		clearGraphs();
-		addGraphs(data);
+		updateGraphs(data);
 	}
 	
 	public void setGraph(Graph graph)

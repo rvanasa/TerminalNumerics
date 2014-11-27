@@ -88,21 +88,21 @@ public class Properties extends AbstractProperties
 	}
 	
 	@Override
-	public String getKey()
+	public String getKey() throws PropertiesException
 	{
-		return null;
+		throw new PropertiesException("No key present for base Properties");
 	}
 	
 	@Override
-	public String getValue()
+	public String getValue() throws PropertiesException
 	{
-		return null;
+		throw new PropertiesException("No value present for base Properties");
 	}
 	
 	@Override
-	public void setValue(String value)
+	public void setValue(String value) throws PropertiesException
 	{
-		
+		throw new PropertiesException("Cannot set value for base Properties");
 	}
 	
 	@Override

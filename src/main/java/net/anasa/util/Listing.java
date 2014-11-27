@@ -302,21 +302,21 @@ public class Listing<E> implements Iterable<E>
 	
 	public <T> Listing<T> conform(IConformHandler<E, T> handler)
 	{
-		try
+		Listing<T> list = new Listing<>();
+		
+		for(int i = 0; i < size(); i++)
 		{
-			Listing<T> list = new Listing<>();
-			
-			for(int i = 0; i < size(); i++)
+			try
 			{
 				list.set(i, handler.getFrom(get(i)));
 			}
-			
-			return list;
+			catch(FormatException e)
+			{
+				Debug.err("Failed to conform data: " + get(i) + " (" + e + ")");
+			}
 		}
-		catch(FormatException e)
-		{
-			return null;
-		}
+		
+		return list;
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -2,7 +2,9 @@ package net.anasa.math.standard;
 
 public interface IStandardModel extends IStandardNode
 {
-	public String getType();
+	public String getName();
 	
-	public IStandardGrade getGradeByID(String id);
+	public Iterable<IStandardGradeLevel> getGradeLevels();
+	
+	public IStandardGradeLevel getGradeByID(String id);
 }

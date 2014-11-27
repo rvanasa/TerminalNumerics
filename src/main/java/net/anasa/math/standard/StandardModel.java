@@ -6,14 +6,14 @@ import net.anasa.util.StringHelper;
 public class StandardModel implements IStandardModel
 {
 	private final String id;
-	private final String type;
+	private final String name;
 	
-	private final Listing<IStandardGrade> gradeLevels;
+	private final Listing<IStandardGradeLevel> gradeLevels;
 	
-	public StandardModel(String id, String type, Listing<IStandardGrade> gradeLevels)
+	public StandardModel(String id, String name, Listing<IStandardGradeLevel> gradeLevels)
 	{
 		this.id = id;
-		this.type = type;
+		this.name = name;
 		
 		this.gradeLevels = gradeLevels;
 	}
@@ -23,20 +23,21 @@ public class StandardModel implements IStandardModel
 	{
 		return id;
 	}
-
+	
 	@Override
-	public String getType()
+	public String getName()
 	{
-		return type;
+		return name;
 	}
-
-	public Listing<IStandardGrade> getGradeLevels()
+	
+	@Override
+	public Listing<IStandardGradeLevel> getGradeLevels()
 	{
 		return gradeLevels;
 	}
-
+	
 	@Override
-	public IStandardGrade getGradeByID(String id)
+	public IStandardGradeLevel getGradeByID(String id)
 	{
 		return getGradeLevels().getFirst((category) -> StringHelper.equalsIgnoreCase(category.getID(), id));
 	}

@@ -8,7 +8,7 @@ import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.ActionRegistry.IComponentAction;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
-import net.anasa.math.ui.xml.LayoutParser;
+import net.anasa.math.ui.xml.XmlLayoutLoader;
 import net.anasa.math.util.UI;
 import net.anasa.util.Checks;
 
@@ -33,7 +33,7 @@ public interface IModuleDelegate
 	{
 		Checks.checkNotNull(layoutURL, new IOException("layout file URL must not be null"));
 		
-		getContext().getComponents().register(id, (props) -> new LayoutParser().getFrom(layoutURL.openStream()).compile(getContext()));
+		getContext().getComponents().register(id, (props) -> new XmlLayoutLoader().load(layoutURL.openStream()).compile(getContext()));
 	}
 	
 	default void addAction(String id, IComponentAction action)

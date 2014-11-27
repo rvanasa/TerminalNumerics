@@ -2,6 +2,7 @@ package net.anasa.util.data.xml;
 
 import net.anasa.util.Checks;
 import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile.XmlException;
 
 public interface IXmlLoader<T>
@@ -27,7 +28,7 @@ public interface IXmlLoader<T>
 	default String getAttribute(String key, XmlElement element, String def)
 	{
 		String data = element.getAttribute(key);
-		return data != null ? data : null;
+		return data != null ? data : def;
 	}
 	
 	default String getElementData(String key, XmlElement element) throws XmlException
@@ -49,5 +50,30 @@ public interface IXmlLoader<T>
 	default String getValue(String key, XmlElement element, String def)
 	{
 		return getElementData(key, element, getAttribute(key, element, def));
+	}
+	
+	default Properties getProperties(XmlElement element)
+	{
+		return getProperties(element, new Properties());
+	}
+	
+	default Properties getProperties(XmlElement element, Properties props)
+	{
+		for(XmlAttribute attribute : element.getAttributes())
+		{
+			props.set(attribute.getKey(), attribute.getValue());
+		}
+		
+		for(XmlElement child : element.getElements())
+		{
+			if(child.hasData())
+			{
+				props.set(child.getName(), child.getData());
+			}
+			
+			getProperties(child, props.getInner(child.getName()));
+		}
+		
+		return props;
 	}
 }

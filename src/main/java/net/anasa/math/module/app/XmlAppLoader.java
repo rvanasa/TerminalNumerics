@@ -6,7 +6,7 @@ import net.anasa.math.module.Version;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.standard.IStandard;
 import net.anasa.math.ui.xml.ILayoutNode;
-import net.anasa.math.ui.xml.LayoutParser;
+import net.anasa.math.ui.xml.XmlLayoutLoader;
 import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.xml.IXmlLoader;
@@ -34,12 +34,12 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 		String description = getValue("description", element, "(No description provided)");
 		
 		IStandard[] standards = new Listing<>(getValue("standards", element, "").split(","))
-				.filter((data) -> data.trim().length() > 0)
+				.filter((data) -> !data.trim().isEmpty())
 				.conform((data) -> context.getStandard(data))
 				.filter((data) -> data != null)
 				.toArray(IStandard.class);
 		
-		ILayoutNode launchComponent = new LayoutParser().getFrom(element.getElement("layout"));
+		ILayoutNode launchComponent = new XmlLayoutLoader().load(element.getElement("layout"));
 		
 		return new App(id, version, name, description, standards, icon, (props) -> launchComponent.compile(context));
 	}

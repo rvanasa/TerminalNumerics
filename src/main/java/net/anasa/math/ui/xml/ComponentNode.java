@@ -36,7 +36,8 @@ public class ComponentNode implements ILayoutNode
 		}
 		catch(ModuleException e)
 		{
-			throw new FormatException(e);
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

@@ -3,7 +3,7 @@ package net.anasa.math.standard;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 
-public class StandardGrade implements IStandardGrade
+public class StandardGradeLevel implements IStandardGradeLevel
 {
 	private final IStandardModel model;
 	
@@ -12,7 +12,7 @@ public class StandardGrade implements IStandardGrade
 	
 	private final Listing<IStandardDomain> domains;
 	
-	public StandardGrade(IStandardModel model, String id, String name, Listing<IStandardDomain> domains)
+	public StandardGradeLevel(IStandardModel model, String id, String name, Listing<IStandardDomain> domains)
 	{
 		this.model = model;
 		
@@ -40,6 +40,7 @@ public class StandardGrade implements IStandardGrade
 		return name;
 	}
 	
+	@Override
 	public Listing<IStandardDomain> getDomains()
 	{
 		return domains;

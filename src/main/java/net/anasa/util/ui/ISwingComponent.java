@@ -19,7 +19,12 @@ public interface ISwingComponent extends IComponent
 	
 	public default void setBorder(String text)
 	{
-		setBorder(BorderFactory.createTitledBorder(null, text, TitledBorder.CENTER, TitledBorder.TOP, new Font(Font.DIALOG, Font.PLAIN, 11)));
+		setBorder(text, new Font(Font.DIALOG, Font.PLAIN, 11));
+	}
+	
+	public default void setBorder(String text, Font font)
+	{
+		setBorder(BorderFactory.createTitledBorder(null, text, TitledBorder.CENTER, TitledBorder.TOP, font));
 	}
 	
 	public default void setBorder(Border border)

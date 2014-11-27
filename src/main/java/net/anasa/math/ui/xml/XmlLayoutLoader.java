@@ -8,27 +8,26 @@ import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.properties.Properties;
-import net.anasa.util.data.xml.XmlAttribute;
+import net.anasa.util.data.xml.IXmlLoader;
 import net.anasa.util.data.xml.XmlElement;
 import net.anasa.util.data.xml.XmlFile;
 import net.anasa.util.data.xml.XmlFile.XmlException;
 
-public class LayoutParser
+public class XmlLayoutLoader implements IXmlLoader<ILayoutNode>
 {
 	private final Listing<ILayoutBuilder> builders = new Listing<>();
 	
-	public LayoutParser()
+	public XmlLayoutLoader()
 	{
-		add(new LayoutBuilder("component", (element) -> new ComponentNode(element.getIDAttribute(), getProps(element))));
-		add(new LayoutBuilder("app", (element) -> new AppNode(element.getIDAttribute(), new Properties())));
+		add(new LayoutBuilder("component", (element) -> new ComponentNode(element.getIDAttribute(), getProperties(element))));
+		add(new LayoutBuilder("app", (element) -> new AppNode(element.getIDAttribute(), getProperties(element))));
 		add(new LayoutBuilder("layout", (element) -> {
 			LayoutType type = LayoutType.valueOf(StringHelper.upperCase(element.getAttribute("type")));
 			Checks.checkNotNull(type, new FormatException("Invalid layout type: " + element.getAttribute("type")));
-			LayoutNode node = new LayoutNode(type.getLayout(getProps(element)));
+			LayoutNode node = new LayoutNode(type.getLayout(getProperties(element)));
 			for(XmlElement child : element.getElements())
 			{
-				node.add(getFrom(child), child.getAttribute("pos"));
+				node.add(load(child), child.getAttribute("pos"));
 			}
 			return node;
 		}));
@@ -44,7 +43,8 @@ public class LayoutParser
 		return builders;
 	}
 	
-	public ILayoutNode getFrom(XmlElement element) throws FormatException
+	@Override
+	public ILayoutNode load(XmlElement element) throws FormatException
 	{
 		Checks.checkNotNull(element, new FormatException("XML element cannot be null"));
 		
@@ -54,42 +54,17 @@ public class LayoutParser
 		return builder.getFrom(element);
 	}
 	
-	public ILayoutNode getFrom(InputStream stream) throws FormatException
+	public ILayoutNode load(InputStream stream) throws FormatException
 	{
 		try
 		{
 			XmlFile xml = XmlFile.read(stream);
 			
-			return getFrom(xml.getBaseElement());
+			return load(xml.getBaseElement());
 		}
 		catch(XmlException e)
 		{
 			throw new FormatException(e);
 		}
-	}
-	
-	private Properties getProps(XmlElement element)
-	{
-		return getProps(element, new Properties());
-	}
-	
-	private Properties getProps(XmlElement element, Properties parent)
-	{
-		Properties props = new Properties();
-		
-		for(XmlAttribute attribute : element.getAttributes())
-		{
-			props.set(attribute.getKey(), attribute.getValue());
-		}
-		
-		for(XmlElement child : element.getElements())
-		{
-			if(child.hasIDAttribute())
-			{
-				getProps(child, parent.getInner(child.getIDAttribute()));
-			}
-		}
-		
-		return props;
 	}
 }

@@ -25,11 +25,11 @@ import net.anasa.util.resolver.logic.ComplexResolver;
 import net.anasa.util.resolver.logic.IResolver;
 import net.anasa.util.resolver.logic.ParserMatchResolver;
 
-public class ExpressionInterpreter
+public class ExpressionResolver implements IResolver<IExpression>
 {
 	private final ParserResolver<IExpression> parser = new ParserResolver<>();
 	
-	public ExpressionInterpreter()
+	public ExpressionResolver()
 	{
 		add(new ComplexResolver<IExpression>("multiply")
 		{
@@ -223,8 +223,15 @@ public class ExpressionInterpreter
 		return parser;
 	}
 	
-	public IExpression getFrom(Listing<IToken> data) throws ResolverException
+	@Override
+	public IExpression resolve(Listing<IToken> data) throws ResolverException
 	{
 		return getParser().resolve(data);
+	}
+
+	@Override
+	public boolean matches(Listing<IToken> data)
+	{
+		return getParser().matches(data);
 	}
 }

@@ -5,7 +5,7 @@ import net.anasa.math.expression.ConstantType;
 import net.anasa.math.expression.FunctionType;
 import net.anasa.math.expression.IExpression;
 import net.anasa.math.expression.OperatorType;
-import net.anasa.math.interpreter.sequence.ExpressionInterpreter;
+import net.anasa.math.interpreter.sequence.ExpressionResolver;
 import net.anasa.math.sequence.SequenceToken.TokenType;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
@@ -76,8 +76,8 @@ public class SequenceParser implements IMathParser
 	{
 		try
 		{
-			ExpressionInterpreter interpreter = new ExpressionInterpreter();
-			return interpreter.getFrom(data);
+			ExpressionResolver interpreter = new ExpressionResolver();
+			return interpreter.resolve(data);
 		}
 		catch(ResolverException e)
 		{

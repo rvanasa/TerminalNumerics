@@ -1,7 +1,6 @@
 package net.anasa.math.ui.xml;
 
 import net.anasa.util.data.DataConform.FormatException;
-import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.layout.ILayout;
 import net.anasa.util.ui.layout.UIBorderLayout;
@@ -16,12 +15,12 @@ public enum LayoutType
 	}),
 	VERTICAL((props) -> {
 		UIVerticalLayout layout = new UIVerticalLayout();
-		layout.setSpacing(IFormat.INT.getFrom(props.getString("spacing", "0")));
+		layout.setSpacing(props.getInt("spacing", 0));
 		return layout;
 	}),
 	BORDER((props) -> {
 		UIBorderLayout layout = new UIBorderLayout();
-		layout.setPadding(IFormat.INT.getFrom(props.getString("padding", "0")));
+		layout.setPadding(props.getInt("padding", 0));
 		return layout;
 	});
 	

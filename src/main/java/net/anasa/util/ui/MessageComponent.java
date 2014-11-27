@@ -14,7 +14,7 @@ public class MessageComponent extends UIComponent<JOptionPane>
 	
 	public MessageComponent(String title, String message)
 	{
-		super(new JOptionPane(message));
+		super(new JOptionPane("<html><body style='width:600'>" + message));
 		
 		this.title = title;
 	}

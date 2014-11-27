@@ -51,6 +51,13 @@ public class LabelComponent extends UIParentComponent<JLabel> implements ISwingC
 		setForeground(color);
 	}
 	
+	public LabelComponent(String text, Font font)
+	{
+		this(text);
+		
+		setFont(font);
+	}
+	
 	public String getText()
 	{
 		return getHandle().getText();

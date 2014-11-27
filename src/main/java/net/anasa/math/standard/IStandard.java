@@ -10,7 +10,7 @@ public interface IStandard extends IStandardNode
 	
 	default String getName()
 	{
-		IStandardGrade grade = getDomain().getGrade();
+		IStandardGradeLevel grade = getDomain().getGrade();
 		IStandardModel model = grade.getModel();
 		
 		return model.getID() + " " + StringHelper.join(".", grade.getID(), getDomain().getID(), getID());

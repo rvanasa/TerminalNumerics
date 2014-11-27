@@ -60,7 +60,7 @@ public class ModuleContext
 	
 	public IStandardModel getStandards() throws ModuleException
 	{
-		return Checks.checkNotNull(StateStandards.getModelFromState(getStandardsState()), new ModuleException("State is not registered: " + getStandardsState()));
+		return Checks.checkNotNull(StateStandards.getModel(getStandardsState()), new ModuleException("State is not registered: " + getStandardsState()));
 	}
 	
 	public IStandard getStandard(String data)
