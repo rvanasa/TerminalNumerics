@@ -52,10 +52,6 @@ public class PatternParser<T> implements IParser<T>
 						parseStep(data.substring(i), list);
 						return;
 					}
-					else
-					{
-						break;
-					}
 				}
 			}
 		}

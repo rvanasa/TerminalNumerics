@@ -25,9 +25,9 @@ public class SequenceParser extends PatternParser<IToken> implements IMathParser
 			.add(new RegexTokenPattern(">=", TokenType.GREATER_THAN_EQUAL))
 			.add(new RegexTokenPattern("<", TokenType.LESS_THAN))
 			.add(new RegexTokenPattern(">", TokenType.GREATER_THAN))
-			.add(new TokenPattern(TokenType.FUNCTION, (data) -> new Listing<>(FunctionType.values()).checkAny((type) -> type.getName().startsWith(data.toLowerCase()))))
+			.add(new TokenPattern(TokenType.FUNCTION, (data) -> new Listing<>(FunctionType.values()).checkAny((type) -> type.getName().equals(data.toLowerCase()))))
 			.add(new TokenPattern(TokenType.OPERATOR, (data) -> OperatorType.isOperator(data)))
-			.add(new TokenPattern(TokenType.NUMBER, (data) -> NumberHelper.isDouble(data) || new Listing<>(ConstantType.values()).checkAny((type) -> type.getName().startsWith(data.toLowerCase()))))
+			.add(new TokenPattern(TokenType.NUMBER, (data) -> NumberHelper.isDouble(data) || new Listing<>(ConstantType.values()).checkAny((type) -> type.getName().equals(data.toLowerCase()))))
 			.add(new RegexTokenPattern("[a-zA-Z_]*", TokenType.VARIABLE));
 	
 	public SequenceParser add(IParserPattern<IToken> pattern)
