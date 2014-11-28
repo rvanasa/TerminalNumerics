@@ -1,4 +1,4 @@
-package net.anasa.util.resolver;
+package net.anasa.util.data.resolver;
 
 import net.anasa.util.StringHelper;
 

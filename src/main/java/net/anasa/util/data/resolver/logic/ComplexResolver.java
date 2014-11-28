@@ -1,12 +1,12 @@
-package net.anasa.util.resolver.logic;
+package net.anasa.util.data.resolver.logic;
 
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
 import net.anasa.util.StringHelper;
-import net.anasa.util.resolver.IToken;
-import net.anasa.util.resolver.ResolverCache;
-import net.anasa.util.resolver.ResolverException;
+import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.data.resolver.ResolverCache;
+import net.anasa.util.data.resolver.ResolverException;
 
 public abstract class ComplexResolver<T> implements IResolver<T>
 {

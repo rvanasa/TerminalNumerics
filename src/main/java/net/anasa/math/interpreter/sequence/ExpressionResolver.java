@@ -11,19 +11,19 @@ import net.anasa.math.expression.OperationExpression;
 import net.anasa.math.expression.OperatorType;
 import net.anasa.math.expression.VariableExpression;
 import net.anasa.math.sequence.SequenceNesting;
-import net.anasa.math.sequence.SequenceToken;
-import net.anasa.math.sequence.SequenceToken.TokenType;
+import net.anasa.math.sequence.TokenType;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
 import net.anasa.util.StringHelper.NestingException;
-import net.anasa.util.resolver.IToken;
-import net.anasa.util.resolver.MultiResolver;
-import net.anasa.util.resolver.ResolverException;
-import net.anasa.util.resolver.logic.ComplexResolver;
-import net.anasa.util.resolver.logic.IResolver;
-import net.anasa.util.resolver.logic.MultiMatchResolver;
+import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.data.resolver.MultiResolver;
+import net.anasa.util.data.resolver.ResolverException;
+import net.anasa.util.data.resolver.Token;
+import net.anasa.util.data.resolver.logic.ComplexResolver;
+import net.anasa.util.data.resolver.logic.IResolver;
+import net.anasa.util.data.resolver.logic.MultiMatchResolver;
 
 public class ExpressionResolver
 {
@@ -39,7 +39,7 @@ public class ExpressionResolver
 			@Override
 			public IExpression resolve(ConsumerStorage storage) throws ResolverException
 			{
-				return getResolver().resolve(new Listing<>(storage.get(a)).add(new SequenceToken(TokenType.OPERATOR, "*")).addAll(storage.get(b)));
+				return getResolver().resolve(new Listing<>(storage.get(a)).add(new Token(TokenType.OPERATOR.name(), "*")).addAll(storage.get(b)));
 			}
 		});
 		

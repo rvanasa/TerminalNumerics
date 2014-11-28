@@ -1,7 +1,7 @@
-package net.anasa.util.resolver;
+package net.anasa.util.data.resolver;
 
 import net.anasa.util.Listing;
-import net.anasa.util.resolver.logic.IResolver;
+import net.anasa.util.data.resolver.logic.IResolver;
 
 public class MultiResolver<T> implements IResolver<T>
 {

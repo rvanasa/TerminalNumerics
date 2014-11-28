@@ -1,9 +1,9 @@
 package net.anasa.math.interpreter;
 
-import net.anasa.math.sequence.SequenceToken;
-import net.anasa.math.sequence.SequenceToken.TokenType;
+import net.anasa.math.sequence.TokenType;
 import net.anasa.util.data.parser.IParserPattern;
-import net.anasa.util.resolver.IToken;
+import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.data.resolver.Token;
 
 public class TokenPattern implements IParserPattern<IToken>
 {
@@ -35,7 +35,7 @@ public class TokenPattern implements IParserPattern<IToken>
 	@Override
 	public IToken compile(String data)
 	{
-		return new SequenceToken(getType(), data);
+		return new Token(getType().name(), data);
 	}
 	
 	@Override

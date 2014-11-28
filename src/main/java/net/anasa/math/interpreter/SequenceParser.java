@@ -6,14 +6,14 @@ import net.anasa.math.expression.FunctionType;
 import net.anasa.math.expression.IExpression;
 import net.anasa.math.expression.OperatorType;
 import net.anasa.math.interpreter.sequence.ExpressionResolver;
-import net.anasa.math.sequence.SequenceToken.TokenType;
+import net.anasa.math.sequence.TokenType;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.parser.IParserPattern;
 import net.anasa.util.data.parser.PatternParser;
-import net.anasa.util.resolver.IToken;
-import net.anasa.util.resolver.ResolverException;
+import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.data.resolver.ResolverException;
 
 public class SequenceParser extends PatternParser<IToken> implements IMathParser
 {
@@ -25,29 +25,9 @@ public class SequenceParser extends PatternParser<IToken> implements IMathParser
 			.add(new RegexTokenPattern(">=", TokenType.GREATER_THAN_EQUAL))
 			.add(new RegexTokenPattern("<", TokenType.LESS_THAN))
 			.add(new RegexTokenPattern(">", TokenType.GREATER_THAN))
-			.add(new TokenPattern(TokenType.FUNCTION, (data) -> {
-				for(FunctionType type : FunctionType.values())
-				{
-					if(type.getName().startsWith(data.toLowerCase()))
-					{
-						return true;
-					}
-				}
-				
-				return false;
-			}))
+			.add(new TokenPattern(TokenType.FUNCTION, (data) -> new Listing<>(FunctionType.values()).check((type) -> type.getName().startsWith(data.toLowerCase()))))
 			.add(new TokenPattern(TokenType.OPERATOR, (data) -> OperatorType.isOperator(data)))
-			.add(new TokenPattern(TokenType.NUMBER, (data) -> {
-				for(ConstantType type : ConstantType.values())
-				{
-					if(type.getName().startsWith(data.toLowerCase()))
-					{
-						return true;
-					}
-				}
-				
-				return NumberHelper.isDouble(data);
-			}))
+			.add(new TokenPattern(TokenType.NUMBER, (data) -> NumberHelper.isDouble(data) || new Listing<>(ConstantType.values()).check((type) -> type.getName().startsWith(data.toLowerCase()))))
 			.add(new RegexTokenPattern("[a-zA-Z_]*", TokenType.VARIABLE));
 	
 	public SequenceParser add(IParserPattern<IToken> pattern)

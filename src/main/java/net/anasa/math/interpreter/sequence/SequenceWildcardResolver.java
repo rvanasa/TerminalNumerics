@@ -2,9 +2,9 @@ package net.anasa.math.interpreter.sequence;
 
 import net.anasa.math.sequence.SequenceNesting;
 import net.anasa.util.Listing;
-import net.anasa.util.resolver.IToken;
-import net.anasa.util.resolver.ResolverException;
-import net.anasa.util.resolver.logic.IResolver;
+import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.data.resolver.ResolverException;
+import net.anasa.util.data.resolver.logic.IResolver;
 
 public class SequenceWildcardResolver implements IResolver<Listing<IToken>>
 {

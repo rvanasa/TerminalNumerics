@@ -1,4 +1,4 @@
-package net.anasa.util.resolver;
+package net.anasa.util.data.resolver;
 
 public class Token implements IToken
 {

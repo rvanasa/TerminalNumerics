@@ -4,7 +4,7 @@ import net.anasa.math.MathException;
 import net.anasa.math.expression.IExpression;
 import net.anasa.math.interpreter.SequenceParser;
 import net.anasa.util.Listing;
-import net.anasa.util.resolver.IToken;
+import net.anasa.util.data.resolver.IToken;
 
 public class Evaluator
 {

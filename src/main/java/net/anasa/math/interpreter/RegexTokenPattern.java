@@ -1,6 +1,6 @@
 package net.anasa.math.interpreter;
 
-import net.anasa.math.sequence.SequenceToken.TokenType;
+import net.anasa.math.sequence.TokenType;
 
 public class RegexTokenPattern extends TokenPattern
 {

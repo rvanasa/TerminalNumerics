@@ -1,10 +1,9 @@
 package net.anasa.math.sequence;
 
-import net.anasa.math.sequence.SequenceToken.TokenType;
 import net.anasa.util.Listing;
 import net.anasa.util.Listing.IListCondition;
 import net.anasa.util.StringHelper.NestingException;
-import net.anasa.util.resolver.IToken;
+import net.anasa.util.data.resolver.IToken;
 
 public final class SequenceNesting
 {

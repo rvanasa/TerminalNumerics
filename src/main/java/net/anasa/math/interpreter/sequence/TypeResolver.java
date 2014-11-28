@@ -1,8 +1,8 @@
 package net.anasa.math.interpreter.sequence;
 
-import net.anasa.math.sequence.SequenceToken.TokenType;
-import net.anasa.util.resolver.IToken;
-import net.anasa.util.resolver.ResolverException;
+import net.anasa.math.sequence.TokenType;
+import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.data.resolver.ResolverException;
 
 public class TypeResolver implements ITypeResolver<IToken>
 {
