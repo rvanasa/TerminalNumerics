@@ -1,7 +1,6 @@
 package net.anasa.math.ui.app;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 
@@ -53,8 +52,7 @@ public class AppListEntryComponent extends PanelComponent
 		layout.apply(this);
 		
 		setBorder(BorderFactory.createEtchedBorder());
-		getHandle().setMinimumSize(new Dimension(100, 40));
-		getHandle().setMaximumSize(new Dimension(400, 40));
+		setMaxSize(480, 40);
 	}
 	
 	public IApp getApp()

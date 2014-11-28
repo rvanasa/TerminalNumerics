@@ -22,10 +22,9 @@ public class App implements IApp
 	
 	private final IComponentEntry launchComponent;
 
-	private final Dependency[] requiredModules;
-	private final Dependency[] requiredApps;
+	private final Dependency[] dependencies;
 	
-	public App(String id, Version version, String name, String description, IStandard[] standards, Image icon, IComponentEntry launchComponent, Dependency[] requiredModules, Dependency[] requiredApps)
+	public App(String id, Version version, String name, String description, IStandard[] standards, Image icon, IComponentEntry launchComponent, Dependency[] dependencies)
 	{
 		this.id = id;
 		this.version = version;
@@ -37,8 +36,7 @@ public class App implements IApp
 		
 		this.launchComponent = launchComponent;
 
-		this.requiredModules = requiredModules;
-		this.requiredApps = requiredApps;
+		this.dependencies = dependencies;
 	}
 	
 	@Override
@@ -95,16 +93,10 @@ public class App implements IApp
 			return null;
 		}
 	}
-
+	
 	@Override
-	public Dependency[] getRequiredModules()
+	public Dependency[] getDependencies()
 	{
-		return requiredModules;
-	}
-
-	@Override
-	public Dependency[] getRequiredApps()
-	{
-		return requiredApps;
+		return dependencies;
 	}
 }

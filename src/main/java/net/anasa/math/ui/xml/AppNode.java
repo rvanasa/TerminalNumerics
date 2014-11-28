@@ -2,6 +2,7 @@ package net.anasa.math.ui.xml;
 
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.ModuleContext;
+import net.anasa.math.ui.app.AppPanelComponent;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
 
@@ -32,6 +33,6 @@ public class AppNode implements ILayoutNode
 	public IComponent compile(ModuleContext context)
 	{
 		IApp app = context.getApps().getByID(getID());
-		return app == null ? null : app.getLaunchComponent(getConfig());
+		return app == null ? null : new AppPanelComponent(app, getConfig());
 	}
 }

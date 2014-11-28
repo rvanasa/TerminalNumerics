@@ -3,13 +3,13 @@ package net.anasa.util.resolver;
 import net.anasa.util.Listing;
 import net.anasa.util.resolver.logic.IResolver;
 
-public class ParserResolver<T> implements IResolver<T>
+public class MultiResolver<T> implements IResolver<T>
 {
 	private final ResolverCache<T> cache = new ResolverCache<>();
 	
 	private final Listing<IResolver<T>> resolvers = new Listing<>();
 	
-	public ParserResolver()
+	public MultiResolver()
 	{
 		
 	}

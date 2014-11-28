@@ -7,6 +7,4 @@ public interface IModule extends IDataEntry
 	public String getDescription();
 	
 	public IModuleDelegate getDelegate();
-	
-	public Dependency[] getDependencies();
 }

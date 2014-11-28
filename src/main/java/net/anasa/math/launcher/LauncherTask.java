@@ -17,7 +17,6 @@ import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile;
 import net.anasa.util.task.ComplexTask;
 import net.anasa.util.task.DirectoryTask;
-import net.anasa.util.task.ListTask;
 import net.anasa.util.task.Task;
 
 public class LauncherTask extends ComplexTask
@@ -82,21 +81,22 @@ public class LauncherTask extends ComplexTask
 			}
 		}));
 		
-		addTask(new ListTask<>("Verifying module dependencies", context.getModules().getValues(), (module) -> {
-			for(Dependency dependency : module.getDependencies())
+		addTask(new Task("Verifying dependencies", () -> {
+			for(IDataEntry data : context.getDataEntries())
 			{
-				checkDependency(dependency, context.getModule(dependency.getID()));
-			}
-		}));
-		
-		addTask(new ListTask<>("Verifying app dependencies", context.getApps().getValues(), (app) -> {
-			for(Dependency dependency : app.getRequiredModules())
-			{
-				checkDependency(dependency, context.getModule(dependency.getID()));
-			}
-			for(Dependency dependency : app.getRequiredApps())
-			{
-				checkDependency(dependency, context.getApp(dependency.getID()));
+				for(Dependency dependency : data.getDependencies())
+				{
+					IDataEntry dataDependency = dependency.getType().getData(context, dependency.getID());
+					
+					if(dataDependency == null)
+					{
+						UI.sendError(dependency.getType() + " is missing required dependency: " + dependency + " (app may not work as expected)");
+					}
+					else if(!dependency.isCompatible(dataDependency.getVersion()))
+					{
+						UI.sendError(dependency.getType() + " is missing version requirements for dependency: " + dependency + " (current version is " + data.getVersion() + ")");
+					}
+				}
 			}
 		}));
 		
@@ -110,17 +110,5 @@ public class LauncherTask extends ComplexTask
 				e.printStackTrace();
 			}
 		}));
-	}
-	
-	private void checkDependency(Dependency dependency, IDataEntry data)
-	{
-		if(data == null)
-		{
-			UI.sendError("App is missing required dependency: " + dependency + " (app may not work as expected)");
-		}
-		else if(!dependency.isCompatible(data.getVersion()))
-		{
-			UI.sendError("App is missing version requirements for dependency: " + dependency + " (current version is " + data.getVersion() + ")");
-		}
 	}
 }

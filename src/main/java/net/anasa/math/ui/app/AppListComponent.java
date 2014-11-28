@@ -32,7 +32,7 @@ public class AppListComponent extends PanelComponent
 	{
 		this.apps = apps;
 		
-		setSize(400, 400);
+		setSize(480, 400);
 		
 		appPanel = new PanelComponent();
 		appPanel.setBorder(BorderFactory.createEtchedBorder());

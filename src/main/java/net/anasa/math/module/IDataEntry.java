@@ -5,4 +5,6 @@ public interface IDataEntry
 	public String getID();
 	
 	public Version getVersion();
+	
+	public Dependency[] getDependencies();
 }

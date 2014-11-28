@@ -19,27 +19,27 @@ import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
 import net.anasa.util.StringHelper.NestingException;
 import net.anasa.util.resolver.IToken;
-import net.anasa.util.resolver.ParserResolver;
+import net.anasa.util.resolver.MultiResolver;
 import net.anasa.util.resolver.ResolverException;
 import net.anasa.util.resolver.logic.ComplexResolver;
 import net.anasa.util.resolver.logic.IResolver;
-import net.anasa.util.resolver.logic.ParserMatchResolver;
+import net.anasa.util.resolver.logic.MultiMatchResolver;
 
 public class ExpressionResolver
 {
-	private final ParserResolver<IExpression> parser = new ParserResolver<>();
+	private final MultiResolver<IExpression> parser = new MultiResolver<>();
 	
 	public ExpressionResolver()
 	{
 		add(new ComplexResolver<IExpression>("multiply")
 		{
-			Consumer<Listing<IToken>> a = new Consumer<>(new ParserMatchResolver<>(getParser()));
-			Consumer<Listing<IToken>> b = new Consumer<>(new ParserMatchResolver<>(getParser()));
+			Consumer<Listing<IToken>> a = new Consumer<>(new MultiMatchResolver<>(getResolver()));
+			Consumer<Listing<IToken>> b = new Consumer<>(new MultiMatchResolver<>(getResolver()));
 			
 			@Override
 			public IExpression resolve(ConsumerStorage storage) throws ResolverException
 			{
-				return getParser().resolve(new Listing<>(storage.get(a)).add(new SequenceToken(TokenType.OPERATOR, "*")).addAll(storage.get(b)));
+				return getResolver().resolve(new Listing<>(storage.get(a)).add(new SequenceToken(TokenType.OPERATOR, "*")).addAll(storage.get(b)));
 			}
 		});
 		
@@ -88,7 +88,7 @@ public class ExpressionResolver
 			
 			{
 				new Consumer<>(new TypeResolver(TokenType.OPEN_PARENTHESIS));
-				expression = new Consumer<>(getParser());
+				expression = new Consumer<>(getResolver());
 				new Consumer<>(new TypeResolver(TokenType.OPEN_PARENTHESIS));
 			}
 			
@@ -142,8 +142,8 @@ public class ExpressionResolver
 					
 					int index = data.indexOf(splitter);
 					
-					IExpression a = getParser().resolve(data.subList(0, index));
-					IExpression b = getParser().resolve(data.subList(index + 1));
+					IExpression a = getResolver().resolve(data.subList(0, index));
+					IExpression b = getResolver().resolve(data.subList(index + 1));
 					
 					return new OperationExpression(OperatorType.get(splitter.getData()), a, b);
 				}
@@ -171,7 +171,7 @@ public class ExpressionResolver
 				}
 			});
 			
-			Consumer<IExpression> operand = new Consumer<>(getParser());
+			Consumer<IExpression> operand = new Consumer<>(getResolver());
 			
 			@Override
 			public IExpression resolve(ConsumerStorage storage) throws ResolverException
@@ -203,7 +203,7 @@ public class ExpressionResolver
 				}
 			});
 			
-			Consumer<IExpression> operand = new Consumer<>(getParser());
+			Consumer<IExpression> operand = new Consumer<>(getResolver());
 			
 			@Override
 			public IExpression resolve(ConsumerStorage storage) throws ResolverException
@@ -215,23 +215,23 @@ public class ExpressionResolver
 	
 	private <T extends IResolver<IExpression>> T add(T resolver)
 	{
-		getParser().add(resolver);
+		getResolver().add(resolver);
 		
 		return resolver;
 	}
 	
-	public ParserResolver<IExpression> getParser()
+	public MultiResolver<IExpression> getResolver()
 	{
 		return parser;
 	}
 	
 	public IExpression resolve(Listing<IToken> data) throws ResolverException
 	{
-		return getParser().resolve(data);
+		return getResolver().resolve(data);
 	}
 	
 	public boolean matches(Listing<IToken> data)
 	{
-		return getParser().matches(data);
+		return getResolver().matches(data);
 	}
 }

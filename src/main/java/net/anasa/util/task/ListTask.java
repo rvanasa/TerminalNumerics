@@ -10,7 +10,7 @@ public class ListTask<T> implements ITask
 {
 	private final String name;
 	
-	private final Collection<T> items;
+	private final Listing<T> items = new Listing<>();
 	
 	private final IListAction<T> action;
 	
@@ -23,7 +23,7 @@ public class ListTask<T> implements ITask
 	{
 		this.name = name;
 		
-		this.items = items;
+		this.items.addAll(items);
 		
 		this.action = action;
 	}
@@ -39,7 +39,7 @@ public class ListTask<T> implements ITask
 		return getName();
 	}
 
-	public Collection<T> getItems()
+	public Listing<T> getItems()
 	{
 		return items;
 	}
