@@ -8,19 +8,13 @@ import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.standard.IStandard;
 import net.anasa.math.standard.IStandardModel;
-import net.anasa.math.util.StateStandards;
-import net.anasa.util.Checks;
+import net.anasa.math.util.CommonCoreStandards;
 import net.anasa.util.Debug;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.properties.Properties;
 
 public class ModuleContext
 {
-	public ModuleContext()
-	{
-		
-	}
-	
 	private final ModuleRegistry modules = new ModuleRegistry();
 	private final AppRegistry apps = new AppRegistry();
 	private final ComponentRegistry components = new ComponentRegistry();
@@ -58,20 +52,20 @@ public class ModuleContext
 		return actions;
 	}
 	
-	public IStandardModel getStandards() throws ModuleException
+	public IStandardModel getStandards(String model)
 	{
-		return Checks.checkNotNull(StateStandards.getModel(getStandardsState()), new ModuleException("State is not registered: " + getStandardsState()));
+		return CommonCoreStandards.getModel(model);
 	}
 	
 	public IStandard getStandard(String data)
 	{
 		try
 		{
-			return StateStandards.getStandard(data);
+			return CommonCoreStandards.getStandard(data);
 		}
 		catch(FormatException e)
 		{
-			Debug.err("Failed to parse state standard: " + data + " (" + e + ")");
+			Debug.err("Failed to parse standard: " + data + " (" + e.getMessage() + ")");
 			return null;
 		}
 	}
@@ -84,10 +78,5 @@ public class ModuleContext
 	public File getDirectory()
 	{
 		return MathSoftware.getDirectory();
-	}
-	
-	public String getStandardsState()
-	{
-		return getSettings().getString("standards.state", "CO");
 	}
 }

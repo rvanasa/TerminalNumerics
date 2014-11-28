@@ -5,7 +5,7 @@ import java.awt.Color;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.ui.UIComponent;
 
-public abstract class CommonComponentBuilder extends ComponentBuilder<UIComponent<?>>
+public abstract class UIComponentBuilder extends ComponentBuilder<UIComponent<?>>
 {
 	ComponentAspect<Integer> background = new ComponentAspect<>("background", IFormat.INT, 0xFFFFFF);
 	ComponentAspect<Integer> foreground = new ComponentAspect<>("foreground", IFormat.INT, 0x000000);

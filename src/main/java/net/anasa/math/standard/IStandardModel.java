@@ -1,10 +1,16 @@
 package net.anasa.math.standard;
 
+import net.anasa.util.Listing;
+import net.anasa.util.StringHelper;
+
 public interface IStandardModel extends IStandardNode
 {
 	public String getName();
 	
-	public Iterable<IStandardGradeLevel> getGradeLevels();
+	public Listing<IStandardGradeLevel> getGradeLevels();
 	
-	public IStandardGradeLevel getGradeByID(String id);
+	default IStandardGradeLevel getGradeByID(String id)
+	{
+		return getGradeLevels().getFirst((grade) -> StringHelper.equalsIgnoreCase(grade.getID(), id));
+	}
 }

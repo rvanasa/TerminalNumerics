@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.anasa.math.MathSoftware;
+import net.anasa.math.io.xml.XmlLayoutLoader;
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.ActionRegistry.IComponentAction;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
-import net.anasa.math.ui.xml.XmlLayoutLoader;
 import net.anasa.math.util.UI;
 import net.anasa.util.Checks;
 

@@ -5,11 +5,11 @@ import java.io.FileInputStream;
 
 import javax.swing.ImageIcon;
 
+import net.anasa.math.io.xml.XmlAppLoader;
 import net.anasa.math.module.JarModule;
-import net.anasa.math.module.app.XmlAppLoader;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.module.provided.ui.UIModule;
-import net.anasa.math.util.StateStandards;
+import net.anasa.math.util.CommonCoreStandards;
 import net.anasa.math.util.UI;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile;
@@ -58,7 +58,7 @@ public class LauncherTask extends ComplexTask
 		addTask(new DirectoryTask("Loading standards", new File(dir, "standards"), (file) -> {
 			try
 			{
-				StateStandards.loadModel(Properties.getFrom(new FileInputStream(file)));
+				CommonCoreStandards.load(Properties.getFrom(new FileInputStream(file)));
 			}
 			catch(Exception e)
 			{
@@ -76,6 +76,17 @@ public class LauncherTask extends ComplexTask
 			catch(Exception e)
 			{
 				UI.sendError("Failed to load app from file: " + file.getName(), e);
+			}
+		}));
+		
+		addTask(new Task("Pausing for dramatic effect", () -> {
+			try
+			{
+				Thread.sleep(2000);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
 			}
 		}));
 	}

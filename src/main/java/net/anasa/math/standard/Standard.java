@@ -1,18 +1,16 @@
 package net.anasa.math.standard;
 
-public class Standard implements IStandard
+public class Standard extends StandardNode implements IStandard
 {
 	private final IStandardDomain category;
-	
-	private final String id;
 	
 	private final String description;
 	
 	public Standard(IStandardDomain category, String id, String description)
 	{
-		this.category = category;
+		super(id);
 		
-		this.id = id;
+		this.category = category;
 		
 		this.description = description;
 	}
@@ -21,12 +19,6 @@ public class Standard implements IStandard
 	public IStandardDomain getDomain()
 	{
 		return category;
-	}
-
-	@Override
-	public String getID()
-	{
-		return id;
 	}
 
 	@Override

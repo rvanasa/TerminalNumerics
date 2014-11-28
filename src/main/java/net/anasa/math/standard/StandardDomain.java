@@ -1,22 +1,21 @@
 package net.anasa.math.standard;
 
 import net.anasa.util.Listing;
-import net.anasa.util.StringHelper;
 
-public class StandardDomain implements IStandardDomain
+public class StandardDomain extends StandardNode implements IStandardDomain
 {
 	private final IStandardGradeLevel level;
 	
-	private final String id;
 	private final String description;
 	
 	private final Listing<IStandard> standards;
 	
 	public StandardDomain(IStandardGradeLevel level, String id, String description, Listing<IStandard> standards)
 	{
+		super(id);
+		
 		this.level = level;
 		
-		this.id = id;
 		this.description = description;
 		
 		this.standards = standards;
@@ -29,12 +28,6 @@ public class StandardDomain implements IStandardDomain
 	}
 	
 	@Override
-	public String getID()
-	{
-		return id;
-	}
-	
-	@Override
 	public String getDescription()
 	{
 		return description;
@@ -44,11 +37,5 @@ public class StandardDomain implements IStandardDomain
 	public Listing<IStandard> getStandards()
 	{
 		return standards;
-	}
-	
-	@Override
-	public IStandard getStandardByID(String id)
-	{
-		return getStandards().getFirst((standard) -> StringHelper.equalsIgnoreCase(standard.getID(), id));
 	}
 }

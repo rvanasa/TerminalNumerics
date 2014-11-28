@@ -88,39 +88,39 @@ public class Properties extends AbstractProperties
 	}
 	
 	@Override
-	public String getKey() throws PropertiesException
+	public String getKey()
 	{
-		throw new PropertiesException("No key present for base Properties");
+		return "";
 	}
 	
 	@Override
-	public String getValue() throws PropertiesException
+	public String getValue()
 	{
-		throw new PropertiesException("No value present for base Properties");
+		return getString(getKey(), null);
 	}
 	
 	@Override
-	public void setValue(String value) throws PropertiesException
+	public void setValue(String value)
 	{
-		throw new PropertiesException("Cannot set value for base Properties");
+		set(getKey(), value);
 	}
 	
 	@Override
 	protected String getValue(String key)
 	{
-		return map.get(key);
+		return map.get(format(key));
 	}
 	
 	@Override
 	protected void putValue(String key, String value)
 	{
-		map.put(key, value);
+		map.put(format(key), value);
 	}
 	
 	@Override
 	public void remove(String key)
 	{
-		map.remove(key);
+		map.remove(format(key));
 	}
 	
 	@Override

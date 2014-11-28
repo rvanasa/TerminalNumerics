@@ -1,12 +1,13 @@
-package net.anasa.math.module.app;
+package net.anasa.math.io.xml;
 
 import java.awt.Image;
 
 import net.anasa.math.module.Version;
+import net.anasa.math.module.app.App;
+import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.standard.IStandard;
 import net.anasa.math.ui.xml.ILayoutNode;
-import net.anasa.math.ui.xml.XmlLayoutLoader;
 import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.xml.IXmlLoader;
@@ -37,6 +38,7 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 				.filter((data) -> !data.trim().isEmpty())
 				.conform((data) -> context.getStandard(data))
 				.filter((data) -> data != null)
+				.sort((a, b) -> a.getName().compareTo(b.getName()))
 				.toArray(IStandard.class);
 		
 		ILayoutNode launchComponent = new XmlLayoutLoader().load(element.getElement("layout"));

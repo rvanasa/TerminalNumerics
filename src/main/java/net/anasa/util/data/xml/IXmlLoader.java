@@ -1,14 +1,12 @@
 package net.anasa.util.data.xml;
 
 import net.anasa.util.Checks;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.ILoader;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile.XmlException;
 
-public interface IXmlLoader<T>
+public interface IXmlLoader<T> extends ILoader<XmlElement, T>
 {
-	public T load(XmlElement element) throws FormatException;
-	
 	default XmlElement getElement(String key, XmlElement element, XmlElement def)
 	{
 		XmlElement inner = element.getElement(key);

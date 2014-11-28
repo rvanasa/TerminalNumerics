@@ -43,7 +43,7 @@ public class InnerProperties extends Properties
 	@Override
 	public String getKey()
 	{
-		return getID().substring(getID().lastIndexOf(DOT) + 1);
+		return getID().substring(getID().lastIndexOf(DOT) + DOT.length());
 	}
 	
 	@Override

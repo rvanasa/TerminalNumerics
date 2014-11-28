@@ -7,8 +7,11 @@ import javax.swing.BorderFactory;
 
 import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.IApp;
+import net.anasa.util.Listing;
+import net.anasa.util.StringHelper;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
+import net.anasa.util.ui.ScrollComponent;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 
@@ -37,9 +40,16 @@ public class AppListEntryComponent extends PanelComponent
 		detailLayout.set(BorderPosition.CENTER, description);
 		detailLayout.apply(details);
 		
+		LabelComponent standards = new LabelComponent("<html>" + StringHelper.join("<br/>", new Listing<>(getApp().getStandards())
+				.conform((standard) -> standard.getName())));
+		standards.setBorder(24, 0);
+		ScrollComponent items = new ScrollComponent(standards);
+		items.removeBorder();
+		
 		UIBorderLayout layout = new UIBorderLayout(4);
 		layout.set(BorderPosition.LEFT, icon);
 		layout.set(BorderPosition.CENTER, details);
+		layout.set(BorderPosition.RIGHT, items);
 		layout.apply(this);
 		
 		setBorder(BorderFactory.createEtchedBorder());

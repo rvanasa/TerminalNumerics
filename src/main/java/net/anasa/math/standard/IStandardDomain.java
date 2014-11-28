@@ -1,12 +1,18 @@
 package net.anasa.math.standard;
 
+import net.anasa.util.Listing;
+import net.anasa.util.StringHelper;
+
 public interface IStandardDomain extends IStandardNode
 {
 	public IStandardGradeLevel getGrade();
 	
 	public String getDescription();
 	
-	public Iterable<IStandard> getStandards();
+	public Listing<IStandard> getStandards();
 	
-	public IStandard getStandardByID(String id);
+	default IStandard getStandardByID(String id)
+	{
+		return getStandards().getFirst((standard) -> StringHelper.equalsIgnoreCase(standard.getID(), id));
+	}
 }

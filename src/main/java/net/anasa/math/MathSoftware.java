@@ -24,7 +24,8 @@ public final class MathSoftware
 		{
 			File logFile = new File(settingsFile.getParent(), "logs/log.txt");
 			
-			if(settingsFile.exists() && settingsFile.length() > 1024 * 1000)
+			long size = logFile.length();
+			if(logFile.exists() && size > 500 * 1000)
 			{
 				int ct = 0;
 				File destination;
@@ -34,6 +35,8 @@ public final class MathSoftware
 					destination = new File(logFile.getParent(), "log." + ct + ".txt");
 				}
 				while(destination.exists());
+				
+				Debug.log("Storing log file: " + destination.getName() + " (file size: " + size + ")");
 				
 				Files.move(logFile.toPath(), destination.toPath());
 				logFile.createNewFile();

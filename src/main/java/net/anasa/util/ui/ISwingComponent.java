@@ -42,6 +42,11 @@ interface ISwingComponent extends IComponent
 		getHandle().setBorder(border);
 	}
 	
+	default void removeBorder()
+	{
+		setBorder(BorderFactory.createEmptyBorder());
+	}
+	
 	default void setToolTipText(String text)
 	{
 		getHandle().setToolTipText(text);

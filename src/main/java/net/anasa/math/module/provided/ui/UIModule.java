@@ -18,7 +18,7 @@ public class UIModule extends Module
 	@Override
 	public void init()
 	{
-		addComponent("panel", new CommonComponentBuilder()
+		addComponent("panel", new UIComponentBuilder()
 		{
 			@Override
 			public PanelComponent getComponent(AspectData data)
@@ -26,7 +26,7 @@ public class UIModule extends Module
 				return new PanelComponent();
 			}
 		});
-		addComponent("label", new CommonComponentBuilder()
+		addComponent("label", new UIComponentBuilder()
 		{
 			ComponentAspect<String> text = new ComponentAspect<String>("text", IFormat.STRING, null);
 			
@@ -36,7 +36,7 @@ public class UIModule extends Module
 				return new LabelComponent(data.getValue(text));
 			}
 		});
-		addComponent("button", new CommonComponentBuilder()
+		addComponent("button", new UIComponentBuilder()
 		{
 			ComponentAspect<String> text = new ComponentAspect<String>("text", IFormat.STRING, "");
 			ComponentAspect<String> action = new ComponentAspect<String>("action", IFormat.STRING, null);

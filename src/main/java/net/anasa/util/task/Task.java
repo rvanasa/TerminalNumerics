@@ -41,5 +41,6 @@ public class Task implements ITask
 	public void runTask(Progress progress)
 	{
 		getCallback().call();
+		progress.increment();
 	}
 }

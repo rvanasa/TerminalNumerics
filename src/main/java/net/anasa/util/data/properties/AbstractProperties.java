@@ -24,12 +24,12 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	protected static final String SPLITTER = ":";
 	protected static final String COMMENT = "#";
-
-	public abstract String getKey() throws PropertiesException;
-
-	public abstract String getValue() throws PropertiesException;
 	
-	public abstract void setValue(String value) throws PropertiesException;
+	public abstract String getKey();
+	
+	public abstract String getValue();
+	
+	public abstract void setValue(String value);
 	
 	protected abstract String getValue(String key);
 	
@@ -58,9 +58,14 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public boolean hasInner(String key)
 	{
+		if(key == null)
+		{
+			return false;
+		}
+		
 		for(String parse : getKeys())
 		{
-			if(parse.startsWith(key + DOT))
+			if(parse.startsWith(format(key) + DOT))
 			{
 				return true;
 			}
@@ -71,7 +76,7 @@ abstract class AbstractProperties implements Iterable<KVPair>
 	
 	public Properties getInner(String id)
 	{
-		return new InnerProperties(this, id);
+		return new InnerProperties(this, format(id));
 	}
 	
 	public Mapping<String, Properties> getInnerProps()
@@ -147,9 +152,9 @@ abstract class AbstractProperties implements Iterable<KVPair>
 		}
 	}
 	
-	private String format(String key)
+	protected String format(String key)
 	{
-		return key.toLowerCase();
+		return key != null ? key.toLowerCase() : null;
 	}
 	
 	public String getString(String key) throws PropertiesException

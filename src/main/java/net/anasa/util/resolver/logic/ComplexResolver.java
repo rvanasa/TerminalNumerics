@@ -10,7 +10,9 @@ import net.anasa.util.resolver.ResolverException;
 
 public abstract class ComplexResolver<T> implements IResolver<T>
 {
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
+	private static boolean DEBUG_MATCH = false;
+	
 	private static int DEBUG_INDENT = 0;
 	
 	private final String id;
@@ -51,10 +53,10 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 	{
 		boolean debug = DEBUG;
 		
-		// if(debug)
-		// {
-		// DEBUG = false;
-		// }
+		if(debug && !DEBUG_MATCH)
+		{
+			DEBUG = false;
+		}
 		
 		try
 		{

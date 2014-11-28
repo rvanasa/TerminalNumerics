@@ -1,7 +1,12 @@
-package net.anasa.math.ui.xml;
+package net.anasa.math.io.xml;
 
 import java.io.InputStream;
 
+import net.anasa.math.ui.xml.AppNode;
+import net.anasa.math.ui.xml.ComponentNode;
+import net.anasa.math.ui.xml.ILayoutNode;
+import net.anasa.math.ui.xml.LayoutNode;
+import net.anasa.math.ui.xml.LayoutType;
 import net.anasa.math.ui.xml.builder.ILayoutBuilder;
 import net.anasa.math.ui.xml.builder.LayoutBuilder;
 import net.anasa.util.Checks;
