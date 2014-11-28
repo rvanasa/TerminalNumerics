@@ -1,4 +1,4 @@
-package net.anasa.math.interpreter;
+package net.anasa.util.data.resolver.pattern;
 
 import net.anasa.math.sequence.TokenType;
 

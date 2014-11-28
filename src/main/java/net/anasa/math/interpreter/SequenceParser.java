@@ -14,6 +14,8 @@ import net.anasa.util.data.parser.IParserPattern;
 import net.anasa.util.data.parser.PatternParser;
 import net.anasa.util.data.resolver.IToken;
 import net.anasa.util.data.resolver.ResolverException;
+import net.anasa.util.data.resolver.pattern.RegexTokenPattern;
+import net.anasa.util.data.resolver.pattern.TokenPattern;
 
 public class SequenceParser extends PatternParser<IToken> implements IMathParser
 {
