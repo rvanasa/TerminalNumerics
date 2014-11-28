@@ -187,6 +187,19 @@ public class Listing<E> implements Iterable<E>
 		return flag;
 	}
 	
+	public boolean checkAny(IListCondition<E> condition)
+	{
+		for(E element : this)
+		{
+			if(condition.isValid(element))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public int count(IListCondition<E> condition)
 	{
 		int ct = 0;
