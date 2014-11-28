@@ -1,6 +1,5 @@
 package net.anasa.util.data.parser;
 
-import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
 
@@ -18,11 +17,11 @@ public class PatternParser<T> implements IParser<T>
 		return patterns;
 	}
 	
-	public PatternParser<T> add(IParserPattern<T> pattern)
+	public <P extends IParserPattern<T>> P addPattern(P pattern)
 	{
 		getPatterns().add(pattern);
 		
-		return this;
+		return pattern;
 	}
 	
 	@Override
@@ -30,8 +29,6 @@ public class PatternParser<T> implements IParser<T>
 	{
 		Listing<T> list = new Listing<>();
 		parseStep(data, list);
-		
-		Debug.log(list);
 		
 		return list;
 	}

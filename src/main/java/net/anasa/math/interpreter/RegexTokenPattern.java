@@ -2,11 +2,11 @@ package net.anasa.math.interpreter;
 
 import net.anasa.math.sequence.SequenceToken.TokenType;
 
-public class RegexTokenBuilder extends TokenBuilder
+public class RegexTokenPattern extends TokenPattern
 {
 	private final String regex;
 	
-	public RegexTokenBuilder(String regex, TokenType type)
+	public RegexTokenPattern(String regex, TokenType type)
 	{
 		super(type, (data) -> data.matches(regex));
 		

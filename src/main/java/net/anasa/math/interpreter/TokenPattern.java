@@ -2,13 +2,15 @@ package net.anasa.math.interpreter;
 
 import net.anasa.math.sequence.SequenceToken;
 import net.anasa.math.sequence.SequenceToken.TokenType;
+import net.anasa.util.data.parser.IParserPattern;
+import net.anasa.util.resolver.IToken;
 
-public class TokenBuilder implements ITokenBuilder
+public class TokenPattern implements IParserPattern<IToken>
 {
 	private final TokenType type;
 	private final ITokenMatcher matcher;
 	
-	public TokenBuilder(TokenType type, ITokenMatcher matcher)
+	public TokenPattern(TokenType type, ITokenMatcher matcher)
 	{
 		this.type = type;
 		this.matcher = matcher;
@@ -31,7 +33,7 @@ public class TokenBuilder implements ITokenBuilder
 	}
 	
 	@Override
-	public SequenceToken getToken(String data)
+	public IToken compile(String data)
 	{
 		return new SequenceToken(getType(), data);
 	}

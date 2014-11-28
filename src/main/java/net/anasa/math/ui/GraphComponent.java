@@ -16,7 +16,6 @@ import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
-import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.math.MathHelper;
 import net.anasa.util.resolver.IToken;
 import net.anasa.util.ui.LabelComponent;
@@ -189,17 +188,7 @@ public class GraphComponent extends PanelComponent
 		
 		try
 		{
-			addGraphs(new Listing<>(data.split(";")).filter((item) -> !item.trim().isEmpty()).conform((item) -> {
-				try
-				{
-					return getParser().getSequence(item);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-					throw new FormatException(e);
-				}
-			}));
+			addGraphs(new Listing<>(data.split(";")).filter((item) -> !item.trim().isEmpty()).conform((item) -> getParser().parse(item)));
 		}
 		catch(Exception e)
 		{
