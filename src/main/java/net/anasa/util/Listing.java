@@ -258,7 +258,7 @@ public class Listing<E> implements Iterable<E>
 		return addAll(Arrays.asList(elements));
 	}
 	
-	public Listing<E> addAll(Iterable<E> elements)
+	public Listing<E> addAll(Iterable<? extends E> elements)
 	{
 		for(E element : elements)
 		{

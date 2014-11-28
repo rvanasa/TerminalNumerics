@@ -44,16 +44,11 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 		
 		ILayoutNode launchComponent = new XmlLayoutLoader().load(element.getElement("layout"));
 		
-		Dependency[] requiredModules = new Listing<>(getValue("modules", element, "").split(",|;"))
+		Dependency[] dependencies = new Listing<>(getValue("dependencies", element, "").split(",|;"))
 				.filter((data) -> !data.trim().isEmpty())
 				.conform((data) -> Dependency.getFrom(data))
 				.toArray(Dependency.class);
 		
-		Dependency[] requiredApps = new Listing<>(getValue("apps", element, "").split(",|;"))
-				.filter((data) -> !data.trim().isEmpty())
-				.conform((data) -> Dependency.getFrom(data))
-				.toArray(Dependency.class);
-		
-		return new App(id, version, name, description, standards, icon, (props) -> launchComponent.compile(context), requiredModules, requiredApps);
+		return new App(id, version, name, description, standards, icon, (props) -> launchComponent.compile(context), dependencies);
 	}
 }

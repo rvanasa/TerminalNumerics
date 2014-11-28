@@ -3,6 +3,7 @@ package net.anasa.math.module.context;
 import java.io.File;
 
 import net.anasa.math.MathSoftware;
+import net.anasa.math.module.IDataEntry;
 import net.anasa.math.module.IModule;
 import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.IApp;
@@ -10,6 +11,7 @@ import net.anasa.math.standard.IStandard;
 import net.anasa.math.standard.IStandardModel;
 import net.anasa.math.util.CommonCoreStandards;
 import net.anasa.util.Debug;
+import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.properties.Properties;
 
@@ -50,6 +52,11 @@ public class ModuleContext
 	public IApp getApp(String id)
 	{
 		return getApps().getByID(id);
+	}
+	
+	public Listing<IDataEntry> getDataEntries()
+	{
+		return new Listing<IDataEntry>().addAll(getModules().getValues()).addAll(getApps().getValues());
 	}
 	
 	public ComponentRegistry getComponents()

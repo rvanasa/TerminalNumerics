@@ -4,7 +4,7 @@
 	<version>0.1</version>
 	<description>Test app for testing purposes testing test.</description>
 	<standards>CCSS 3.NBT.A.1, CCSS 3.NF.A.1, ccss 3.NF.A.2.B</standards>
-	<apps>test_app_3:1.10</apps>
+	<dependencies>app.test_app_3:1.10</dependencies>
 	<layout type="border">
 		<component pos="center" id="graph" display="x(x)" />
 	</layout>

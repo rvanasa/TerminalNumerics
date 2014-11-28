@@ -3,6 +3,7 @@ package net.anasa.math.module;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.util.Checks;
 import net.anasa.util.EnumHelper;
+import net.anasa.util.StringHelper;
 import net.anasa.util.data.DataConform.FormatException;
 
 public class Dependency
@@ -61,23 +62,23 @@ public class Dependency
 		{
 			return true;
 		}
-		else if(getVersion().getMajor() > version.getMajor())
-		{
-			return true;
-		}
 		else if(getVersion().getMajor() < version.getMajor())
 		{
-			return false;
-		}
-		else if(getVersion().getMinor() > version.getMinor())
-		{
 			return true;
+		}
+		else if(getVersion().getMajor() > version.getMajor())
+		{
+			return false;
 		}
 		else if(getVersion().getMinor() < version.getMinor())
 		{
+			return true;
+		}
+		else if(getVersion().getMinor() > version.getMinor())
+		{
 			return false;
 		}
-		else if(getVersion().getPatch() >= version.getPatch())
+		else if(getVersion().getPatch() <= version.getPatch())
 		{
 			return true;
 		}
@@ -108,6 +109,11 @@ public class Dependency
 		public IDataEntry getData(ModuleContext context, String id)
 		{
 			return handle.getData(context, id);
+		}
+		
+		public String getName()
+		{
+			return StringHelper.capitalize(name().toLowerCase());
 		}
 		
 		private interface IDependencyTypeHandle
