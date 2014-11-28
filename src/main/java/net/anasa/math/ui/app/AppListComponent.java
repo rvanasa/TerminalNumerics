@@ -25,7 +25,7 @@ public class AppListComponent extends PanelComponent
 	
 	public AppListComponent(ModuleContext context)
 	{
-		this(context.getApps().getApps());
+		this(context.getApps().getValues());
 	}
 	
 	public AppListComponent(Listing<IApp> apps)

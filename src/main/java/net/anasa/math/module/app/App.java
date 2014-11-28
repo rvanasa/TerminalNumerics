@@ -2,6 +2,7 @@ package net.anasa.math.module.app;
 
 import java.awt.Image;
 
+import net.anasa.math.module.Dependency;
 import net.anasa.math.module.Version;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.standard.IStandard;
@@ -20,8 +21,11 @@ public class App implements IApp
 	private final Image icon;
 	
 	private final IComponentEntry launchComponent;
+
+	private final Dependency[] requiredModules;
+	private final Dependency[] requiredApps;
 	
-	public App(String id, Version version, String name, String description, IStandard[] standards, Image icon, IComponentEntry launchComponent)
+	public App(String id, Version version, String name, String description, IStandard[] standards, Image icon, IComponentEntry launchComponent, Dependency[] requiredModules, Dependency[] requiredApps)
 	{
 		this.id = id;
 		this.version = version;
@@ -32,6 +36,9 @@ public class App implements IApp
 		this.icon = icon;
 		
 		this.launchComponent = launchComponent;
+
+		this.requiredModules = requiredModules;
+		this.requiredApps = requiredApps;
 	}
 	
 	@Override
@@ -70,17 +77,34 @@ public class App implements IApp
 		return icon;
 	}
 	
+	public IComponentEntry getLaunchComponent()
+	{
+		return launchComponent;
+	}
+
 	@Override
 	public IComponent getLaunchComponent(Properties props)
 	{
 		try
 		{
-			return launchComponent.getComponent(props);
+			return getLaunchComponent().getComponent(props);
 		}
 		catch(Exception e)
 		{
 			UI.sendError("Failed to create launch component for app: " + getID(), e);
 			return null;
 		}
+	}
+
+	@Override
+	public Dependency[] getRequiredModules()
+	{
+		return requiredModules;
+	}
+
+	@Override
+	public Dependency[] getRequiredApps()
+	{
+		return requiredApps;
 	}
 }

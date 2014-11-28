@@ -16,7 +16,7 @@ public class AppRegistry implements IRegistry<IApp>
 		
 	}
 	
-	public Listing<IApp> getApps()
+	public Listing<IApp> getValues()
 	{
 		return apps;
 	}
@@ -24,20 +24,20 @@ public class AppRegistry implements IRegistry<IApp>
 	public void register(IApp app) throws ModuleException
 	{
 		Checks.checkNotNull(app, new ModuleException("App cannot be null"));
-		Checks.check(getApps().check((entry) -> !StringHelper.equals(app.getID(), entry.getID())), new ModuleException("Duplicate app ID: " + app.getID()));
+		Checks.check(getValues().check((entry) -> !StringHelper.equals(app.getID(), entry.getID())), new ModuleException("Duplicate app ID: " + app.getID()));
 		
 		Debug.log("Loaded app: " + app.getName() + " " + app.getVersion());
-		getApps().add(app);
+		getValues().add(app);
 	}
 	
 	@Override
 	public IApp getByID(String id)
 	{
-		return getApps().getFirst((app) -> StringHelper.equals(id, app.getID()));
+		return getValues().getFirst((app) -> StringHelper.equals(id, app.getID()));
 	}
 	
 	public IApp getByName(String name)
 	{
-		return getApps().getFirst((app) -> StringHelper.equals(name, app.getName()));
+		return getValues().getFirst((app) -> StringHelper.equals(name, app.getName()));
 	}
 }

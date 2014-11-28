@@ -1,14 +1,12 @@
 package net.anasa.math.module;
 
-public interface IModule
+public interface IModule extends IDataEntry
 {
-	public String getID();
-	
-	public Version getVersion();
-	
 	public String getName();
 	
 	public String getDescription();
 	
 	public IModuleDelegate getDelegate();
+	
+	public Dependency[] getDependencies();
 }

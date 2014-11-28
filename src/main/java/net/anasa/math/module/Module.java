@@ -8,13 +8,17 @@ public class Module implements IModule, IModuleDelegate
 	private final String name;
 	private final String description;
 	
-	public Module(String id, Version version, String name, String description)
+	private final Dependency[] dependencies;
+	
+	public Module(String id, Version version, String name, String description, Dependency... dependencies)
 	{
 		this.id = id;
 		this.version = version;
 		
 		this.name = name;
 		this.description = description;
+		
+		this.dependencies = dependencies;
 	}
 	
 	@Override
@@ -45,5 +49,11 @@ public class Module implements IModule, IModuleDelegate
 	public IModuleDelegate getDelegate()
 	{
 		return this;
+	}
+
+	@Override
+	public Dependency[] getDependencies()
+	{
+		return dependencies;
 	}
 }

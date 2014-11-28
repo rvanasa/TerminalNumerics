@@ -16,7 +16,7 @@ public class ModuleRegistry implements IRegistry<IModule>
 		
 	}
 	
-	public Listing<IModule> getModules()
+	public Listing<IModule> getValues()
 	{
 		return modules;
 	}
@@ -24,9 +24,9 @@ public class ModuleRegistry implements IRegistry<IModule>
 	public void register(IModule module) throws ModuleException
 	{
 		Checks.checkNotNull(module, new ModuleException("Module cannot be null"));
-		Checks.check(getModules().check((entry) -> !StringHelper.equals(module.getID(), entry.getID())), new ModuleException("Duplicate module ID: " + module.getID()));
+		Checks.check(getValues().check((entry) -> !StringHelper.equals(module.getID(), entry.getID())), new ModuleException("Duplicate module ID: " + module.getID()));
 		
-		getModules().add(module);
+		getValues().add(module);
 		Debug.log("Loaded module: " + module.getName() + " " + module.getVersion());
 		
 		try
@@ -42,11 +42,11 @@ public class ModuleRegistry implements IRegistry<IModule>
 	@Override
 	public IModule getByID(String id)
 	{
-		return getModules().getFirst((module) -> StringHelper.equals(id, module.getID()));
+		return getValues().getFirst((module) -> StringHelper.equals(id, module.getID()));
 	}
 	
 	public IModule getByName(String name)
 	{
-		return getModules().getFirst((module) -> StringHelper.equals(name, module.getName()));
+		return getValues().getFirst((module) -> StringHelper.equals(name, module.getName()));
 	}
 }

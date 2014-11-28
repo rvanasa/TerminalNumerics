@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import javax.swing.ImageIcon;
 
 import net.anasa.math.io.xml.XmlAppLoader;
+import net.anasa.math.module.Dependency;
+import net.anasa.math.module.IDataEntry;
 import net.anasa.math.module.JarModule;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.module.provided.ui.UIModule;
@@ -15,6 +17,7 @@ import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile;
 import net.anasa.util.task.ComplexTask;
 import net.anasa.util.task.DirectoryTask;
+import net.anasa.util.task.ListTask;
 import net.anasa.util.task.Task;
 
 public class LauncherTask extends ComplexTask
@@ -79,15 +82,45 @@ public class LauncherTask extends ComplexTask
 			}
 		}));
 		
+		addTask(new ListTask<>("Verifying module dependencies", context.getModules().getValues(), (module) -> {
+			for(Dependency dependency : module.getDependencies())
+			{
+				checkDependency(dependency, context.getModule(dependency.getID()));
+			}
+		}));
+		
+		addTask(new ListTask<>("Verifying app dependencies", context.getApps().getValues(), (app) -> {
+			for(Dependency dependency : app.getRequiredModules())
+			{
+				checkDependency(dependency, context.getModule(dependency.getID()));
+			}
+			for(Dependency dependency : app.getRequiredApps())
+			{
+				checkDependency(dependency, context.getApp(dependency.getID()));
+			}
+		}));
+		
 		addTask(new Task("Pausing for dramatic effect", () -> {
 			try
 			{
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
 		}));
+	}
+	
+	private void checkDependency(Dependency dependency, IDataEntry data)
+	{
+		if(data == null)
+		{
+			UI.sendError("App is missing required dependency: " + dependency + " (app may not work as expected)");
+		}
+		else if(!dependency.isCompatible(data.getVersion()))
+		{
+			UI.sendError("App is missing version requirements for dependency: " + dependency + " (current version is " + data.getVersion() + ")");
+		}
 	}
 }

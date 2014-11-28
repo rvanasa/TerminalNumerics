@@ -30,6 +30,11 @@ public class ModuleContext
 		getModules().register(module);
 		return module;
 	}
+
+	public IModule getModule(String id)
+	{
+		return getModules().getByID(id);
+	}
 	
 	public AppRegistry getApps()
 	{
@@ -40,6 +45,11 @@ public class ModuleContext
 	{
 		getApps().register(app);
 		return app;
+	}
+
+	public IApp getApp(String id)
+	{
+		return getApps().getByID(id);
 	}
 	
 	public ComponentRegistry getComponents()

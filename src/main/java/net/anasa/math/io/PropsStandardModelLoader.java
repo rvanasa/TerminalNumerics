@@ -13,7 +13,7 @@ import net.anasa.util.data.properties.IPropertiesLoader;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.properties.PropertiesException;
 
-public class PropertiesStandardModelLoader implements IPropertiesLoader<Listing<IStandardModel>>
+public class PropsStandardModelLoader implements IPropertiesLoader<Listing<IStandardModel>>
 {
 	@Override
 	public Listing<IStandardModel> load(Properties props) throws PropertiesException

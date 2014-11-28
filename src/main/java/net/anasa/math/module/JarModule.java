@@ -7,6 +7,7 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
 import net.anasa.util.Checks;
+import net.anasa.util.Listing;
 import net.anasa.util.data.properties.Properties;
 
 public class JarModule implements IModule
@@ -19,6 +20,8 @@ public class JarModule implements IModule
 	private final String description;
 	
 	private final IModuleDelegate delegate;
+	
+	private final Dependency[] dependencies;
 	
 	public JarModule(File file) throws ModuleException
 	{
@@ -33,24 +36,23 @@ public class JarModule implements IModule
 			name = props.getString("name");
 			description = props.getString("description", null);
 			
-			// ZipEntry iconEntry = jar.getEntry(props.getString("icon",
-			// "icon.png"));
-			// icon = iconEntry != null ?
-			// ImageIO.read(jar.getInputStream(iconEntry)) :
-			// null;
-			
 			URLClassLoader loader = new URLClassLoader(new URL[] {new URL("jar:file:" + file.getPath() + "!/")});
 			
 			@SuppressWarnings("unchecked")
 			Class<? extends IModuleDelegate> componentClass = (Class<? extends IModuleDelegate>)Class.forName(props.getString("delegate"), true, loader);
 			delegate = componentClass.newInstance();
 			
+			dependencies = new Listing<>(props.getString("dependencies", "").split(",|;"))
+					.filter((data) -> !data.trim().isEmpty())
+					.conform((data) -> Dependency.getFrom(data))
+					.toArray(Dependency.class);
+			
 			loader.close();
 			jar.close();
 		}
 		catch(Exception e)
 		{
-			throw new ModuleException("Failed to load module!", e);
+			throw new ModuleException(e);
 		}
 	}
 	
@@ -82,5 +84,11 @@ public class JarModule implements IModule
 	public IModuleDelegate getDelegate()
 	{
 		return delegate;
+	}
+
+	@Override
+	public Dependency[] getDependencies()
+	{
+		return dependencies;
 	}
 }

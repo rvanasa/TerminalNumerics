@@ -4,6 +4,7 @@
 	<version>0</version>
 	<description>Another test app for testing tests.</description>
 	<standards>ccss 3.g.a.2</standards>
+	<modules>test_module</modules>
 	<layout type="border">
 		<component id="label" pos="top" text="Test graph input interface" />
 		<component id="graph_input" pos="center" />

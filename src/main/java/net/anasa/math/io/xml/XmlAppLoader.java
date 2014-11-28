@@ -2,6 +2,7 @@ package net.anasa.math.io.xml;
 
 import java.awt.Image;
 
+import net.anasa.math.module.Dependency;
 import net.anasa.math.module.Version;
 import net.anasa.math.module.app.App;
 import net.anasa.math.module.app.IApp;
@@ -34,7 +35,7 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 		String name = getValue("name", element);
 		String description = getValue("description", element, "(No description provided)");
 		
-		IStandard[] standards = new Listing<>(getValue("standards", element, "").split(","))
+		IStandard[] standards = new Listing<>(getValue("standards", element, "").split(",|;"))
 				.filter((data) -> !data.trim().isEmpty())
 				.conform((data) -> context.getStandard(data))
 				.filter((data) -> data != null)
@@ -43,6 +44,16 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 		
 		ILayoutNode launchComponent = new XmlLayoutLoader().load(element.getElement("layout"));
 		
-		return new App(id, version, name, description, standards, icon, (props) -> launchComponent.compile(context));
+		Dependency[] requiredModules = new Listing<>(getValue("modules", element, "").split(",|;"))
+				.filter((data) -> !data.trim().isEmpty())
+				.conform((data) -> Dependency.getFrom(data))
+				.toArray(Dependency.class);
+		
+		Dependency[] requiredApps = new Listing<>(getValue("apps", element, "").split(",|;"))
+				.filter((data) -> !data.trim().isEmpty())
+				.conform((data) -> Dependency.getFrom(data))
+				.toArray(Dependency.class);
+		
+		return new App(id, version, name, description, standards, icon, (props) -> launchComponent.compile(context), requiredModules, requiredApps);
 	}
 }

@@ -58,7 +58,7 @@ public final class MathSoftware
 			
 			new MathSoftware(settingsFile);
 			
-			new MathLauncher(getContext(), () -> new AppListComponent(getContext().getApps().getApps()));
+			new MathLauncher(getContext(), () -> new AppListComponent(getContext().getApps().getValues()));
 		}
 		catch(Exception e)
 		{
