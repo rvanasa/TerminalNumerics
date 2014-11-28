@@ -90,11 +90,11 @@ public class LauncherTask extends ComplexTask
 					
 					if(dataDependency == null)
 					{
-						UI.sendError(dependency.getType().getName() + " is missing required dependency: " + dependency + " (system may not run as expected)");
+						UI.sendError(data.getID() + " is missing required " + dependency.getType().getName() + ": " + dependency + " (system may not run as expected)");
 					}
 					else if(!dependency.isCompatible(dataDependency.getVersion()))
 					{
-						UI.sendError(dependency.getType().getName() + " is missing version requirements for dependency: " + dependency + " (current version is " + data.getVersion() + ")");
+						UI.sendError(data.getID() + " does not meet version requirements for " + dependency.getType() + ": " + dependency + " (current version is " + data.getVersion() + ")");
 					}
 				}
 			}
