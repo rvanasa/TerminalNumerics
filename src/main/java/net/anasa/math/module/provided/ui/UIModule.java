@@ -33,7 +33,9 @@ public class UIModule extends Module
 			@Override
 			public LabelComponent getComponent(AspectData data)
 			{
-				return new LabelComponent(data.getValue(text));
+				LabelComponent label = new LabelComponent(data.getValue(text));
+				label.setBorder(4, 2);
+				return label;
 			}
 		});
 		addComponent("button", new UIComponentBuilder()
