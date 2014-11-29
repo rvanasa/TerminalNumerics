@@ -12,7 +12,7 @@ public class OutputComponent extends TextAreaComponent
 		setRows(height);
 		
 		Debug.registerListener((type, message) -> appendLine("[" + type + "] " + message));
-		Debug.log("Logging system output");
+		Debug.log("Viewing system output");
 	}
 	
 	public OutputComponent()

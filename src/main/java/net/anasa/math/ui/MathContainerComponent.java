@@ -31,7 +31,7 @@ public class MathContainerComponent extends PanelComponent
 						new SeperatorComponent(),
 						new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
 				}), new MenuComponent("Advanced", new IComponent[] {
-						new MenuActionComponent("Browse Data Directory", () -> {
+						new MenuActionComponent("Browse Resource Directory", () -> {
 							try
 							{
 								Desktop.getDesktop().open(MathSoftware.getDirectory());

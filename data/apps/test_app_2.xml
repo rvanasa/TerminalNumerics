@@ -8,6 +8,5 @@
 	<layout type="border">
 		<component id="label" pos="top" text="Test graph input interface" />
 		<component id="graph_input" pos="center" />
-		<component id="button" pos="bottom" text="Close Window" action="close" />
 	</layout>
 </app>
