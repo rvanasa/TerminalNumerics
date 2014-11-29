@@ -1,8 +1,8 @@
 package net.anasa.math.module.test;
 
-import net.anasa.math.module.IModuleDelegate;
-import net.anasa.math.ui.GraphComponent;
-import net.anasa.math.ui.GraphInputComponent;
+import rchs.tsa.math.module.IModuleDelegate;
+import rchs.tsa.math.ui.GraphComponent;
+import rchs.tsa.math.ui.GraphInputComponent;
 
 public class TestModule implements IModuleDelegate
 {
