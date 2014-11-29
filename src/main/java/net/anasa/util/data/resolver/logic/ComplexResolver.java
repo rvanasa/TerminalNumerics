@@ -130,18 +130,26 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 				debug("check c = " + c + " consumer = " + consumer + " i = " + i + " sub = " + sub + " match = " + match);
 				if(match)
 				{
-					if(i >= data.size() - 1 || next.matches(data.subList(i)) || !consumer.matches(data.subList(0, i + 1)))
+					if(i >= data.size() - 1 || !consumer.matches(data.subList(0, i + 1)))
 					{
 						debug("match passthrough i = " + i + " sub = " + sub + " post = " + data.subList(i + 1));
 						updateStorage(consumer, sub, storage);
-						return resolveConsumer(c + 1, data.subList(i), storage);
+						
+						try
+						{
+							return resolveConsumer(c + 1, data.subList(i), storage);
+						}
+						catch(ResolverException e)
+						{
+							debug("match fail : " + e.getMessage());
+						}
 					}
 					else
 					{
 						debug("match continue i = " + i + " sub = " + sub);
 					}
 				}
-				else
+				else if(i >= data.size())
 				{
 					debug("match drop i = " + i + " sub = " + sub);
 					throw new ResolverException("Invalid consumer data: " + sub + " c = " + c + " " + consumer);
