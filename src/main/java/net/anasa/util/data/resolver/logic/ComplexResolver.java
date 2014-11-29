@@ -120,7 +120,7 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 		}
 		else
 		{
-			Consumer<?> next = getConsumers().get(c + 1);
+			// Consumer<?> next = getConsumers().get(c + 1);
 			
 			for(int i = 1; i < data.size(); i++)
 			{
@@ -149,7 +149,7 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 						debug("match continue i = " + i + " sub = " + sub);
 					}
 				}
-				else if(i >= data.size())
+				else if(i >= data.size() - 1)
 				{
 					debug("match drop i = " + i + " sub = " + sub);
 					throw new ResolverException("Invalid consumer data: " + sub + " c = " + c + " " + consumer);
