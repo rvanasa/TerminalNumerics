@@ -2,7 +2,7 @@ package net.anasa.math.module.context;
 
 import java.io.File;
 
-import net.anasa.math.MathSoftware;
+import net.anasa.math.TerminalNumerics;
 import net.anasa.math.module.Dependency;
 import net.anasa.math.module.IModule;
 import net.anasa.math.module.IResource;
@@ -132,11 +132,11 @@ public class ModuleContext
 	
 	public Properties getSettings()
 	{
-		return MathSoftware.getSettings();
+		return TerminalNumerics.getSettings();
 	}
 	
 	public File getDirectory()
 	{
-		return MathSoftware.getDirectory();
+		return TerminalNumerics.getDirectory();
 	}
 }

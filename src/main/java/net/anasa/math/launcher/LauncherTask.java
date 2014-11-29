@@ -83,15 +83,15 @@ public class LauncherTask extends ComplexTask
 			context.verifyResources();
 		}));
 		
-		// addTask(new Task("Pausing for dramatic effect", () -> {
-		// try
-		// {
-		// Thread.sleep(1000);
-		// }
-		// catch(Exception e)
-		// {
-		// e.printStackTrace();
-		// }
-		// }));
+		addTask(new Task("Pausing for dramatic effect", () -> {
+			try
+			{
+				Thread.sleep(1500);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}));
 	}
 }

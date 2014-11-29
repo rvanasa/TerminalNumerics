@@ -2,7 +2,7 @@ package net.anasa.math.ui;
 
 import java.awt.Desktop;
 
-import net.anasa.math.MathSoftware;
+import net.anasa.math.TerminalNumerics;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.ui.app.AppListComponent;
 import net.anasa.math.ui.standard.StandardModelComponent;
@@ -27,14 +27,14 @@ public class MathContainerComponent extends PanelComponent
 		layout.set(BorderPosition.TOP, new MenuBarComponent(new MenuComponent[] {
 				new MenuComponent("Options", new IComponent[] {
 						new MenuActionComponent("View Software License", () -> new WindowComponent("Software License", new LicenseComponent()).display()),
-						new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(0, 600, new StandardModelComponent(StateStandards.getModel("CCSS")))).display()),
+						new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(400, 600, new StandardModelComponent(StateStandards.getModel("CCSS")))).display()),
 						new SeperatorComponent(),
 						new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
 				}), new MenuComponent("Advanced", new IComponent[] {
 						new MenuActionComponent("Browse Resource Directory", () -> {
 							try
 							{
-								Desktop.getDesktop().open(MathSoftware.getDirectory());
+								Desktop.getDesktop().open(TerminalNumerics.getDirectory());
 							}
 							catch(Exception e)
 							{

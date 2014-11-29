@@ -47,7 +47,7 @@ public class AppIconComponent extends LabelComponent
 		
 		setContextMenu(new ContextMenuComponent(new MenuOption[] {
 				new MenuOption("Launch app", this::launchApp),
-				new MenuOption("View info", () -> new WindowComponent(app.getName(), new AppInfoComponent(app)).display()),
+				new MenuOption("View info", () -> new WindowComponent(app.getName(), app.getIcon(), new AppInfoComponent(app)).display()),
 		}));
 	}
 	
@@ -60,10 +60,10 @@ public class AppIconComponent extends LabelComponent
 	{
 		return launchConfig;
 	}
-
+	
 	public void launchApp()
 	{
-		WindowComponent window = new WindowComponent(getApp().getName(), new AppPanelComponent(getApp(), getLaunchConfig()));
+		WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon(), getApp().getLaunchComponent(getLaunchConfig()));
 		window.display();
 		window.setMinSize(window.getSize());
 	}

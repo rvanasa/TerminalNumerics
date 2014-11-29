@@ -43,7 +43,7 @@ public class WindowComponent extends UIParentComponent<JFrame>
 	
 	public WindowComponent()
 	{
-		this(null, null, true);
+		this(null, null, null, true);
 	}
 	
 	public WindowComponent(String title)
@@ -51,22 +51,28 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		this(title, null);
 	}
 	
-	public WindowComponent(String title, IComponent content)
-	{
-		this(title, content, true);
-	}
-	
 	public WindowComponent(IComponent content)
 	{
-		this(null, content, false);
+		this(null, null, content, false);
 	}
 	
-	public WindowComponent(String title, IComponent content, boolean frame)
+	public WindowComponent(String title, IComponent content)
+	{
+		this(title, null, content);
+	}
+	
+	public WindowComponent(String title, Image icon, IComponent content)
+	{
+		this(title, icon, content, true);
+	}
+	
+	public WindowComponent(String title, Image icon, IComponent content, boolean frame)
 	{
 		super(new JFrame());
 		
 		setTitle(title);
 		setFrameVisible(frame);
+		setIcon(icon);
 		setComponent(content, null);
 		
 		getHandle().setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -139,9 +145,9 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		return getHandle().getIconImage();
 	}
 	
-	public void setIcon(Image image)
+	public void setIcon(Image icon)
 	{
-		getHandle().setIconImage(image);
+		getHandle().setIconImage(icon);
 	}
 	
 	public void pack()

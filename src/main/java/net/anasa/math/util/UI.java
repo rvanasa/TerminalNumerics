@@ -5,6 +5,12 @@ import net.anasa.util.ui.MessageComponent;
 
 public final class UI
 {
+	public static void sendMessage(String message)
+	{
+		MessageComponent ui = new MessageComponent("Message", message);
+		ui.display();
+	}
+	
 	public static void sendError(String message)
 	{
 		Debug.err(message);

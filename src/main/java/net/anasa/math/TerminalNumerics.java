@@ -15,15 +15,34 @@ import net.anasa.util.data.io.FileHandler;
 import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.Properties;
 
-public final class MathSoftware
+public final class TerminalNumerics
 {
-	public static void main(String... argv)
+	public static void main(String... argv) throws Exception
 	{
-		File settingsFile = new File("data/settings.props");
+		File settingsFile;
+		
+		if(argv.length > 0)
+		{
+			settingsFile = new File(argv[0]);
+			if(!settingsFile.isFile())
+			{
+				throw new IOException("Could not find settings file at location: " + settingsFile.getPath());
+			}
+			
+		}
+		else
+		{
+			settingsFile = new File("data/settings.txt");
+			settingsFile.getParentFile().mkdirs();
+			settingsFile.createNewFile();
+		}
+		
+		File logDir = new File(settingsFile.getParent(), "logs");
+		logDir.mkdir();
 		
 		try
 		{
-			File logFile = new File(settingsFile.getParent(), "logs/log.txt");
+			File logFile = new File(logDir, "log.txt");
 			
 			long size = logFile.length();
 			if(logFile.exists() && size > 500 * 1000)
@@ -33,7 +52,7 @@ public final class MathSoftware
 				do
 				{
 					ct++;
-					destination = new File(logFile.getParent(), "log." + ct + ".txt");
+					destination = new File(logDir, "log." + ct + ".txt");
 				}
 				while(destination.exists());
 				
@@ -54,10 +73,11 @@ public final class MathSoftware
 					e.printStackTrace();
 				}
 			});
-			
+
+			Debug.log("Settings file: " + settingsFile.getPath());
 			Debug.log("[" + new Date() + "]");
 			
-			new MathSoftware(settingsFile);
+			new TerminalNumerics(settingsFile);
 			
 			new MathLauncher(getContext(), () -> new MathContainerComponent(getContext()));
 		}
@@ -69,11 +89,16 @@ public final class MathSoftware
 		}
 	}
 	
-	private static MathSoftware INSTANCE;
+	private static TerminalNumerics INSTANCE;
 	
-	public static MathSoftware getInstance()
+	public static TerminalNumerics getInstance()
 	{
 		return INSTANCE;
+	}
+	
+	public static String getLicense()
+	{
+		return getInstance().license;
 	}
 	
 	public static Properties getSettings()
@@ -91,26 +116,21 @@ public final class MathSoftware
 		return getInstance().context;
 	}
 	
-	public static String getLicense()
-	{
-		return getInstance().license;
-	}
+	private final String license;
 	
 	private final Properties settings;
 	private final File directory;
 	
-	private final String license;
-	
 	private final ModuleContext context;
 	
-	private MathSoftware(File settingsFile) throws IOException
+	private TerminalNumerics(File settingsFile) throws IOException
 	{
 		INSTANCE = this;
 		
+		license = IOHelper.read(getClass().getResourceAsStream("/license.txt"));
+		
 		settings = new FileHandler<>(settingsFile, Properties.FORMAT).load();
 		directory = new File(settings.getString("directory", settingsFile.getParent()));
-		
-		license = IOHelper.read(getClass().getResourceAsStream("/license.txt"));
 		
 		context = new ModuleContext();
 	}

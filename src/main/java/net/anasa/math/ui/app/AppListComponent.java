@@ -40,7 +40,12 @@ public class AppListComponent extends PanelComponent
 		filterBar = new TextFieldComponent();
 		filterBar.addKeyListener((event) -> updateApps());
 		
-		setAppFilter((app, text) -> app.getName().contains(text) || app.getID().contains(text) || app.getDescription().startsWith(text));
+		setAppFilter((app, text) -> {
+			text = text.trim().toLowerCase();
+			return app.getName().toLowerCase().contains(text)
+					|| app.getID().toLowerCase().contains(text)
+					|| app.getDescription().toLowerCase().startsWith(text);
+		});
 		
 		updateApps();
 		
@@ -54,7 +59,7 @@ public class AppListComponent extends PanelComponent
 	{
 		return apps;
 	}
-
+	
 	public PanelComponent getAppPanel()
 	{
 		return appPanel;

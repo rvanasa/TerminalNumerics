@@ -1,6 +1,8 @@
 package net.anasa.math.launcher;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.ImageIcon;
@@ -28,7 +30,8 @@ public class MathLauncher
 		try
 		{
 			ITask task = new LauncherTask(context, dir);
-			SplashScreenComponent screen = new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Math Software", gui.getValue()).display());
+			Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/ui/thumbnail.png"));
+			SplashScreenComponent screen = new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Math Software", icon, gui.getValue()).display());
 			screen.getProgressBar().setForeground(new Color(0x444444));
 			screen.display();
 		}

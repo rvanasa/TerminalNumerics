@@ -3,7 +3,7 @@ package net.anasa.math.module;
 import java.io.IOException;
 import java.net.URL;
 
-import net.anasa.math.MathSoftware;
+import net.anasa.math.TerminalNumerics;
 import net.anasa.math.io.xml.XmlLayoutLoader;
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.ActionRegistry.IComponentAction;
@@ -20,7 +20,7 @@ public interface IModuleDelegate
 	
 	default ModuleContext getContext()
 	{
-		return MathSoftware.getContext();
+		return TerminalNumerics.getContext();
 	}
 	
 	default void addComponent(String id, IComponentEntry entry)
