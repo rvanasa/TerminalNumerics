@@ -82,20 +82,21 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 		});
 		
-		add(new ComplexResolver<IExpression>("parenthesis")
+		add(new IResolver<IExpression>()
 		{
-			Consumer<IExpression> inner;
-			
+			@Override
+			public boolean matches(Listing<IToken> data)
 			{
-				new Consumer<>(new TypeResolver(TokenType.OPEN_PARENTHESIS));
-				inner = new Consumer<>(expression);
-				new Consumer<>(new TypeResolver(TokenType.CLOSE_PARENTHESIS));
+				return data.size() >= 2
+						&& TokenType.OPEN_PARENTHESIS.isType(data.get(0).getType())
+						&& TokenType.CLOSE_PARENTHESIS.isType(data.get(data.size() - 1).getType())
+						&& SequenceNesting.isNestingValid(data);
 			}
 			
 			@Override
-			public IExpression resolve(ConsumerStorage storage) throws ResolverException
+			public IExpression resolve(Listing<IToken> data) throws ResolverException
 			{
-				return storage.get(inner);
+				return expression.resolve(data.shear(1, 1));
 			}
 		});
 		

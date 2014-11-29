@@ -3,15 +3,15 @@ package net.anasa.util.ui.menu;
 import javax.swing.JMenu;
 
 import net.anasa.util.ICallback;
-import net.anasa.util.ui.UIActionComponent;
+import net.anasa.util.ui.IComponent;
 
-public class MenuComponent extends UIActionComponent<JMenu>
+public class MenuComponent extends MenuItemComponent<JMenu>
 {
-	public MenuComponent(String name, MenuItemComponent... items)
+	public MenuComponent(String name, IComponent... items)
 	{
 		super(new JMenu(name));
 		
-		for(MenuItemComponent item : items)
+		for(IComponent item : items)
 		{
 			addItem(item);
 		}
@@ -33,7 +33,7 @@ public class MenuComponent extends UIActionComponent<JMenu>
 		getHandle().setName(name);
 	}
 	
-	public void addItem(MenuItemComponent item)
+	public void addItem(IComponent item)
 	{
 		getHandle().add(item.getHandle());
 	}

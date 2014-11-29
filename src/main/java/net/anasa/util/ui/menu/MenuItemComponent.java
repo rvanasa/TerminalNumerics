@@ -4,33 +4,20 @@ import javax.swing.Icon;
 import javax.swing.JMenuItem;
 
 import net.anasa.util.ICallback;
-import net.anasa.util.ui.IInputComponent;
 import net.anasa.util.ui.ISwingComponent;
 import net.anasa.util.ui.UIActionComponent;
 
-public class MenuItemComponent extends UIActionComponent<JMenuItem> implements IInputComponent<Boolean>, ISwingComponent
+public abstract class MenuItemComponent<T extends JMenuItem> extends UIActionComponent<T> implements ISwingComponent
 {
-	public MenuItemComponent(String text, ICallback callback)
+	public MenuItemComponent(T handle)
 	{
-		this(text, (item) -> callback.call());
-	}
-	
-	public MenuItemComponent(String text, IMenuItemCallback callback)
-	{
-		super(new JMenuItem(text));
-		
-		addActionListener(callback);
+		super(handle);
 	}
 	
 	@Override
 	protected void setupActionCallback(ICallback callback)
 	{
 		getHandle().addActionListener((event) -> callback.call());
-	}
-	
-	public void addActionListener(IMenuItemCallback callback)
-	{
-		addActionListener(() -> callback.call(this));
 	}
 	
 	public String getText()
@@ -42,23 +29,6 @@ public class MenuItemComponent extends UIActionComponent<JMenuItem> implements I
 	{
 		getHandle().setText(text);
 	}
-
-	@Override
-	public Boolean getValue()
-	{
-		return getHandle().isSelected();
-	}
-
-	@Override
-	public void setValue(Boolean value)
-	{
-		getHandle().setSelected(value);
-	}
-	
-	public void toggle()
-	{
-		setValue(!getValue());
-	}
 	
 	public Icon getIcon()
 	{
@@ -68,10 +38,5 @@ public class MenuItemComponent extends UIActionComponent<JMenuItem> implements I
 	public void setIcon(Icon icon)
 	{
 		getHandle().setIcon(icon);
-	}
-	
-	public interface IMenuItemCallback
-	{
-		public void call(MenuItemComponent item);
 	}
 }

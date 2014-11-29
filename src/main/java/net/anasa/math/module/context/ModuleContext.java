@@ -48,7 +48,7 @@ public class ModuleContext
 		getApps().register(app);
 		return app;
 	}
-
+	
 	public IApp getApp(String id)
 	{
 		return getApps().getByID(id);

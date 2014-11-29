@@ -1,12 +1,8 @@
 package net.anasa.util.ui;
 
-import java.awt.event.KeyAdapter;
-
 import javax.swing.JTextArea;
 
 import net.anasa.util.ICallback;
-import net.anasa.util.ui.event.IUIListener;
-import net.anasa.util.ui.event.KeyEvent;
 
 public class TextAreaComponent extends UIActionComponent<JTextArea> implements IInputComponent<String>, ISwingComponent
 {
@@ -31,26 +27,11 @@ public class TextAreaComponent extends UIActionComponent<JTextArea> implements I
 		super(new JTextArea());
 		
 		getHandle().setWrapStyleWord(true);
-		
-		getHandle().addKeyListener(new KeyAdapter()
-		{
-			@Override
-			public void keyReleased(java.awt.event.KeyEvent event)
-			{
-				getEvents().dispatch(new KeyEvent(TextAreaComponent.this, event.getKeyChar()));
-			}
-		});
 	}
 	
 	@Override
 	protected void setupActionCallback(ICallback callback)
 	{
-		
-	}
-	
-	public void addKeyListener(IUIListener<KeyEvent> listener)
-	{
-		getEvents().register(KeyEvent.class, listener);
 	}
 	
 	@Override
