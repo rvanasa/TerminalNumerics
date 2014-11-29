@@ -1,22 +1,19 @@
-package net.anasa.math.util;
+package net.anasa.util.ui;
 
 import net.anasa.util.Debug;
-import net.anasa.util.ui.MessageComponent;
 
 public final class UI
 {
 	public static void sendMessage(String message)
 	{
-		MessageComponent ui = new MessageComponent("Message", message);
-		ui.display();
+		new MessageComponent("Message", message).display();
 	}
 	
 	public static void sendError(String message)
 	{
 		Debug.err(message);
 		
-		MessageComponent ui = new MessageComponent("Error Message", message);
-		ui.display();
+		new MessageComponent("Error Message", message).display();
 	}
 	
 	public static void sendError(String message, Exception e)
