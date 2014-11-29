@@ -43,7 +43,7 @@ public final class MathSoftware
 				logFile.createNewFile();
 			}
 			
-			Debug.registerListener((message, type) -> {
+			Debug.registerListener((type, message) -> {
 				try(FileWriter output = new FileWriter(logFile, true))
 				{
 					output.write(message + '\n');

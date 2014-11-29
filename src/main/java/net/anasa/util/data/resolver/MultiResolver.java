@@ -24,9 +24,11 @@ public class MultiResolver<T> implements IResolver<T>
 		return resolvers;
 	}
 	
-	public void add(IResolver<T> resolver)
+	public <R extends IResolver<T>> R add(R resolver)
 	{
 		getResolvers().add(resolver);
+		
+		return resolver;
 	}
 	
 	@Override

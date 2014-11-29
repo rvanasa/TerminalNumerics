@@ -6,6 +6,11 @@ import net.anasa.util.math.Vector2;
 
 public class ScrollComponent extends UIComponent<JScrollPane> implements ISwingComponent
 {
+	public ScrollComponent(IComponent inner)
+	{
+		this(false, inner);
+	}
+	
 	public ScrollComponent(int width, int height, IComponent inner)
 	{
 		this(new Vector2(width, height), inner);
@@ -18,13 +23,14 @@ public class ScrollComponent extends UIComponent<JScrollPane> implements ISwingC
 		setSize(size);
 	}
 	
-	public ScrollComponent(IComponent inner)
+	public ScrollComponent(boolean horizontal, IComponent inner)
 	{
 		super(new JScrollPane(inner.getHandle()));
 		
-		setHorizontalScrollBar(false);
-		
+		setHorizontalScrollBar(horizontal);
+
 		setVerticalIncrement(16);
+		setHorizontalIncrement(16);
 	}
 	
 	public void setHorizontalScrollBar(boolean horizontal)
@@ -40,5 +46,10 @@ public class ScrollComponent extends UIComponent<JScrollPane> implements ISwingC
 	public void setVerticalIncrement(int increment)
 	{
 		getHandle().getVerticalScrollBar().setUnitIncrement(increment);
+	}
+	
+	public void setHorizontalIncrement(int increment)
+	{
+		getHandle().getHorizontalScrollBar().setUnitIncrement(increment);
 	}
 }

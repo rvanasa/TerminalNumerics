@@ -65,6 +65,22 @@ public class TextAreaComponent extends UIActionComponent<JTextArea> implements I
 		getHandle().setText(value);
 	}
 	
+	public void append(String value)
+	{
+		getHandle().append(value);
+		setCaretAtEnd();
+	}
+	
+	public void appendLine(String line)
+	{
+		if(getValue() != null && !getValue().isEmpty())
+		{
+			append("\n");
+		}
+		
+		append(line);
+	}
+	
 	public int getRows()
 	{
 		return getHandle().getRows();

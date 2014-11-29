@@ -5,11 +5,11 @@ import net.anasa.util.data.resolver.IToken;
 import net.anasa.util.data.resolver.MultiResolver;
 import net.anasa.util.data.resolver.ResolverException;
 
-public class MultiMatchResolver<T> implements IResolver<Listing<IToken>>
+public class CollectionResolver<T> implements IResolver<Listing<IToken>>
 {
 	private final MultiResolver<T> parser;
 	
-	public MultiMatchResolver(MultiResolver<T> parser)
+	public CollectionResolver(MultiResolver<T> parser)
 	{
 		this.parser = parser;
 	}

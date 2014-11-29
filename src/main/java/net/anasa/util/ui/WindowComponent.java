@@ -18,6 +18,8 @@ import net.anasa.util.ui.event.WindowCloseEvent;
 
 public class WindowComponent extends UIParentComponent<JFrame>
 {
+	private static final Listing<WindowComponent> WINDOWS = new Listing<>();
+	
 	public static final WindowComponent getParentWindow(IComponent component)
 	{
 		if(component == null)
@@ -31,7 +33,13 @@ public class WindowComponent extends UIParentComponent<JFrame>
 		}
 	}
 	
-	private static final Listing<WindowComponent> WINDOWS = new Listing<>();
+	public static void closeAllWindows()
+	{
+		for(WindowComponent window : WINDOWS)
+		{
+			window.close();
+		}
+	}
 	
 	public WindowComponent()
 	{

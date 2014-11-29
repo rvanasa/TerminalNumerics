@@ -26,7 +26,7 @@ public class AppRegistry implements IRegistry<IApp>
 		Checks.checkNotNull(app, new ModuleException("App cannot be null"));
 		Checks.check(getValues().check((entry) -> !StringHelper.equals(app.getID(), entry.getID())), new ModuleException("Duplicate app ID: " + app.getID()));
 		
-		Debug.log("Loaded app: " + app.getName() + " " + app.getVersion());
+		Debug.log("Loaded app: " + app.getID() + " " + app.getVersion());
 		getValues().add(app);
 	}
 	

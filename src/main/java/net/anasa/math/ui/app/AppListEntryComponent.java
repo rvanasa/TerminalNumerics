@@ -8,6 +8,7 @@ import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.IApp;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
+import net.anasa.util.math.Vector2;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.ScrollComponent;
@@ -50,9 +51,12 @@ public class AppListEntryComponent extends PanelComponent
 		layout.set(BorderPosition.CENTER, details);
 		layout.set(BorderPosition.RIGHT, items);
 		layout.apply(this);
-		
+
 		setBorder(BorderFactory.createEtchedBorder());
-		setMaxSize(480, 40);
+		
+		Vector2 size = new Vector2(480, 40);
+		setMaxSize(size);
+		setSize(size);
 	}
 	
 	public IApp getApp()

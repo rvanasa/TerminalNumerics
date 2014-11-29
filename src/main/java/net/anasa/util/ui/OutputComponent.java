@@ -1,5 +1,6 @@
 package net.anasa.util.ui;
 
+import net.anasa.util.Debug;
 
 public class OutputComponent extends TextAreaComponent
 {
@@ -9,6 +10,9 @@ public class OutputComponent extends TextAreaComponent
 		
 		setColumns(width);
 		setRows(height);
+		
+		Debug.registerListener((type, message) -> appendLine("[" + type + "] " + message));
+		Debug.log("Logging system output");
 	}
 	
 	public OutputComponent()
@@ -16,18 +20,5 @@ public class OutputComponent extends TextAreaComponent
 		super();
 		
 		setEditable(false);
-		
-		setWordWrap(true);
-	}
-	
-	public String getText()
-	{
-		return getHandle().getText();
-	}
-	
-	public void append(String message)
-	{
-		getHandle().append(message + '\n');
-		getHandle().setCaretPosition(getText().length());
 	}
 }

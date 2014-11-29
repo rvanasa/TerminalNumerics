@@ -41,7 +41,7 @@ public final class Debug
 	{
 		for(IDebugListener listener : LISTENERS)
 		{
-			listener.onMessage(String.valueOf(message), type);
+			listener.onMessage(type, String.valueOf(message));
 		}
 	}
 	
@@ -62,7 +62,7 @@ public final class Debug
 	
 	public interface IDebugListener
 	{
-		public void onMessage(String message, MessageType type);
+		public void onMessage(MessageType type, String message);
 	}
 	
 	public enum MessageType

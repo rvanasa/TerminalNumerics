@@ -27,7 +27,7 @@ public class ModuleRegistry implements IRegistry<IModule>
 		Checks.check(getValues().check((entry) -> !StringHelper.equals(module.getID(), entry.getID())), new ModuleException("Duplicate module ID: " + module.getID()));
 		
 		getValues().add(module);
-		Debug.log("Loaded module: " + module.getName() + " " + module.getVersion());
+		Debug.log("Loaded module: " + module.getID() + " " + module.getVersion());
 		
 		try
 		{

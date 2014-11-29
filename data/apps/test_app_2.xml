@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <app id="test_app_2">
 	<name>Test App #2</name>
-	<version>0</version>
+	<version>1.0.100</version>
 	<description>Another test app for testing tests.</description>
 	<standards>ccss 3.g.a.2</standards>
 	<dependencies>module.test_module</dependencies>
