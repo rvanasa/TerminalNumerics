@@ -10,8 +10,7 @@ import net.anasa.util.data.resolver.ResolverException;
 
 public abstract class ComplexResolver<T> implements IResolver<T>
 {
-	private static boolean DEBUG = false;
-	private static boolean DEBUG_MATCH = false;
+	private static boolean DEBUG = true, DEBUG_MATCH = false;
 	
 	private static int DEBUG_INDENT = 0;
 	
@@ -142,7 +141,7 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 						debug("match continue i = " + i + " sub = " + sub);
 					}
 				}
-				else if(i >= data.size() - 1)
+				else
 				{
 					debug("match drop i = " + i + " sub = " + sub);
 					throw new ResolverException("Invalid consumer data: " + sub + " c = " + c + " " + consumer);

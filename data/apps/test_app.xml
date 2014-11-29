@@ -6,6 +6,6 @@
 	<standards>CCSS 3.NBT.A.1, CCSS 3.NF.A.1, ccss 3.NF.A.2.B</standards>
 	<dependencies>app.test_app_3:1.10</dependencies>
 	<layout type="border">
-		<component pos="center" id="graph" display="x(x)" />
+		<component pos="center" id="graph" display="(x*x)" />
 	</layout>
 </app>
