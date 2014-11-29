@@ -1,0 +1,4 @@
+id: test_module
+version: 1.0
+name: Test Module
+delegate: net.anasa.math.module.test.TestModule

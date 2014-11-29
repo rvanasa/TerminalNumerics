@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<layout type="border">
+	<component pos="center" id="graph" graph="x^2(x + 1)" />
+</layout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app id="test_app_3">
+	<name>Another Test App</name>
+	<version>01.10.00</version>
+	<description>Test for yet another test app testing.</description>
+	<layout type="border">
+		<component id="label" pos="top" text="Nothing to see here, bye." />
+		<component id="button" pos="bottom" text="Close Window" action="close" />
+	</layout>
+</app>
