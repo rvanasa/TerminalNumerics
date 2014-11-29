@@ -9,7 +9,7 @@ import net.anasa.util.Checks;
 import net.anasa.util.data.DataConform.FormatException;
 import net.anasa.util.data.properties.Properties;
 
-public final class CommonCoreStandards
+public final class StateStandards
 {
 	private static final Properties STANDARDS = new Properties();
 	

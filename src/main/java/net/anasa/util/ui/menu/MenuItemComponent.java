@@ -12,6 +12,11 @@ public class MenuItemComponent extends UIActionComponent<JMenuItem> implements I
 {
 	public MenuItemComponent(String text, ICallback callback)
 	{
+		this(text, (item) -> callback.call());
+	}
+	
+	public MenuItemComponent(String text, IMenuItemCallback callback)
+	{
 		super(new JMenuItem(text));
 		
 		addActionListener(callback);
@@ -21,6 +26,11 @@ public class MenuItemComponent extends UIActionComponent<JMenuItem> implements I
 	protected void setupActionCallback(ICallback callback)
 	{
 		getHandle().addActionListener((event) -> callback.call());
+	}
+	
+	public void addActionListener(IMenuItemCallback callback)
+	{
+		addActionListener(() -> callback.call(this));
 	}
 	
 	public String getText()
@@ -45,6 +55,11 @@ public class MenuItemComponent extends UIActionComponent<JMenuItem> implements I
 		getHandle().setSelected(value);
 	}
 	
+	public void toggle()
+	{
+		setValue(!getValue());
+	}
+	
 	public Icon getIcon()
 	{
 		return getHandle().getIcon();
@@ -53,5 +68,10 @@ public class MenuItemComponent extends UIActionComponent<JMenuItem> implements I
 	public void setIcon(Icon icon)
 	{
 		getHandle().setIcon(icon);
+	}
+	
+	public interface IMenuItemCallback
+	{
+		public void call(MenuItemComponent item);
 	}
 }

@@ -6,6 +6,11 @@ import net.anasa.util.math.Vector2;
 
 public class ScrollComponent extends UIComponent<JScrollPane> implements ISwingComponent
 {
+	public ScrollComponent(int width, int height, IComponent inner)
+	{
+		this(new Vector2(width, height), inner);
+	}
+	
 	public ScrollComponent(Vector2 size, IComponent inner)
 	{
 		this(inner);

@@ -11,7 +11,7 @@ import net.anasa.math.module.IDataEntry;
 import net.anasa.math.module.JarModule;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.module.provided.ui.UIModule;
-import net.anasa.math.util.CommonCoreStandards;
+import net.anasa.math.util.StateStandards;
 import net.anasa.math.util.UI;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile;
@@ -60,7 +60,7 @@ public class LauncherTask extends ComplexTask
 		addTask(new DirectoryTask("Loading standards", new File(dir, "standards"), (file) -> {
 			try
 			{
-				CommonCoreStandards.load(Properties.getFrom(new FileInputStream(file)));
+				StateStandards.load(Properties.getFrom(new FileInputStream(file)));
 			}
 			catch(Exception e)
 			{

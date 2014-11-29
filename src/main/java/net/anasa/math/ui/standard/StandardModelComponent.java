@@ -15,7 +15,7 @@ public class StandardModelComponent extends PanelComponent
 	{
 		this.model = model;
 		
-		setBorder(model.getID(), new Font(Font.DIALOG_INPUT, Font.BOLD, 14));
+		setBorder(model.getName(), new Font(Font.DIALOG_INPUT, Font.BOLD, 14));
 		
 		UIVerticalLayout layout = new UIVerticalLayout();
 		for(IStandardGradeLevel grade : model.getGradeLevels())

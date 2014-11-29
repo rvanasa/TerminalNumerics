@@ -9,7 +9,7 @@ import net.anasa.math.module.ModuleException;
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.standard.IStandard;
 import net.anasa.math.standard.IStandardModel;
-import net.anasa.math.util.CommonCoreStandards;
+import net.anasa.math.util.StateStandards;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
@@ -71,14 +71,14 @@ public class ModuleContext
 	
 	public IStandardModel getStandards(String model)
 	{
-		return CommonCoreStandards.getModel(model);
+		return StateStandards.getModel(model);
 	}
 	
 	public IStandard getStandard(String data)
 	{
 		try
 		{
-			return CommonCoreStandards.getStandard(data);
+			return StateStandards.getStandard(data);
 		}
 		catch(FormatException e)
 		{
