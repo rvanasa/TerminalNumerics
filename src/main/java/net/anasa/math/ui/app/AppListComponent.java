@@ -95,6 +95,9 @@ public class AppListComponent extends PanelComponent
 			}
 		}
 		layout.apply(getAppPanel());
+		
+		getAppPanel().revalidate();
+		redraw();
 	}
 	
 	public interface IAppFilter
