@@ -50,6 +50,10 @@ public class JarModule implements IModule
 			loader.close();
 			jar.close();
 		}
+		catch(ModuleException e)
+		{
+			throw e;
+		}
 		catch(Exception e)
 		{
 			throw new ModuleException(e);

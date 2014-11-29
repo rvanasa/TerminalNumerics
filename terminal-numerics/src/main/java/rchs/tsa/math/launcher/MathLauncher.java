@@ -7,14 +7,14 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
-import rchs.tsa.math.MathException;
-import rchs.tsa.math.module.context.ModuleContext;
 import net.anasa.util.logic.IValue;
 import net.anasa.util.task.ITask;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.MessageComponent;
 import net.anasa.util.ui.SplashScreenComponent;
 import net.anasa.util.ui.WindowComponent;
+import rchs.tsa.math.MathException;
+import rchs.tsa.math.module.context.ModuleContext;
 
 public class MathLauncher
 {
@@ -31,7 +31,8 @@ public class MathLauncher
 		{
 			ITask task = new LauncherTask(context, dir);
 			Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/ui/thumbnail.png"));
-			SplashScreenComponent screen = new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Math Software", icon, gui.getValue()).display());
+			SplashScreenComponent screen = new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Terminal Numerics", icon, gui.getValue()).display());
+			screen.setIcon(icon);
 			screen.getProgressBar().setForeground(new Color(0x444444));
 			screen.display();
 		}

@@ -5,7 +5,7 @@
 	<artifactId>terminal-numerics</artifactId>
 	<version>1.0</version>
 	<name>Terminal Numerics</name>
-	<description>Rock Canyon TSA 2015 Software Development Project</description>
+	<description>Rock Canyon TSA Software Development Project 2015</description>
 	<dependencies>
 		<dependency>
 			<groupId>net.anasa</groupId>
