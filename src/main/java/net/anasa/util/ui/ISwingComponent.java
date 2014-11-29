@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-interface ISwingComponent extends IComponent
+public interface ISwingComponent extends IComponent
 {
 	@Override
 	public JComponent getHandle();

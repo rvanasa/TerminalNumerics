@@ -8,10 +8,11 @@ import java.util.Date;
 
 import net.anasa.math.launcher.MathLauncher;
 import net.anasa.math.module.context.ModuleContext;
-import net.anasa.math.ui.app.AppListComponent;
+import net.anasa.math.ui.MathContainerComponent;
 import net.anasa.math.util.UI;
 import net.anasa.util.Debug;
 import net.anasa.util.data.io.FileHandler;
+import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.Properties;
 
 public final class MathSoftware
@@ -58,7 +59,7 @@ public final class MathSoftware
 			
 			new MathSoftware(settingsFile);
 			
-			new MathLauncher(getContext(), () -> new AppListComponent(getContext().getApps().getValues()));
+			new MathLauncher(getContext(), () -> new MathContainerComponent(getContext()));
 		}
 		catch(Exception e)
 		{
@@ -90,8 +91,15 @@ public final class MathSoftware
 		return getInstance().context;
 	}
 	
+	public static String getLicense()
+	{
+		return getInstance().license;
+	}
+	
 	private final Properties settings;
 	private final File directory;
+	
+	private final String license;
 	
 	private final ModuleContext context;
 	
@@ -101,6 +109,8 @@ public final class MathSoftware
 		
 		settings = new FileHandler<>(settingsFile, Properties.FORMAT).load();
 		directory = new File(settings.getString("directory", settingsFile.getParent()));
+		
+		license = IOHelper.read(getClass().getResourceAsStream("/license.txt"));
 		
 		context = new ModuleContext();
 	}
