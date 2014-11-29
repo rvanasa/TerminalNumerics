@@ -67,6 +67,7 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 		}
 		catch(ResolverException e)
 		{
+			debug(e.getMessage());
 			debug("not a match data = " + data);
 			return false;
 		}
@@ -130,21 +131,21 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 				debug("check c = " + c + " consumer = " + consumer + " i = " + i + " sub = " + sub + " match = " + match);
 				if(match)
 				{
-					if(i >= data.size() - 1 || next.matches(data.subList(i)))
+					if(i >= data.size() - 1 || next.matches(data.subList(i)) || !consumer.matches(data.subList(0, i + 1)))
 					{
-						debug("passthrough i = " + i + " sub = " + sub + " post = " + data.subList(i + 1));
+						debug("match passthrough i = " + i + " sub = " + sub + " post = " + data.subList(i + 1));
 						updateStorage(consumer, sub, storage);
 						return resolveConsumer(c + 1, data.subList(i), storage);
 					}
 					else
 					{
-						debug("match next slide i = " + i + " sub = " + sub);
+						debug("match continue i = " + i + " sub = " + sub);
 					}
 				}
-				else
+				else if(i >= data.size() - 1)
 				{
 					debug("match drop i = " + i + " sub = " + sub);
-					throw new ResolverException("Invalid consumer data: " + sub);
+					throw new ResolverException("Invalid consumer data: " + sub + " c = " + c + " " + consumer);
 				}
 			}
 		}
@@ -166,7 +167,7 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 	{
 		if(DEBUG)
 		{
-			Debug.log(StringHelper.space(DEBUG_INDENT * 2) +"[" + getID() + "] " + message);
+			Debug.log(StringHelper.space(DEBUG_INDENT * 2) + "[" + getID() + "] " + message);
 		}
 	}
 	
@@ -232,12 +233,13 @@ public abstract class ComplexResolver<T> implements IResolver<T>
 			map.put(consumer, value);
 		}
 		
-		@SuppressWarnings("unchecked")
 		public <K> K get(Consumer<K> consumer) throws ResolverException
 		{
 			try
 			{
-				return (K)map.get(consumer);
+				@SuppressWarnings("unchecked")
+				K value = (K)map.get(consumer);
+				return value;
 			}
 			catch(ClassCastException e)
 			{
