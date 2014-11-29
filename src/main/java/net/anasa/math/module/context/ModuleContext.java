@@ -3,13 +3,14 @@ package net.anasa.math.module.context;
 import java.io.File;
 
 import net.anasa.math.MathSoftware;
-import net.anasa.math.module.IDataEntry;
+import net.anasa.math.module.Dependency;
 import net.anasa.math.module.IModule;
-import net.anasa.math.module.ModuleException;
+import net.anasa.math.module.IResource;
 import net.anasa.math.module.app.IApp;
 import net.anasa.math.standard.IStandard;
 import net.anasa.math.standard.IStandardModel;
 import net.anasa.math.util.StateStandards;
+import net.anasa.math.util.UI;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.data.DataConform.FormatException;
@@ -27,12 +28,20 @@ public class ModuleContext
 		return modules;
 	}
 	
-	public IModule addModule(IModule module) throws ModuleException
+	public IModule addModule(IModule module)
 	{
-		getModules().register(module);
-		return module;
+		try
+		{
+			getModules().register(module);
+			return module;
+		}
+		catch(Exception e)
+		{
+			UI.sendError("Failed to load module: " + module, e);
+			return null;
+		}
 	}
-
+	
 	public IModule getModule(String id)
 	{
 		return getModules().getByID(id);
@@ -43,10 +52,18 @@ public class ModuleContext
 		return apps;
 	}
 	
-	public IApp addApp(IApp app) throws ModuleException
+	public IApp addApp(IApp app)
 	{
-		getApps().register(app);
-		return app;
+		try
+		{
+			getApps().register(app);
+			return app;
+		}
+		catch(Exception e)
+		{
+			UI.sendError("Failed to load app: " + app, e);
+			return null;
+		}
 	}
 	
 	public IApp getApp(String id)
@@ -54,9 +71,35 @@ public class ModuleContext
 		return getApps().getByID(id);
 	}
 	
-	public Listing<IDataEntry> getDataEntries()
+	public Listing<IResource> getResources()
 	{
-		return new Listing<IDataEntry>().addAll(getModules().getValues()).addAll(getApps().getValues());
+		return new Listing<IResource>().addAll(getModules().getValues()).addAll(getApps().getValues());
+	}
+	
+	public boolean verifyResources()
+	{
+		return getResources().checkEach((data) -> verify(data));
+	}
+	
+	public boolean verify(IResource resource)
+	{
+		for(Dependency dependency : resource.getDependencies())
+		{
+			IResource dataDependency = dependency.getType().getData(this, dependency.getID());
+			
+			if(dataDependency == null)
+			{
+				UI.sendError(resource.getID() + " is missing required " + dependency.getType().getName() + ": " + dependency + " (system may not run as expected)");
+				return false;
+			}
+			else if(!dependency.isCompatible(dataDependency.getVersion()))
+			{
+				UI.sendError(resource.getID() + " does not meet version requirements for " + dependency.getType() + ": " + dependency + " (installed version is " + resource.getVersion() + ")");
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	public ComponentRegistry getComponents()

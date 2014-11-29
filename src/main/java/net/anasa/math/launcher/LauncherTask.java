@@ -6,8 +6,6 @@ import java.io.FileInputStream;
 import javax.swing.ImageIcon;
 
 import net.anasa.math.io.xml.XmlAppLoader;
-import net.anasa.math.module.Dependency;
-import net.anasa.math.module.IDataEntry;
 import net.anasa.math.module.JarModule;
 import net.anasa.math.module.context.ModuleContext;
 import net.anasa.math.module.provided.ui.UIModule;
@@ -82,22 +80,7 @@ public class LauncherTask extends ComplexTask
 		}));
 		
 		addTask(new Task("Verifying dependencies", () -> {
-			for(IDataEntry data : context.getDataEntries())
-			{
-				for(Dependency dependency : data.getDependencies())
-				{
-					IDataEntry dataDependency = dependency.getType().getData(context, dependency.getID());
-					
-					if(dataDependency == null)
-					{
-						UI.sendError(data.getID() + " is missing required " + dependency.getType().getName() + ": " + dependency + " (system may not run as expected)");
-					}
-					else if(!dependency.isCompatible(dataDependency.getVersion()))
-					{
-						UI.sendError(data.getID() + " does not meet version requirements for " + dependency.getType() + ": " + dependency + " (current version is " + data.getVersion() + ")");
-					}
-				}
-			}
+			context.verifyResources();
 		}));
 		
 		// addTask(new Task("Pausing for dramatic effect", () -> {

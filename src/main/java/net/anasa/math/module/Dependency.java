@@ -106,7 +106,7 @@ public class Dependency
 			this.handle = handle;
 		}
 		
-		public IDataEntry getData(ModuleContext context, String id)
+		public IResource getData(ModuleContext context, String id)
 		{
 			return handle.getData(context, id);
 		}
@@ -118,7 +118,7 @@ public class Dependency
 		
 		private interface IDependencyTypeHandle
 		{
-			public IDataEntry getData(ModuleContext context, String id);
+			public IResource getData(ModuleContext context, String id);
 		}
 	}
 }

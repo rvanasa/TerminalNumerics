@@ -23,11 +23,12 @@ public class ProgressBarComponent extends UIParentComponent<JProgressBar> implem
 		
 		this.progress = progress;
 		
+		setTextVisible(true);
+		
 		new Thread(() -> {
 			while(!getProgress().isComplete())
 			{
 				String text = getText();
-				getHandle().setStringPainted(text != null);
 				getHandle().setString(text);
 				
 				if(getProgress().isEnabled())
@@ -76,5 +77,15 @@ public class ProgressBarComponent extends UIParentComponent<JProgressBar> implem
 	public void setText(String text)
 	{
 		setText(() -> text);
+	}
+	
+	public boolean isTextVisible()
+	{
+		return getHandle().isStringPainted();
+	}
+	
+	public void setTextVisible(boolean visible)
+	{
+		getHandle().setStringPainted(visible);
 	}
 }

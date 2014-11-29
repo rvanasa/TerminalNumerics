@@ -9,7 +9,6 @@ import net.anasa.math.module.app.IApp;
 import net.anasa.math.module.context.ActionRegistry.IComponentAction;
 import net.anasa.math.module.context.IComponentEntry;
 import net.anasa.math.module.context.ModuleContext;
-import net.anasa.math.util.UI;
 import net.anasa.util.Checks;
 
 public interface IModuleDelegate
@@ -41,15 +40,13 @@ public interface IModuleDelegate
 		getContext().getActions().register(id, action);
 	}
 	
-	default void addApp(String id, IApp app)
+	default void addModule(IModule module)
 	{
-		try
-		{
-			getContext().addApp(app);
-		}
-		catch(ModuleException e)
-		{
-			UI.sendError("Failed to load app with ID: " + app.getID(), e);
-		}
+		getContext().addModule(module);
+	}
+	
+	default void addApp(IApp app)
+	{
+		getContext().addApp(app);
 	}
 }

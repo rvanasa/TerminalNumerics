@@ -1,7 +1,9 @@
 package net.anasa.math.module;
 
-public interface IDataEntry
+public interface IResource
 {
+	public ResourceType getResourceType();
+	
 	public String getID();
 	
 	public Version getVersion();
