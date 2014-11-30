@@ -2,7 +2,7 @@
 <app id="test_app">
 	<name>Test App</name>
 	<version>0.1</version>
-	<description>Test app for testing purposes testing test.</description>
+	<description>Basic app that tests the expression parsing algorithms.</description>
 	<standards>CCSS 3.NBT.A.1, CCSS 3.NF.A.1, ccss 3.nf.a.2.b</standards>
 	<dependencies>app.test_app_3:1.10</dependencies>
 	<layout type="border">
