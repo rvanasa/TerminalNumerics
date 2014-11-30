@@ -27,7 +27,7 @@ public class MathContainerComponent extends PanelComponent
 		layout.set(BorderPosition.TOP, new MenuBarComponent(new MenuComponent[] {
 				new MenuComponent("Options", new IComponent[] {
 						new MenuActionComponent("View Software License", () -> new WindowComponent("Software License", new LicenseComponent()).display()),
-						new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(680, 600, new StandardModelComponent(StateStandards.getModel("CCSS")))).display()),
+						new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(400, 600, new StandardModelComponent(StateStandards.getModel("CCSS")))).display()),
 						new SeperatorComponent(),
 						new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
 				}), new MenuComponent("Advanced", new IComponent[] {
