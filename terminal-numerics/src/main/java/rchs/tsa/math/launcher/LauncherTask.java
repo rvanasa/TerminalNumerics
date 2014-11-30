@@ -5,17 +5,17 @@ import java.io.FileInputStream;
 
 import javax.swing.ImageIcon;
 
-import rchs.tsa.math.io.xml.XmlAppLoader;
-import rchs.tsa.math.module.JarModule;
-import rchs.tsa.math.module.context.ModuleContext;
-import rchs.tsa.math.module.provided.ui.UIModule;
-import rchs.tsa.math.util.StateStandards;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.data.xml.XmlFile;
 import net.anasa.util.task.ComplexTask;
 import net.anasa.util.task.DirectoryTask;
 import net.anasa.util.task.Task;
 import net.anasa.util.ui.UI;
+import rchs.tsa.math.io.xml.XmlAppLoader;
+import rchs.tsa.math.module.JarModule;
+import rchs.tsa.math.module.context.ModuleContext;
+import rchs.tsa.math.module.provided.ui.UIModule;
+import rchs.tsa.math.util.StateStandards;
 
 public class LauncherTask extends ComplexTask
 {
@@ -24,7 +24,7 @@ public class LauncherTask extends ComplexTask
 		addTask(new Task(null, () -> {
 			try
 			{
-				Thread.sleep(500);
+				Thread.sleep(2000);
 			}
 			catch(Exception e)
 			{
@@ -81,17 +81,6 @@ public class LauncherTask extends ComplexTask
 		
 		addTask(new Task("Verifying dependencies", () -> {
 			context.verifyResources();
-		}));
-		
-		addTask(new Task("Pausing for dramatic effect", () -> {
-			try
-			{
-				Thread.sleep(1500);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
 		}));
 	}
 }

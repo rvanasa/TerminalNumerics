@@ -2,11 +2,6 @@ package rchs.tsa.math.ui;
 
 import java.awt.Desktop;
 
-import rchs.tsa.math.TerminalNumerics;
-import rchs.tsa.math.module.context.ModuleContext;
-import rchs.tsa.math.ui.app.AppListComponent;
-import rchs.tsa.math.ui.standard.StandardModelComponent;
-import rchs.tsa.math.util.StateStandards;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.OutputComponent;
 import net.anasa.util.ui.PanelComponent;
@@ -18,6 +13,11 @@ import net.anasa.util.ui.menu.MenuActionComponent;
 import net.anasa.util.ui.menu.MenuBarComponent;
 import net.anasa.util.ui.menu.MenuComponent;
 import net.anasa.util.ui.menu.SeperatorComponent;
+import rchs.tsa.math.TerminalNumerics;
+import rchs.tsa.math.module.context.ModuleContext;
+import rchs.tsa.math.ui.app.AppListComponent;
+import rchs.tsa.math.ui.standard.StandardModelComponent;
+import rchs.tsa.math.util.StateStandards;
 
 public class MathContainerComponent extends PanelComponent
 {
@@ -31,16 +31,16 @@ public class MathContainerComponent extends PanelComponent
 						new SeperatorComponent(),
 						new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
 				}), new MenuComponent("Advanced", new IComponent[] {
-						new MenuActionComponent("Browse Resource Directory", () -> {
-							try
-							{
-								Desktop.getDesktop().open(TerminalNumerics.getDirectory());
-							}
-							catch(Exception e)
-							{
-								e.printStackTrace();
-							}
-						}),
+						new MenuActionComponent("Browse Data Files", () -> {
+								try
+								{
+									Desktop.getDesktop().open(TerminalNumerics.getDirectory());
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+								}
+							}),
 						new MenuActionComponent("Monitor System Output", () -> new WindowComponent("System Output", new ScrollComponent(true, new OutputComponent(60, 20))).display()),
 				})
 		}));

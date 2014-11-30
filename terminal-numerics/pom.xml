@@ -30,6 +30,69 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${mainClass}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-data</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/export</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}</directory>
+									<includes>
+										<include>readme.txt</include>
+										<include>data/**/*</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>${basedir}/src/main/resources</directory>
+									<includes>
+										<include>license.txt</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>${basedir}/target</directory>
+									<includes>
+										<include>${project.build.finalName}.jar</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>com.akathist.maven.plugins.launch4j</groupId>
 				<artifactId>launch4j-maven-plugin</artifactId>
 				<version>1.5.1</version>
@@ -42,8 +105,8 @@
 						</goals>
 						<configuration>
 							<headerType>gui</headerType>
-							<jar>${project.build.directory}/${project.build.finalName}.jar</jar>
-							<outfile>${project.build.directory}/export/${project.build.finalName}.exe</outfile>
+							<jar>${project.build.directory}/export/${project.build.finalName}.jar</jar>
+							<outfile>${project.build.directory}/export/${project.name}.exe</outfile>
 							<downloadUrl>http://java.com/download</downloadUrl>
 							<classPath>
 								<mainClass>${mainClass}</mainClass>
@@ -66,37 +129,6 @@
 								<internalName>anasa</internalName>
 								<originalFilename>${project.build.finalName}.exe</originalFilename>
 							</versionInfo>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
-				<executions>
-					<execution>
-						<id>copy-data</id>
-						<phase>install</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/export</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}</directory>
-									<includes>
-										<include>readme.txt</include>
-										<include>data/**/*</include>
-									</includes>
-								</resource>
-								<resource>
-									<directory>${basedir}/src/main/resources</directory>
-									<includes>
-										<include>license.txt</include>
-									</includes>
-								</resource>
-							</resources>
 						</configuration>
 					</execution>
 				</executions>

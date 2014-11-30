@@ -5,13 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import rchs.tsa.math.MathException;
-import rchs.tsa.math.MathNumber;
-import rchs.tsa.math.graph.Graph;
-import rchs.tsa.math.graph.GraphView;
-import rchs.tsa.math.interpreter.SequenceParser;
-import rchs.tsa.math.ui.event.GraphEvent;
-import rchs.tsa.math.util.Evaluator;
 import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
@@ -24,6 +17,13 @@ import net.anasa.util.ui.SliderComponent;
 import net.anasa.util.ui.event.IUIListener;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
+import rchs.tsa.math.MathException;
+import rchs.tsa.math.MathNumber;
+import rchs.tsa.math.graph.Graph;
+import rchs.tsa.math.graph.GraphView;
+import rchs.tsa.math.interpreter.SequenceParser;
+import rchs.tsa.math.ui.event.GraphEvent;
+import rchs.tsa.math.util.Evaluator;
 
 public class GraphComponent extends PanelComponent
 {
