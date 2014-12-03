@@ -35,9 +35,9 @@ public class NumberSquareComponent extends PanelComponent
 		squares = new NumberSquare[width * height];
 		
 		int n = 0;
-		for(int i = 0; i < width; i++)
+		for(int j = 0; j < height; j++)
 		{
-			for(int j = 0; j < height; j++)
+			for(int i = 0; i < width; i++)
 			{
 				squares[n] = new NumberSquare(i, j, n + 1);
 				n++;
