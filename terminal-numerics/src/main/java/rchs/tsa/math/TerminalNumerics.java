@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
 
-import rchs.tsa.math.launcher.MathLauncher;
-import rchs.tsa.math.module.context.ModuleContext;
-import rchs.tsa.math.ui.MathContainerComponent;
 import net.anasa.util.Debug;
 import net.anasa.util.data.io.FileHandler;
 import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.UI;
+import rchs.tsa.math.launcher.MathLauncher;
+import rchs.tsa.math.module.context.ModuleContext;
+import rchs.tsa.math.ui.MathContainerComponent;
 
 public final class TerminalNumerics
 {
@@ -73,7 +73,7 @@ public final class TerminalNumerics
 				}
 			});
 
-			Debug.log("Settings file: " + settingsFile.getPath());
+			Debug.log("Settings file: " + settingsFile.getAbsolutePath());
 			Debug.log("[" + new Date() + "]");
 			
 			new TerminalNumerics(settingsFile);

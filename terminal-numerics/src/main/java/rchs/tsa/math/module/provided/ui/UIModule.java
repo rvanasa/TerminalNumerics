@@ -1,12 +1,14 @@
 package rchs.tsa.math.module.provided.ui;
 
-import rchs.tsa.math.module.Module;
-import rchs.tsa.math.module.Version;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.ui.ButtonComponent;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.WindowComponent;
+import rchs.tsa.math.module.Module;
+import rchs.tsa.math.module.Version;
+import rchs.tsa.math.ui.GraphComponent;
+import rchs.tsa.math.ui.GraphInputComponent;
 
 public class UIModule extends Module
 {
@@ -52,6 +54,9 @@ public class UIModule extends Module
 				return button;
 			}
 		});
+		
+		addComponent("graph", (props) -> new GraphComponent(props.getString("display", "")));
+		addComponent("graph_input", (props) -> new GraphInputComponent());
 		
 		addAction("close", (component) -> WindowComponent.getParentWindow(component).close());
 	}
