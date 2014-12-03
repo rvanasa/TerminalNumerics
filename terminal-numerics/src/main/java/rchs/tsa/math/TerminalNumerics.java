@@ -128,7 +128,7 @@ public final class TerminalNumerics
 		
 		license = IOHelper.read(getClass().getResourceAsStream("/license.txt"));
 		
-		settings = new FileHandler<>(settingsFile, Properties.FORMAT).load();
+		settings = new FileHandler<>(settingsFile, Properties.FORMAT).read();
 		directory = new File(settings.getString("directory", settingsFile.getParent()));
 		
 		context = new ModuleContext();

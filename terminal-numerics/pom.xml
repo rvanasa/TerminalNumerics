@@ -138,6 +138,24 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<executions>
 					<execution>
+						<id>build-java</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<classpathScope>test</classpathScope>
+							<arguments>
+								<argument>-classpath</argument>
+								<classpath />
+								<argument>build.BuildHandler</argument>
+							</arguments>
+							<workingDirectory>${basedir}</workingDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-bat</id>
 						<phase>install</phase>
 						<goals>
 							<goal>exec</goal>
