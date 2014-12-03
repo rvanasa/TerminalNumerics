@@ -4,7 +4,7 @@ import rchs.tsa.math.module.context.ModuleContext;
 import net.anasa.util.Checks;
 import net.anasa.util.EnumHelper;
 import net.anasa.util.StringHelper;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 
 public class Dependency
 {

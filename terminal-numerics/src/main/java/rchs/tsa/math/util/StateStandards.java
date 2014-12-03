@@ -6,7 +6,7 @@ import rchs.tsa.math.standard.IStandardGradeLevel;
 import rchs.tsa.math.standard.IStandardModel;
 import rchs.tsa.math.standard.properties.PropsStandardModel;
 import net.anasa.util.Checks;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.properties.Properties;
 
 public final class StateStandards

@@ -10,7 +10,7 @@ import rchs.tsa.math.module.context.ModuleContext;
 import rchs.tsa.math.standard.IStandard;
 import rchs.tsa.math.ui.xml.ILayoutNode;
 import net.anasa.util.Listing;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.xml.IXmlLoader;
 import net.anasa.util.data.xml.XmlElement;
 

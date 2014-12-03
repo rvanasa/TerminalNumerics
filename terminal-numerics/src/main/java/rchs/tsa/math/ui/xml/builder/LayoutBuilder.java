@@ -2,7 +2,7 @@ package rchs.tsa.math.ui.xml.builder;
 
 import rchs.tsa.math.ui.xml.ILayoutNode;
 import net.anasa.util.StringHelper;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.xml.XmlElement;
 
 public class LayoutBuilder implements ILayoutBuilder

@@ -1,6 +1,6 @@
 package rchs.tsa.math.ui.xml;
 
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.layout.ILayout;
 import net.anasa.util.ui.layout.UIBorderLayout;

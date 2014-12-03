@@ -14,7 +14,7 @@ import net.anasa.util.math.MathHelper;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.SliderComponent;
-import net.anasa.util.ui.event.IUIListener;
+import net.anasa.util.ui.event.IComponentListener;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 import rchs.tsa.math.MathException;
@@ -209,7 +209,7 @@ public class GraphComponent extends PanelComponent
 		addGraph(graph);
 	}
 	
-	public void addGraphListener(IUIListener<GraphEvent> listener)
+	public void addGraphListener(IComponentListener<GraphEvent> listener)
 	{
 		getEvents().register(GraphEvent.class, listener);
 	}

@@ -2,7 +2,7 @@ package rchs.tsa.math.module.provided.ui;
 
 import rchs.tsa.math.module.context.IComponentEntry;
 import net.anasa.util.Listing;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;

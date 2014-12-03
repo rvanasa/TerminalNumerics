@@ -3,7 +3,7 @@ package rchs.tsa.math.module;
 import net.anasa.util.Checks;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 
 public class Version
 {

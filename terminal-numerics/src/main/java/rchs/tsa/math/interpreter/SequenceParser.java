@@ -11,7 +11,7 @@ import rchs.tsa.math.interpreter.sequence.pattern.TokenPattern;
 import rchs.tsa.math.sequence.TokenType;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.parser.IParserPattern;
 import net.anasa.util.data.parser.PatternParser;
 import net.anasa.util.data.resolver.IToken;

@@ -12,7 +12,7 @@ import rchs.tsa.math.standard.IStandardModel;
 import rchs.tsa.math.util.StateStandards;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.UI;
 

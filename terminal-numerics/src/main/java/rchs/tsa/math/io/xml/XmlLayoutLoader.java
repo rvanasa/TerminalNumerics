@@ -12,7 +12,7 @@ import rchs.tsa.math.ui.xml.builder.LayoutBuilder;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
-import net.anasa.util.data.DataConform.FormatException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.xml.IXmlLoader;
 import net.anasa.util.data.xml.XmlElement;
 import net.anasa.util.data.xml.XmlFile;

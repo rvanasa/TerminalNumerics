@@ -4,14 +4,15 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import rchs.tsa.math.module.ModuleException;
-import rchs.tsa.math.module.app.IApp;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.ContextMenuComponent;
-import net.anasa.util.ui.ContextMenuComponent.MenuOption;
+import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.WindowComponent;
 import net.anasa.util.ui.event.ClickEvent.ButtonType;
+import net.anasa.util.ui.menu.MenuActionComponent;
+import rchs.tsa.math.module.ModuleException;
+import rchs.tsa.math.module.app.IApp;
 
 public class AppIconComponent extends LabelComponent
 {
@@ -45,9 +46,9 @@ public class AppIconComponent extends LabelComponent
 		
 		setBorder(2, 2);
 		
-		setContextMenu(new ContextMenuComponent(new MenuOption[] {
-				new MenuOption("Launch app", this::launchApp),
-				new MenuOption("View info", () -> new WindowComponent(app.getName(), app.getIcon(), new AppInfoComponent(app)).display()),
+		setContextMenu(new ContextMenuComponent(new IComponent[] {
+				new MenuActionComponent("Launch app", this::launchApp),
+				new MenuActionComponent("View info", () -> new WindowComponent(app.getName(), app.getIcon(), new AppInfoComponent(app)).display()),
 		}));
 	}
 	
