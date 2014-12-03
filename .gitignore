@@ -1,3 +1,4 @@
 terminal-numerics/target
 terminal-numerics/data/logs
 test-module/bin
+terminal-numerics/src/main/resources/build.txt
