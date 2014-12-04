@@ -36,13 +36,7 @@ public class AppIconComponent extends LabelComponent
 		this.launchConfig = launchConfig;
 		
 		setCursor(CursorType.HAND);
-		
-		addClickListener((event) -> {
-			if(event.getButton() == ButtonType.LEFT)
-			{
-				launchApp();
-			}
-		});
+		addClickListener(ButtonType.LEFT, (event) -> launchApp());
 		
 		setBorder(2, 2);
 		
@@ -65,7 +59,7 @@ public class AppIconComponent extends LabelComponent
 	public void launchApp()
 	{
 		WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon(), getApp().getLaunchComponent(getLaunchConfig()));
-		window.display();
 		window.setMinSize(window.getSize());
+		window.display();
 	}
 }

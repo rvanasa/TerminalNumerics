@@ -1,5 +1,17 @@
 package rchs.tsa.math.interpreter.sequence;
 
+import net.anasa.util.Checks;
+import net.anasa.util.Listing;
+import net.anasa.util.NumberHelper;
+import net.anasa.util.StringHelper;
+import net.anasa.util.StringHelper.NestingException;
+import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.data.resolver.MultiResolver;
+import net.anasa.util.data.resolver.ResolverException;
+import net.anasa.util.data.resolver.Token;
+import net.anasa.util.data.resolver.logic.CollectorResolver;
+import net.anasa.util.data.resolver.logic.ComplexResolver;
+import net.anasa.util.data.resolver.logic.IResolver;
 import rchs.tsa.math.MathNumber;
 import rchs.tsa.math.expression.ConstantType;
 import rchs.tsa.math.expression.FunctionExpression;
@@ -12,18 +24,6 @@ import rchs.tsa.math.expression.OperatorType;
 import rchs.tsa.math.expression.VariableExpression;
 import rchs.tsa.math.sequence.SequenceNesting;
 import rchs.tsa.math.sequence.TokenType;
-import net.anasa.util.Checks;
-import net.anasa.util.Listing;
-import net.anasa.util.NumberHelper;
-import net.anasa.util.StringHelper;
-import net.anasa.util.StringHelper.NestingException;
-import net.anasa.util.data.resolver.IToken;
-import net.anasa.util.data.resolver.MultiResolver;
-import net.anasa.util.data.resolver.ResolverException;
-import net.anasa.util.data.resolver.Token;
-import net.anasa.util.data.resolver.logic.CollectionResolver;
-import net.anasa.util.data.resolver.logic.ComplexResolver;
-import net.anasa.util.data.resolver.logic.IResolver;
 
 public class ExpressionResolver extends MultiResolver<IExpression>
 {
@@ -33,8 +33,8 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 		
 		add(new ComplexResolver<IExpression>("multiply")
 		{
-			Consumer<Listing<IToken>> a = new Consumer<>(new CollectionResolver<>(expression));
-			Consumer<Listing<IToken>> b = new Consumer<>(new CollectionResolver<>(expression));
+			Consumer<Listing<IToken>> a = new Consumer<>(new CollectorResolver(expression));
+			Consumer<Listing<IToken>> b = new Consumer<>(new CollectorResolver(expression));
 			
 			@Override
 			public IExpression resolve(ConsumerStorage storage) throws ResolverException
