@@ -1,14 +1,12 @@
 package rchs.tsa.math.ui.app;
 
-import javax.swing.ImageIcon;
-
-import rchs.tsa.math.module.app.IApp;
 import net.anasa.util.Listing;
 import net.anasa.util.Lookup;
 import net.anasa.util.StringHelper;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.layout.UIVerticalLayout;
+import rchs.tsa.math.module.app.IApp;
 
 public class AppInfoComponent extends PanelComponent
 {
@@ -31,7 +29,7 @@ public class AppInfoComponent extends PanelComponent
 		data.forEach((key, value) -> {
 			layout.add(new LabelComponent(key + ": " + value));
 		});
-		layout.add(new LabelComponent(app.getIcon() != null ? new ImageIcon(app.getIcon()) : null));
+		layout.add(new AppIconComponent(app));
 		layout.apply(this);
 	}
 	

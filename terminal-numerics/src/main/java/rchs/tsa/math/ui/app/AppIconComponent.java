@@ -11,7 +11,6 @@ import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.WindowComponent;
 import net.anasa.util.ui.event.ClickEvent.ButtonType;
 import net.anasa.util.ui.menu.MenuActionComponent;
-import rchs.tsa.math.module.ModuleException;
 import rchs.tsa.math.module.app.IApp;
 
 public class AppIconComponent extends LabelComponent
@@ -22,12 +21,12 @@ public class AppIconComponent extends LabelComponent
 	
 	private final Properties launchConfig;
 	
-	public AppIconComponent(IApp app) throws ModuleException
+	public AppIconComponent(IApp app)
 	{
 		this(app, new Properties());
 	}
 	
-	public AppIconComponent(IApp app, Properties launchConfig) throws ModuleException
+	public AppIconComponent(IApp app, Properties launchConfig)
 	{
 		super(app.getIcon() == null ? null : new ImageIcon(app.getIcon().getScaledInstance(IMAGE_SIZE, IMAGE_SIZE, Image.SCALE_SMOOTH)));
 		
