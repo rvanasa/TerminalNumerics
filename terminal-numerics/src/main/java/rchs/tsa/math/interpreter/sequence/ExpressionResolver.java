@@ -17,7 +17,6 @@ import rchs.tsa.math.expression.ConstantType;
 import rchs.tsa.math.expression.FunctionExpression;
 import rchs.tsa.math.expression.FunctionType;
 import rchs.tsa.math.expression.IExpression;
-import rchs.tsa.math.expression.IFunction;
 import rchs.tsa.math.expression.NumberExpression;
 import rchs.tsa.math.expression.OperationExpression;
 import rchs.tsa.math.expression.OperatorType;
@@ -145,40 +144,38 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 		});
 		
-		add(new BiResolver<>("function", new ITypeResolver<IFunction>()
+		add(new IResolver<IExpression>()
 		{
 			@Override
-			public TokenType getType()
+			public boolean matches(Listing<IToken> data)
 			{
-				return TokenType.FUNCTION;
+				return data.size() > 1
+						&& TokenType.FUNCTION.isType(data.get(0))
+						&& expression.matches(data.subList(1));
 			}
 			
 			@Override
-			public IFunction resolve(IToken item) throws ResolverException
+			public IExpression resolve(Listing<IToken> data) throws ResolverException
 			{
-				return FunctionType.get(item.getData());
+				return new FunctionExpression(FunctionType.get(data.get(0).getData()), expression.resolve(data.subList(1)));
 			}
-		}, expression, (function, operand) -> new FunctionExpression(function, operand)));
+		});
 		
-		add(new BiResolver<>("negative", new ITypeResolver<OperatorType>()
+		add(new IResolver<IExpression>()
 		{
 			@Override
-			public TokenType getType()
+			public boolean matches(Listing<IToken> data)
 			{
-				return TokenType.OPERATOR;
+				return data.size() > 1
+						&& StringHelper.equals(OperatorType.SUBTRACT.getSignature(), data.get(0).getData())
+						&& expression.matches(data.subList(1));
 			}
 			
 			@Override
-			public boolean matches(IToken item)
+			public IExpression resolve(Listing<IToken> data) throws ResolverException
 			{
-				return StringHelper.equals(OperatorType.SUBTRACT.getSignature(), item.getData());
+				return new OperationExpression(OperatorType.SUBTRACT, new NumberExpression(0), expression.resolve(data.subList(1)));
 			}
-			
-			@Override
-			public OperatorType resolve(IToken item) throws ResolverException
-			{
-				return OperatorType.SUBTRACT;
-			}
-		}, expression, (negative, operand) -> new OperationExpression(negative, new NumberExpression(new MathNumber(0)), operand)));
+		});
 	}
 }

@@ -17,6 +17,11 @@ public enum TokenType
 	GREATER_THAN_EQUAL,
 	LESS_THAN_EQUAL;
 	
+	public boolean isType(IToken token)
+	{
+		return isType(token.getType());
+	}
+	
 	public boolean isType(String type)
 	{
 		return name().equalsIgnoreCase(type);
