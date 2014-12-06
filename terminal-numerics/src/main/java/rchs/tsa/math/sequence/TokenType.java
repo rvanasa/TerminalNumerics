@@ -1,5 +1,8 @@
 package rchs.tsa.math.sequence;
 
+import net.anasa.util.StringHelper;
+import net.anasa.util.data.resolver.IToken;
+
 public enum TokenType
 {
 	NUMBER,
@@ -16,11 +19,16 @@ public enum TokenType
 	
 	public boolean isType(String type)
 	{
-		return name().equals(type);
+		return name().equalsIgnoreCase(type);
 	}
 	
 	public static TokenType getFrom(String type)
 	{
-		return valueOf(type);
+		return valueOf(StringHelper.upperCase(type));
+	}
+	
+	public static TokenType getFrom(IToken token)
+	{
+		return getFrom(token.getType());
 	}
 }

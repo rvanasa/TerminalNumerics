@@ -9,7 +9,28 @@ public final class SequenceNesting
 {
 	public static boolean isNestingValid(Listing<IToken> data)
 	{
-		return data.count((item) -> TokenType.OPEN_PARENTHESIS.isType(item.getType())) == data.count((item) -> TokenType.CLOSE_PARENTHESIS.isType(item.getType()));
+		TokenType lastType = null;
+		
+		int stack = 0;
+		for(IToken token : data)
+		{
+			if(isNestingToken(token.getType()))
+			{
+				stack++;
+				lastType = TokenType.getFrom(token);
+			}
+			else if(isCorrespondingToken(token.getType()))
+			{
+				stack--;
+				
+				if(stack < 0 || lastType == null || !getCorrespondingType(lastType).isType(token.getType()))
+				{
+					return false;
+				}
+			}
+		}
+		
+		return stack == 0;
 	}
 	
 	public static boolean isNestingToken(String type)
@@ -17,19 +38,24 @@ public final class SequenceNesting
 		return TokenType.OPEN_PARENTHESIS.isType(type);
 	}
 	
+	public static boolean isCorrespondingToken(String type)
+	{
+		return TokenType.CLOSE_PARENTHESIS.isType(type);
+	}
+	
 	public static boolean isNestingToken(TokenType type)
 	{
 		return isNestingToken(type.name());
 	}
 	
-	public static TokenType getCorrespondingType(TokenType type) throws NestingException
+	public static TokenType getCorrespondingType(TokenType type)
 	{
 		if(isNestingToken(type))
 		{
 			return TokenType.CLOSE_PARENTHESIS;
 		}
 		
-		throw new NestingException("Invalid nesting item type: " + type);
+		return null;
 	}
 	
 	public static int getCorresponding(Listing<IToken> data, int index) throws NestingException

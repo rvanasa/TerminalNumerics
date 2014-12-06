@@ -9,8 +9,8 @@ import net.anasa.util.data.resolver.IToken;
 import net.anasa.util.data.resolver.MultiResolver;
 import net.anasa.util.data.resolver.ResolverException;
 import net.anasa.util.data.resolver.Token;
+import net.anasa.util.data.resolver.logic.BiResolver;
 import net.anasa.util.data.resolver.logic.CollectorResolver;
-import net.anasa.util.data.resolver.logic.ComplexResolver;
 import net.anasa.util.data.resolver.logic.IResolver;
 import rchs.tsa.math.MathNumber;
 import rchs.tsa.math.expression.ConstantType;
@@ -31,17 +31,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 	{
 		ExpressionResolver expression = this;
 		
-		add(new ComplexResolver<IExpression>("multiply")
-		{
-			Consumer<Listing<IToken>> a = new Consumer<>(new CollectorResolver(expression));
-			Consumer<Listing<IToken>> b = new Consumer<>(new CollectorResolver(expression));
-			
-			@Override
-			public IExpression resolve(ConsumerStorage storage) throws ResolverException
-			{
-				return expression.resolve(new Listing<>(storage.get(a)).add(new Token(TokenType.OPERATOR.name(), "*")).addAll(storage.get(b)));
-			}
-		});
+		add(new BiResolver<>("multiply", new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> expression.resolve(new Listing<>(a).add(new Token(TokenType.OPERATOR.name(), "*")).addAll(b))));
 		
 		add(new ITypeResolver<IExpression>()
 		{
@@ -90,7 +80,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 				return data.size() >= 2
 						&& TokenType.OPEN_PARENTHESIS.isType(data.get(0).getType())
 						&& TokenType.CLOSE_PARENTHESIS.isType(data.get(data.size() - 1).getType())
-						&& SequenceNesting.isNestingValid(data);
+						&& SequenceNesting.isNestingValid(data.shear(1, 1));
 			}
 			
 			@Override
@@ -155,62 +145,40 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 		});
 		
-		add(new ComplexResolver<IExpression>("function")
+		add(new BiResolver<>("function", new ITypeResolver<IFunction>()
 		{
-			Consumer<IFunction> function = new Consumer<>(new ITypeResolver<IFunction>()
+			@Override
+			public TokenType getType()
 			{
-				@Override
-				public TokenType getType()
-				{
-					return TokenType.FUNCTION;
-				}
-				
-				@Override
-				public IFunction resolve(IToken item) throws ResolverException
-				{
-					return FunctionType.get(item.getData());
-				}
-			});
-			
-			Consumer<IExpression> operand = new Consumer<>(expression);
+				return TokenType.FUNCTION;
+			}
 			
 			@Override
-			public IExpression resolve(ConsumerStorage storage) throws ResolverException
+			public IFunction resolve(IToken item) throws ResolverException
 			{
-				return new FunctionExpression(storage.get(function), storage.get(operand));
+				return FunctionType.get(item.getData());
 			}
-		});
+		}, expression, (function, operand) -> new FunctionExpression(function, operand)));
 		
-		add(new ComplexResolver<IExpression>("negative")
+		add(new BiResolver<>("negative", new ITypeResolver<OperatorType>()
 		{
-			Consumer<OperatorType> negative = new Consumer<>(new ITypeResolver<OperatorType>()
+			@Override
+			public TokenType getType()
 			{
-				@Override
-				public TokenType getType()
-				{
-					return TokenType.OPERATOR;
-				}
-				
-				@Override
-				public boolean matches(IToken item)
-				{
-					return StringHelper.equals(OperatorType.SUBTRACT.getSignature(), item.getData());
-				}
-				
-				@Override
-				public OperatorType resolve(IToken item) throws ResolverException
-				{
-					return OperatorType.SUBTRACT;
-				}
-			});
-			
-			Consumer<IExpression> operand = new Consumer<>(expression);
+				return TokenType.OPERATOR;
+			}
 			
 			@Override
-			public IExpression resolve(ConsumerStorage storage) throws ResolverException
+			public boolean matches(IToken item)
 			{
-				return new OperationExpression(storage.get(negative), new NumberExpression(new MathNumber(0)), storage.get(operand));
+				return StringHelper.equals(OperatorType.SUBTRACT.getSignature(), item.getData());
 			}
-		});
+			
+			@Override
+			public OperatorType resolve(IToken item) throws ResolverException
+			{
+				return OperatorType.SUBTRACT;
+			}
+		}, expression, (negative, operand) -> new OperationExpression(negative, new NumberExpression(new MathNumber(0)), operand)));
 	}
 }
