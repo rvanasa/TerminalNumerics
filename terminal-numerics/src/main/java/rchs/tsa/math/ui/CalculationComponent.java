@@ -6,6 +6,7 @@ import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.TextFieldComponent;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
+import rchs.tsa.math.MathException;
 
 public class CalculationComponent<T> extends PanelComponent
 {
@@ -24,7 +25,7 @@ public class CalculationComponent<T> extends PanelComponent
 		
 		this.callback = callback;
 		
-		input.addActionListener(() -> calculate());
+		input.addActionListener(this::calculate);
 		
 		UIBorderLayout layout = new UIBorderLayout();
 		layout.set(BorderPosition.LEFT, new PanelComponent(property));
@@ -46,12 +47,16 @@ public class CalculationComponent<T> extends PanelComponent
 	{
 		return callback;
 	}
-
+	
 	public void calculate()
 	{
 		try
 		{
 			getOutput().setValue(StringHelper.getOrNull(getCallback().calculate(getProperty().getValue())));
+		}
+		catch(MathException e)
+		{
+			getOutput().setValue(null);
 		}
 		catch(Exception e)
 		{
@@ -61,6 +66,6 @@ public class CalculationComponent<T> extends PanelComponent
 	
 	public interface ICalculationCallback<T>
 	{
-		public Object calculate(T input);
+		public Object calculate(T input) throws MathException;
 	}
 }

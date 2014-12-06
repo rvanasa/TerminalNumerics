@@ -24,7 +24,7 @@ public class LauncherTask extends ComplexTask
 		addTask(new Task(null, () -> {
 			try
 			{
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			}
 			catch(Exception e)
 			{

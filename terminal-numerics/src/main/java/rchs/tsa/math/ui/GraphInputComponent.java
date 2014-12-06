@@ -1,9 +1,5 @@
 package rchs.tsa.math.ui;
 
-import rchs.tsa.math.MathData;
-import rchs.tsa.math.MathException;
-import rchs.tsa.math.graph.Graph;
-import rchs.tsa.math.util.Evaluator;
 import net.anasa.util.Listing;
 import net.anasa.util.ui.ButtonComponent;
 import net.anasa.util.ui.LabelComponent;
@@ -13,6 +9,9 @@ import net.anasa.util.ui.TextFieldComponent;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 import net.anasa.util.ui.layout.UIVerticalLayout;
+import rchs.tsa.math.MathData;
+import rchs.tsa.math.graph.Graph;
+import rchs.tsa.math.util.Evaluator;
 
 public class GraphInputComponent extends PanelComponent
 {
@@ -59,16 +58,7 @@ public class GraphInputComponent extends PanelComponent
 		PanelComponent calcPanel = new PanelComponent();
 		calcPanel.setBorder(4, 2);
 		
-		calculations.add(new CalculationComponent<>("Solve for x", new TextFieldComponent(16), (data) -> {
-			try
-			{
-				return getSelectedGraph() != null ? getSelectedGraph().getFrom(Evaluator.evaluate(data).evaluate(getMathData())) : null;
-			}
-			catch(MathException e)
-			{
-				return null;
-			}
-		}));
+		calculations.add(new CalculationComponent<>("Solve for x", new TextFieldComponent(16), (data) -> getSelectedGraph() != null ? getSelectedGraph().getFrom(Evaluator.evaluate(data).evaluate(getMathData())) : null));
 		
 		UIVerticalLayout calcLayout = new UIVerticalLayout();
 		calcLayout.add(graphSelect);
