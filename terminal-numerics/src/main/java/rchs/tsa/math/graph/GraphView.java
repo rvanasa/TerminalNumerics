@@ -1,11 +1,11 @@
 package rchs.tsa.math.graph;
 
-import rchs.tsa.math.MathException;
-import rchs.tsa.math.MathNumber;
 import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
+import rchs.tsa.math.MathException;
+import rchs.tsa.math.MathNumber;
 
 public class GraphView
 {
@@ -110,14 +110,14 @@ public class GraphView
 		Double lastY = null;
 		for(MathNumber x : getInputValues(graph))
 		{
-			lastY = resolve(graph, x, values, lastX, lastY);
+			lastY = getValue(graph, x, values, lastX, lastY);
 			lastX = x.getValue();
 		}
 		
 		return values;
 	}
 	
-	private double resolve(Graph graph, MathNumber x, Mapping<MathNumber, MathNumber> values, Double lastX, Double lastY) throws MathException
+	protected double getValue(Graph graph, MathNumber x, Mapping<MathNumber, MathNumber> values, Double lastX, Double lastY) throws MathException
 	{
 		MathNumber y = graph.getFrom(x);
 		
@@ -130,7 +130,7 @@ public class GraphView
 		
 		if(flag)
 		{
-			resolve(graph, new MathNumber(x.getValue() - ((x.getValue() - lastX) / 2)), values, lastX, y.getValue());
+			getValue(graph, new MathNumber(x.getValue() - ((x.getValue() - lastX) / 2)), values, lastX, y.getValue());
 		}
 		
 		if(!y.isNaN())
@@ -140,7 +140,7 @@ public class GraphView
 		
 		if(flag)
 		{
-			resolve(graph, new MathNumber(x.getValue() + ((x.getValue() - lastX) / 2)), values, x.getValue(), y.getValue());
+			getValue(graph, new MathNumber(x.getValue() + ((x.getValue() - lastX) / 2)), values, x.getValue(), y.getValue());
 		}
 		
 		return y.getValue();
