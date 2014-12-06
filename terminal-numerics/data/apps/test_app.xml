@@ -7,6 +7,6 @@
 	<dependencies>app.test_app_3:1.10</dependencies>
 	<layout type="border">
 		<component pos="top" id="label" text="Graph interface for testing the expression resolver algorithms." />
-		<component pos="center" id="graph" display="(x(-x^.2));x^2sqrt(-x);1/sin(x^.5);(x+2)(x-3)" />
+		<component pos="center" id="graph" display="(x(-x^.2));x^2sqrt(-x);1/sin(x^.5);(x+2)(x-3);(x(-x^.2))/tan(x^.5)-(x+2)(x-3)" />
 	</layout>
 </app>
