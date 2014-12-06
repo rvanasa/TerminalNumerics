@@ -115,16 +115,22 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 					
 					IToken splitter = null;
 					
+					boolean last = false;
 					for(IToken item : SequenceNesting.stripNesting(data))
 					{
-						if(TokenType.OPERATOR.isType(item.getType()))
+						if(!last && TokenType.OPERATOR.isType(item.getType()))
 						{
 							OperatorType op = OperatorType.get(item.getData());
 							
 							if(splitter == null || !op.hasPriority(OperatorType.get(splitter.getData())))
 							{
 								splitter = item;
+								last = true;
 							}
+						}
+						else
+						{
+							last = false;
 						}
 					}
 					
