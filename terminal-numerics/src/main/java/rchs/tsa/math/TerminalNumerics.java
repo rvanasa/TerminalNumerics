@@ -44,7 +44,7 @@ public final class TerminalNumerics
 			File logFile = new File(logDir, "log.txt");
 			
 			long size = logFile.length();
-			if(logFile.exists() && size > 500 * 1000)
+			if(logFile.exists() && size > 1000 * 1000)
 			{
 				int ct = 0;
 				File destination;
