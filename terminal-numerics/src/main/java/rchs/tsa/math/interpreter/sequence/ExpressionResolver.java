@@ -87,23 +87,6 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 		});
 		
-		add(new IResolver<IExpression>()
-		{
-			@Override
-			public boolean matches(Listing<IToken> data)
-			{
-				return data.size() > 1
-						&& TokenType.FUNCTION.isType(data.get(0))
-						&& expression.matches(data.subList(1));
-			}
-			
-			@Override
-			public IExpression resolve(Listing<IToken> data) throws ResolverException
-			{
-				return new FunctionExpression(FunctionType.get(data.get(0).getData()), expression.resolve(data.subList(1)));
-			}
-		});
-		
 		IResolver<IExpression> operation = new IResolver<IExpression>()
 		{
 			@Override
@@ -168,6 +151,23 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 		add(new BiResolver<>("multiply", new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> operation.resolve(new Listing<>(a).add(new Token(TokenType.OPERATOR.name(), "*")).addAll(b))));
 		
 		add(operation);
+		
+		add(new IResolver<IExpression>()
+		{
+			@Override
+			public boolean matches(Listing<IToken> data)
+			{
+				return data.size() > 1
+						&& TokenType.FUNCTION.isType(data.get(0))
+						&& expression.matches(data.subList(1));
+			}
+			
+			@Override
+			public IExpression resolve(Listing<IToken> data) throws ResolverException
+			{
+				return new FunctionExpression(FunctionType.get(data.get(0).getData()), expression.resolve(data.subList(1)));
+			}
+		});
 		
 		add(new IResolver<IExpression>()
 		{
