@@ -9,6 +9,7 @@ import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
+import net.anasa.util.Pair;
 import net.anasa.util.data.resolver.IToken;
 import net.anasa.util.math.MathHelper;
 import net.anasa.util.ui.LabelComponent;
@@ -18,7 +19,6 @@ import net.anasa.util.ui.event.IComponentListener;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.MathNumber;
 import rchs.tsa.math.graph.Graph;
 import rchs.tsa.math.graph.GraphView;
 import rchs.tsa.math.interpreter.SequenceParser;
@@ -256,16 +256,17 @@ public class GraphComponent extends PanelComponent
 				Integer lastX = null;
 				Integer lastY = null;
 				
-				Mapping<MathNumber, MathNumber> map = getView().getValues(graph);
+				Mapping<Double, Double> map = getView().getValues(graph);
 				
-				for(MathNumber x : map.getKeys())
+				for(Pair<Double, Double> pair : map)
 				{
-					MathNumber y = map.get(x);
+					double x = pair.getKey();
+					double y = pair.getValue();
 					
-					int posX = getX(x.getValue());
-					int posY = getY(y.getValue());
+					int posX = getX(x);
+					int posY = getY(y);
 					
-					if(lastX != null && MathHelper.isContained(getY(y.getValue()), 0, getPanel().getHeight()))
+					if(lastX != null && MathHelper.isContained(getY(y), 0, getPanel().getHeight()))
 					{
 						g.drawLine(lastX, lastY, posX, posY);
 					}

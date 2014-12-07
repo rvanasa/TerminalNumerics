@@ -23,7 +23,7 @@ public class GraphView
 	
 	public GraphView(Bounds bounds)
 	{
-		this(bounds, 800);
+		this(bounds, 200);
 		
 		normalizeInterval();
 	}
@@ -92,7 +92,7 @@ public class GraphView
 		double min = getBounds().getMinX();
 		double max = getBounds().getMaxX();
 		
-		for(double n = min; n <= max; n += (max - min) / getResolution())
+		for(double n = min; n <= max; n += getBounds().getWidth() / getResolution())
 		{
 			list.add(new MathNumber(n));
 		}
@@ -100,11 +100,11 @@ public class GraphView
 		return list;
 	}
 	
-	public Mapping<MathNumber, MathNumber> getValues(Graph graph) throws MathException
+	public Mapping<Double, Double> getValues(Graph graph) throws MathException
 	{
 		Checks.checkNotNull(graph, new NullPointerException("Graph cannot be null"));
 		
-		Mapping<MathNumber, MathNumber> values = new Mapping<>();
+		Mapping<Double, Double> values = new Mapping<>();
 		
 		Double lastX = null;
 		Double lastY = null;
@@ -117,32 +117,32 @@ public class GraphView
 		return values;
 	}
 	
-	protected double getValue(Graph graph, MathNumber x, Mapping<MathNumber, MathNumber> values, Double lastX, Double lastY) throws MathException
+	protected double getValue(Graph graph, MathNumber x, Mapping<Double, Double> values, Double lastX, Double lastY) throws MathException
 	{
-		MathNumber y = graph.getFrom(x);
+		Double y = graph.getFrom(x).getValue();
 		
 		if(lastX != null && x.getValue() > 0 && lastX < 0)
 		{
-			values.put(new MathNumber(0), graph.getFrom(new MathNumber(0)));
+			values.put(0D, graph.getFrom(new MathNumber(0)).getValue());
 		}
 		
-		boolean flag = lastY != null && Math.abs(y.getValue() - lastY) > Math.pow(getBounds().getWidth(), 2) / getResolution() && Math.abs(y.getValue() - lastY) < getBounds().getHeight();
+		boolean flag = lastY != null && Math.abs(y - lastY) > 2 * getBounds().getWidth() / getResolution() && Math.abs(y - lastY) < getBounds().getHeight();
 		
 		if(flag)
 		{
-			getValue(graph, new MathNumber(x.getValue() - ((x.getValue() - lastX) / 2)), values, lastX, y.getValue());
+			getValue(graph, new MathNumber(x.getValue() - ((x.getValue() - lastX) / 2)), values, lastX, y);
 		}
 		
 		if(!y.isNaN())
 		{
-			values.put(x, y);
+			values.put(x.getValue(), y);
 		}
 		
 		if(flag)
 		{
-			getValue(graph, new MathNumber(x.getValue() + ((x.getValue() - lastX) / 2)), values, x.getValue(), y.getValue());
+			getValue(graph, new MathNumber(x.getValue() + ((x.getValue() - lastX) / 2)), values, x.getValue(), y);
 		}
 		
-		return y.getValue();
+		return y;
 	}
 }
