@@ -1,7 +1,8 @@
 package rchs.tsa.math.sequence;
 
+import java.util.function.Predicate;
+
 import net.anasa.util.Listing;
-import net.anasa.util.Listing.IListCondition;
 import net.anasa.util.StringHelper.NestingException;
 import net.anasa.util.data.resolver.IToken;
 
@@ -95,7 +96,7 @@ public final class SequenceNesting
 	{
 		Listing<IToken> list = new Listing<>(data);
 		
-		IListCondition<IToken> condition = (item) -> isNestingToken(item.getType());
+		Predicate<IToken> condition = (item) -> isNestingToken(item.getType());
 		
 		while(list.contains(condition))
 		{

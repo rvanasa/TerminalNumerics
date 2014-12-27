@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.util.Date;
 
 import net.anasa.util.Debug;
+import net.anasa.util.StringHelper;
 import net.anasa.util.data.io.FileHandler;
 import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.Properties;
@@ -23,7 +24,7 @@ public final class TerminalNumerics
 		
 		if(argv.length > 0)
 		{
-			settingsFile = new File(argv[0]);
+			settingsFile = new File(StringHelper.join(" ", argv));
 			if(!settingsFile.isFile())
 			{
 				throw new IOException("Could not find settings file at location: " + settingsFile.getPath());
