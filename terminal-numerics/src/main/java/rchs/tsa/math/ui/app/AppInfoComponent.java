@@ -6,7 +6,7 @@ import net.anasa.util.StringHelper;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.layout.UIVerticalLayout;
-import rchs.tsa.math.module.app.IApp;
+import rchs.tsa.math.resource.app.IApp;
 
 public class AppInfoComponent extends PanelComponent
 {
@@ -23,7 +23,7 @@ public class AppInfoComponent extends PanelComponent
 				.put("Name", app.getName())
 				.put("Version", app.getVersion().toString())
 				.put("Description", app.getDescription())
-				.put("Common Core Standards", StringHelper.join("; ", new Listing<>(app.getStandards()).conform((standard) -> standard.getName())));
+				.put("Common Core Standards", StringHelper.join("; ", new Listing<>(app.getStandards()).format((standard) -> standard.getName())));
 		
 		UIVerticalLayout layout = new UIVerticalLayout(2);
 		data.forEach((key, value) -> {

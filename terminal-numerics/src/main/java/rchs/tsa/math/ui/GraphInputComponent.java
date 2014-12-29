@@ -9,7 +9,7 @@ import net.anasa.util.ui.TextFieldComponent;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 import net.anasa.util.ui.layout.UIVerticalLayout;
-import rchs.tsa.math.MathData;
+import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.graph.Graph;
 import rchs.tsa.math.util.Evaluator;
 

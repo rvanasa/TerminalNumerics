@@ -1,8 +1,6 @@
 package rchs.tsa.math.expression;
 
-import rchs.tsa.math.MathData;
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.MathNumber;
 import net.anasa.util.Checks;
 
 public class VariableExpression extends MathExpression implements IVariable

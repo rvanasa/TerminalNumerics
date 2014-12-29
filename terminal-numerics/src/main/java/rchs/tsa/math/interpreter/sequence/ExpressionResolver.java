@@ -4,7 +4,7 @@ import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
-import net.anasa.util.StringHelper.NestingException;
+import net.anasa.util.data.FormatException;
 import net.anasa.util.data.resolver.IToken;
 import net.anasa.util.data.resolver.MultiResolver;
 import net.anasa.util.data.resolver.ResolverException;
@@ -12,17 +12,17 @@ import net.anasa.util.data.resolver.Token;
 import net.anasa.util.data.resolver.logic.BiResolver;
 import net.anasa.util.data.resolver.logic.CollectorResolver;
 import net.anasa.util.data.resolver.logic.IResolver;
-import rchs.tsa.math.MathNumber;
 import rchs.tsa.math.expression.ConstantType;
 import rchs.tsa.math.expression.FunctionExpression;
 import rchs.tsa.math.expression.FunctionType;
 import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.MathNumber;
 import rchs.tsa.math.expression.NumberExpression;
 import rchs.tsa.math.expression.OperationExpression;
 import rchs.tsa.math.expression.OperatorType;
 import rchs.tsa.math.expression.VariableExpression;
+import rchs.tsa.math.sequence.ExpressionTokenType;
 import rchs.tsa.math.sequence.SequenceNesting;
-import rchs.tsa.math.sequence.TokenType;
 
 public class ExpressionResolver extends MultiResolver<IExpression>
 {
@@ -33,9 +33,9 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 		add(new ITypeResolver<IExpression>()
 		{
 			@Override
-			public TokenType getType()
+			public ExpressionTokenType getType()
 			{
-				return TokenType.NUMBER;
+				return ExpressionTokenType.NUMBER;
 			}
 			
 			@Override
@@ -57,9 +57,9 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 		add(new ITypeResolver<IExpression>()
 		{
 			@Override
-			public TokenType getType()
+			public ExpressionTokenType getType()
 			{
-				return TokenType.VARIABLE;
+				return ExpressionTokenType.VARIABLE;
 			}
 			
 			@Override
@@ -75,8 +75,8 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			public boolean matches(Listing<IToken> data)
 			{
 				return data.size() >= 2
-						&& TokenType.OPEN_PARENTHESIS.isType(data.get(0).getType())
-						&& TokenType.CLOSE_PARENTHESIS.isType(data.get(data.size() - 1).getType())
+						&& data.get(0).getType() == ExpressionTokenType.OPEN_PARENTHESIS
+						&& data.get(data.size() - 1).getType() == ExpressionTokenType.CLOSE_PARENTHESIS
 						&& SequenceNesting.isNestingValid(data.shear(1, 1));
 			}
 			
@@ -108,7 +108,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			{
 				try
 				{
-					Checks.check(SequenceNesting.isNestingValid(data) && SequenceNesting.stripNesting(data).contains((item) -> TokenType.OPERATOR.isType(item.getType())),
+					Checks.check(SequenceNesting.isNestingValid(data) && SequenceNesting.stripNesting(data).contains((item) -> item.getType() == ExpressionTokenType.OPERATOR),
 							new ResolverException("Invalid operator input data: " + data));
 					
 					IToken splitter = null;
@@ -116,7 +116,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 					boolean last = false;
 					for(IToken item : SequenceNesting.stripNesting(data))
 					{
-						if(!last && TokenType.OPERATOR.isType(item.getType()))
+						if(!last && item.getType() == ExpressionTokenType.OPERATOR)
 						{
 							OperatorType op = OperatorType.get(item.getData());
 							
@@ -141,14 +141,14 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 					
 					return new OperationExpression(OperatorType.get(splitter.getData()), a, b);
 				}
-				catch(NestingException e)
+				catch(FormatException e)
 				{
 					throw new ResolverException(e);
 				}
 			}
 		};
 		
-		add(new BiResolver<>("multiply", new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> operation.resolve(new Listing<>(a).add(new Token(TokenType.OPERATOR.name(), "*")).addAll(b))));
+		add(new BiResolver<>("multiply", new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> operation.resolve(new Listing<>(a).add(new Token(ExpressionTokenType.OPERATOR, "*")).addAll(b))));
 		
 		add(operation);
 		
@@ -158,7 +158,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			public boolean matches(Listing<IToken> data)
 			{
 				return data.size() > 1
-						&& TokenType.FUNCTION.isType(data.get(0))
+						&& data.get(0).getType() == ExpressionTokenType.FUNCTION
 						&& expression.matches(data.subList(1));
 			}
 			

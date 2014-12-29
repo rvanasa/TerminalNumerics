@@ -5,7 +5,7 @@ import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.MathNumber;
+import rchs.tsa.math.expression.MathNumber;
 
 public class GraphView
 {

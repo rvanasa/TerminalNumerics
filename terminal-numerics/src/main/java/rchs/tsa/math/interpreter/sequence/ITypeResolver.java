@@ -1,15 +1,14 @@
 package rchs.tsa.math.interpreter.sequence;
 
-import rchs.tsa.math.sequence.TokenType;
 import net.anasa.util.Listing;
-import net.anasa.util.StringHelper;
 import net.anasa.util.data.resolver.IToken;
 import net.anasa.util.data.resolver.ResolverException;
 import net.anasa.util.data.resolver.logic.IResolver;
+import rchs.tsa.math.sequence.ExpressionTokenType;
 
 public interface ITypeResolver<K> extends IResolver<K>
 {
-	public TokenType getType();
+	public ExpressionTokenType getType();
 	
 	@Override
 	default boolean matches(Listing<IToken> data)
@@ -20,7 +19,7 @@ public interface ITypeResolver<K> extends IResolver<K>
 		}
 		
 		IToken item = data.get(0);
-		return StringHelper.equals(getType().name(), item.getType()) && matches(item);
+		return getType() == item.getType() && matches(item);
 	}
 	
 	default boolean matches(IToken item)

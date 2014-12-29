@@ -1,7 +1,7 @@
 package rchs.tsa.math.ui;
 
-import rchs.tsa.math.MathData;
 import rchs.tsa.math.MathException;
+import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.util.Evaluator;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.TextFieldComponent;

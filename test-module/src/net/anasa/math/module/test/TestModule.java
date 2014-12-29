@@ -1,6 +1,6 @@
 package net.anasa.math.module.test;
 
-import rchs.tsa.math.module.IModuleDelegate;
+import rchs.tsa.math.resource.module.IModuleDelegate;
 
 public class TestModule implements IModuleDelegate
 {

@@ -13,7 +13,7 @@ import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.UI;
 import rchs.tsa.math.launcher.MathLauncher;
-import rchs.tsa.math.module.context.ModuleContext;
+import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.ui.MathContainerComponent;
 
 public final class TerminalNumerics

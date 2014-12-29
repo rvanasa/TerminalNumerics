@@ -14,10 +14,9 @@ import net.anasa.util.ui.menu.MenuBarComponent;
 import net.anasa.util.ui.menu.MenuComponent;
 import net.anasa.util.ui.menu.SeperatorComponent;
 import rchs.tsa.math.TerminalNumerics;
-import rchs.tsa.math.module.context.ModuleContext;
+import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.ui.app.AppListComponent;
 import rchs.tsa.math.ui.standard.StandardModelComponent;
-import rchs.tsa.math.util.StateStandards;
 
 public class MathContainerComponent extends PanelComponent
 {
@@ -27,7 +26,7 @@ public class MathContainerComponent extends PanelComponent
 		layout.set(BorderPosition.TOP, new MenuBarComponent(new MenuComponent[] {
 				new MenuComponent("Options", new IComponent[] {
 						new MenuActionComponent("View Software License", () -> new WindowComponent("Software License", new LicenseComponent()).display()),
-						new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(680, 600, new StandardModelComponent(StateStandards.getModel("CCSS")))).display()),
+						new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(680, 600, new StandardModelComponent(context.getStandards("CCSS")))).display()),
 						new SeperatorComponent(),
 						new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
 				}), new MenuComponent("Advanced", new IComponent[] {

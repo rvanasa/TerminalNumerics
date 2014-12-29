@@ -1,10 +1,10 @@
 package rchs.tsa.math.ui.xml;
 
-import rchs.tsa.math.module.ModuleException;
-import rchs.tsa.math.module.context.ModuleContext;
 import net.anasa.util.data.FormatException;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
+import rchs.tsa.math.resource.module.ModuleException;
+import rchs.tsa.math.resource.module.context.ModuleContext;
 
 public class ComponentNode implements ILayoutNode
 {
@@ -32,7 +32,7 @@ public class ComponentNode implements ILayoutNode
 	{
 		try
 		{
-			return context.getComponents().create(getID(), getProps());
+			return context.createComponent(getID(), getProps());
 		}
 		catch(ModuleException e)
 		{

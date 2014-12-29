@@ -1,14 +1,8 @@
 package rchs.tsa.math.io.xml;
 
+import java.io.IOException;
 import java.io.InputStream;
 
-import rchs.tsa.math.ui.xml.AppNode;
-import rchs.tsa.math.ui.xml.ComponentNode;
-import rchs.tsa.math.ui.xml.ILayoutNode;
-import rchs.tsa.math.ui.xml.LayoutNode;
-import rchs.tsa.math.ui.xml.LayoutType;
-import rchs.tsa.math.ui.xml.builder.ILayoutBuilder;
-import rchs.tsa.math.ui.xml.builder.LayoutBuilder;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
@@ -16,7 +10,13 @@ import net.anasa.util.data.FormatException;
 import net.anasa.util.data.xml.IXmlLoader;
 import net.anasa.util.data.xml.XmlElement;
 import net.anasa.util.data.xml.XmlFile;
-import net.anasa.util.data.xml.XmlFile.XmlException;
+import rchs.tsa.math.ui.xml.AppNode;
+import rchs.tsa.math.ui.xml.ComponentNode;
+import rchs.tsa.math.ui.xml.ILayoutNode;
+import rchs.tsa.math.ui.xml.LayoutNode;
+import rchs.tsa.math.ui.xml.LayoutType;
+import rchs.tsa.math.ui.xml.builder.ILayoutBuilder;
+import rchs.tsa.math.ui.xml.builder.LayoutBuilder;
 
 public class XmlLayoutLoader implements IXmlLoader<ILayoutNode>
 {
@@ -59,17 +59,10 @@ public class XmlLayoutLoader implements IXmlLoader<ILayoutNode>
 		return builder.getFrom(element);
 	}
 	
-	public ILayoutNode load(InputStream stream) throws FormatException
+	public ILayoutNode load(InputStream stream) throws IOException, FormatException
 	{
-		try
-		{
-			XmlFile xml = XmlFile.read(stream);
-			
-			return load(xml.getBaseElement());
-		}
-		catch(XmlException e)
-		{
-			throw new FormatException(e);
-		}
+		XmlFile xml = XmlFile.read(stream);
+		
+		return load(xml.getBaseElement());
 	}
 }

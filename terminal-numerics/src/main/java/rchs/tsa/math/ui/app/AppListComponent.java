@@ -2,8 +2,6 @@ package rchs.tsa.math.ui.app;
 
 import javax.swing.BorderFactory;
 
-import rchs.tsa.math.module.app.IApp;
-import rchs.tsa.math.module.context.ModuleContext;
 import net.anasa.util.Listing;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.ScrollComponent;
@@ -12,6 +10,8 @@ import net.anasa.util.ui.UI;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 import net.anasa.util.ui.layout.UIVerticalLayout;
+import rchs.tsa.math.resource.app.IApp;
+import rchs.tsa.math.resource.module.context.ModuleContext;
 
 public class AppListComponent extends PanelComponent
 {
@@ -25,7 +25,7 @@ public class AppListComponent extends PanelComponent
 	
 	public AppListComponent(ModuleContext context)
 	{
-		this(context.getApps().getValues());
+		this(context.getApps());
 	}
 	
 	public AppListComponent(Listing<IApp> apps)

@@ -1,14 +1,5 @@
 package rchs.tsa.math.interpreter;
 
-import rchs.tsa.math.MathException;
-import rchs.tsa.math.expression.ConstantType;
-import rchs.tsa.math.expression.FunctionType;
-import rchs.tsa.math.expression.IExpression;
-import rchs.tsa.math.expression.OperatorType;
-import rchs.tsa.math.interpreter.sequence.ExpressionResolver;
-import rchs.tsa.math.interpreter.sequence.pattern.RegexTokenPattern;
-import rchs.tsa.math.interpreter.sequence.pattern.TokenPattern;
-import rchs.tsa.math.sequence.TokenType;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.data.FormatException;
@@ -16,21 +7,30 @@ import net.anasa.util.data.parser.IParserPattern;
 import net.anasa.util.data.parser.PatternParser;
 import net.anasa.util.data.resolver.IToken;
 import net.anasa.util.data.resolver.ResolverException;
+import rchs.tsa.math.MathException;
+import rchs.tsa.math.expression.ConstantType;
+import rchs.tsa.math.expression.FunctionType;
+import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.OperatorType;
+import rchs.tsa.math.interpreter.pattern.RegexTokenPattern;
+import rchs.tsa.math.interpreter.pattern.TokenPattern;
+import rchs.tsa.math.interpreter.sequence.ExpressionResolver;
+import rchs.tsa.math.sequence.ExpressionTokenType;
 
 public class SequenceParser extends PatternParser<IToken> implements IMathParser
 {
 	public static final SequenceParser EXPRESSION = new SequenceParser()
-			.add(new RegexTokenPattern("\\(", TokenType.OPEN_PARENTHESIS))
-			.add(new RegexTokenPattern("\\)", TokenType.CLOSE_PARENTHESIS))
-			.add(new RegexTokenPattern("=", TokenType.EQUALS))
-			.add(new RegexTokenPattern("<=", TokenType.LESS_THAN_EQUAL))
-			.add(new RegexTokenPattern(">=", TokenType.GREATER_THAN_EQUAL))
-			.add(new RegexTokenPattern("<", TokenType.LESS_THAN))
-			.add(new RegexTokenPattern(">", TokenType.GREATER_THAN))
-			.add(new TokenPattern(TokenType.FUNCTION, (data) -> new Listing<>(FunctionType.values()).checkAny((type) -> type.getName().equals(data.toLowerCase()))))
-			.add(new TokenPattern(TokenType.OPERATOR, (data) -> OperatorType.isOperator(data)))
-			.add(new TokenPattern(TokenType.NUMBER, (data) -> NumberHelper.isDouble(data) || new Listing<>(ConstantType.values()).checkAny((type) -> type.getName().equals(data.toLowerCase()))))
-			.add(new RegexTokenPattern("[a-zA-Z_]*", TokenType.VARIABLE));
+			.add(new RegexTokenPattern("\\(", ExpressionTokenType.OPEN_PARENTHESIS))
+			.add(new RegexTokenPattern("\\)", ExpressionTokenType.CLOSE_PARENTHESIS))
+			.add(new RegexTokenPattern("=", ExpressionTokenType.EQUALS))
+			.add(new RegexTokenPattern("<=", ExpressionTokenType.LESS_THAN_EQUAL))
+			.add(new RegexTokenPattern(">=", ExpressionTokenType.GREATER_THAN_EQUAL))
+			.add(new RegexTokenPattern("<", ExpressionTokenType.LESS_THAN))
+			.add(new RegexTokenPattern(">", ExpressionTokenType.GREATER_THAN))
+			.add(new TokenPattern(ExpressionTokenType.FUNCTION, (data) -> new Listing<>(FunctionType.values()).checkAny((type) -> type.getName().equals(data.toLowerCase()))))
+			.add(new TokenPattern(ExpressionTokenType.OPERATOR, (data) -> OperatorType.isOperator(data)))
+			.add(new TokenPattern(ExpressionTokenType.NUMBER, (data) -> NumberHelper.isDouble(data) || new Listing<>(ConstantType.values()).checkAny((type) -> type.getName().equals(data.toLowerCase()))))
+			.add(new RegexTokenPattern("[a-zA-Z_]*", ExpressionTokenType.VARIABLE));
 	
 	public SequenceParser add(IParserPattern<IToken> pattern)
 	{

@@ -1,9 +1,9 @@
 package rchs.tsa.math.graph;
 
-import rchs.tsa.math.MathData;
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.MathNumber;
 import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.MathData;
+import rchs.tsa.math.expression.MathNumber;
 
 public class Graph
 {

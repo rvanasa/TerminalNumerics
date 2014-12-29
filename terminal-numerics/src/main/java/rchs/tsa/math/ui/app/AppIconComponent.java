@@ -11,7 +11,7 @@ import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.WindowComponent;
 import net.anasa.util.ui.event.ClickEvent.ButtonType;
 import net.anasa.util.ui.menu.MenuActionComponent;
-import rchs.tsa.math.module.app.IApp;
+import rchs.tsa.math.resource.app.IApp;
 
 public class AppIconComponent extends LabelComponent
 {

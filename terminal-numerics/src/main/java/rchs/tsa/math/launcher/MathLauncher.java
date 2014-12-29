@@ -14,7 +14,7 @@ import net.anasa.util.ui.MessageComponent;
 import net.anasa.util.ui.SplashScreenComponent;
 import net.anasa.util.ui.WindowComponent;
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.module.context.ModuleContext;
+import rchs.tsa.math.resource.module.context.ModuleContext;
 
 public class MathLauncher
 {

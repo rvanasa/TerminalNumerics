@@ -1,11 +1,11 @@
 package rchs.tsa.math.standard.properties;
 
+import net.anasa.util.Listing;
+import net.anasa.util.data.properties.Properties;
 import rchs.tsa.math.standard.IStandard;
 import rchs.tsa.math.standard.IStandardDomain;
 import rchs.tsa.math.standard.IStandardGradeLevel;
 import rchs.tsa.math.standard.Standard;
-import net.anasa.util.Listing;
-import net.anasa.util.data.properties.Properties;
 
 public class PropsStandardDomain extends PropsStandardNode implements IStandardDomain
 {
@@ -33,6 +33,6 @@ public class PropsStandardDomain extends PropsStandardNode implements IStandardD
 	@Override
 	public Listing<IStandard> getStandards()
 	{
-		return new Listing<>(getProps().getKeys()).conform((key) -> new Standard(this, key, getProps().getString(key)));
+		return new Listing<>(getProps().getKeys()).format((key) -> new Standard(this, key, getProps().getString(key, "No description")));
 	}
 }

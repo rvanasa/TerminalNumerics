@@ -1,6 +1,6 @@
 package rchs.tsa.math.graph;
 
-import rchs.tsa.math.MathNumber;
+import rchs.tsa.math.expression.MathNumber;
 import net.anasa.util.StringHelper;
 
 public class NumberSystem

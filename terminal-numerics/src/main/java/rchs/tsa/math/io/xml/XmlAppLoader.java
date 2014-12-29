@@ -2,11 +2,11 @@ package rchs.tsa.math.io.xml;
 
 import java.awt.Image;
 
-import rchs.tsa.math.module.Dependency;
-import rchs.tsa.math.module.Version;
-import rchs.tsa.math.module.app.App;
-import rchs.tsa.math.module.app.IApp;
-import rchs.tsa.math.module.context.ModuleContext;
+import rchs.tsa.math.resource.Dependency;
+import rchs.tsa.math.resource.Version;
+import rchs.tsa.math.resource.app.App;
+import rchs.tsa.math.resource.app.IApp;
+import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.standard.IStandard;
 import rchs.tsa.math.ui.xml.ILayoutNode;
 import net.anasa.util.Listing;

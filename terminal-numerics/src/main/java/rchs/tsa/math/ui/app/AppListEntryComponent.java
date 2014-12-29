@@ -4,8 +4,6 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 
-import rchs.tsa.math.module.ModuleException;
-import rchs.tsa.math.module.app.IApp;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 import net.anasa.util.math.Vector2;
@@ -14,6 +12,8 @@ import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.ScrollComponent;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
+import rchs.tsa.math.resource.app.IApp;
+import rchs.tsa.math.resource.module.ModuleException;
 
 public class AppListEntryComponent extends PanelComponent
 {
@@ -41,7 +41,7 @@ public class AppListEntryComponent extends PanelComponent
 		detailLayout.apply(details);
 		
 		LabelComponent standards = new LabelComponent("<html>" + StringHelper.join("<br/>", new Listing<>(getApp().getStandards())
-				.conform((standard) -> standard.getName())));
+				.format((standard) -> standard.getName())));
 		standards.setBorder(24, 0);
 		ScrollComponent items = new ScrollComponent(standards);
 		items.removeBorder();
@@ -51,7 +51,7 @@ public class AppListEntryComponent extends PanelComponent
 		layout.set(BorderPosition.CENTER, details);
 		layout.set(BorderPosition.RIGHT, items);
 		layout.apply(this);
-
+		
 		setBorder(BorderFactory.createEtchedBorder());
 		
 		Vector2 size = new Vector2(480, 40);

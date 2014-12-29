@@ -1,6 +1,6 @@
 package rchs.tsa.math.ui.app;
 
-import rchs.tsa.math.module.app.IApp;
+import rchs.tsa.math.resource.app.IApp;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.layout.UIBorderLayout;
