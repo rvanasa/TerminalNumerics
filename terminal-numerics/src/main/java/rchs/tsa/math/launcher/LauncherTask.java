@@ -37,6 +37,8 @@ public class LauncherTask extends ComplexTask
 			}
 		}));
 		
+		addTask(new DownloadTask(context));
+		
 		for(ResourceType type : ResourceType.values())
 		{
 			addTask(new DirectoryTask("Loading " + type.getPath(), new File(dir, "resources/" + type.getPath()), (file) -> file.getName().endsWith("." + type.getExtension()), (file) -> {

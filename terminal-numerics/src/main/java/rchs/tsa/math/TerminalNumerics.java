@@ -6,13 +6,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
 
+import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import net.anasa.util.StringHelper;
-import net.anasa.util.data.io.FileHandler;
 import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.UI;
 import rchs.tsa.math.launcher.MathLauncher;
+import rchs.tsa.math.resource.module.ModuleException;
+import rchs.tsa.math.resource.module.context.BaseModuleContext;
 import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.ui.MathContainerComponent;
 
@@ -81,7 +83,7 @@ public final class TerminalNumerics
 			
 			new MathLauncher(getContext(), () -> new MathContainerComponent(getContext()));
 		}
-		catch(Exception e)
+		catch(Throwable e)
 		{
 			UI.sendError("The software encountered a fatal error!", e);
 			e.printStackTrace();
@@ -103,12 +105,12 @@ public final class TerminalNumerics
 	
 	public static Properties getSettings()
 	{
-		return getInstance().settings;
+		return getContext().getSettings();
 	}
 	
 	public static File getDirectory()
 	{
-		return getInstance().directory;
+		return getContext().getDirectory();
 	}
 	
 	public static ModuleContext getContext()
@@ -116,22 +118,23 @@ public final class TerminalNumerics
 		return getInstance().context;
 	}
 	
+	public void setContext(ModuleContext context)
+	{
+		Checks.checkNotNull(context, "ModuleContext cannot be null");
+		
+		this.context = context;
+	}
+	
 	private final String license;
 	
-	private final Properties settings;
-	private final File directory;
+	private ModuleContext context;
 	
-	private final ModuleContext context;
-	
-	private TerminalNumerics(File settingsFile) throws IOException
+	private TerminalNumerics(File settingsFile) throws IOException, ModuleException
 	{
 		INSTANCE = this;
 		
 		license = IOHelper.read(getClass().getResourceAsStream("/license.txt"));
 		
-		settings = new FileHandler<>(settingsFile, Properties.FORMAT).read();
-		directory = new File(settings.getString("directory", settingsFile.getParent()));
-		
-		context = new ModuleContext();
+		setContext(new BaseModuleContext(settingsFile));
 	}
 }
