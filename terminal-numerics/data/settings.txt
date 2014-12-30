@@ -1,1 +1,2 @@
+resource_download: false
 resource_url: http://107.2.175.157/terminal-numerics/resources

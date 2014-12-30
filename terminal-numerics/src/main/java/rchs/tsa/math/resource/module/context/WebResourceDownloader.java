@@ -28,7 +28,7 @@ public class WebResourceDownloader implements IResourceDownloader
 	{
 		URL url = new URL(getPath() + "?type=" + type.getPath());
 		
-		return new Listing<>(new UrlReader<>(url, IFormat.STRING).read().split("\n"));
+		return new Listing<>(new UrlReader<>(url, IFormat.STRING).read().split("\n")).filter((id) -> !id.isEmpty());
 	}
 
 	@Override

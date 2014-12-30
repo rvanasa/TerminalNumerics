@@ -32,7 +32,7 @@ public class DownloadTask extends ComplexTask
 						}
 						catch(ModuleException e)
 						{
-							UI.sendError("Failed to install resources!", e);
+							UI.sendError("Failed to install resource: " + id, e);
 						}
 					}
 				}

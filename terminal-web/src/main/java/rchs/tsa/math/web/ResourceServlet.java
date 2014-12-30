@@ -14,14 +14,10 @@ import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.FormatException;
 import net.anasa.util.data.io.IOHelper;
-import net.anasa.util.data.properties.Properties;
-import net.anasa.util.function.ExceptedSupplier;
 import rchs.tsa.math.resource.ResourceType;
 
 public class ResourceServlet extends HttpServlet
 {
-	private final Properties settings = Properties.getFrom(new ExceptedSupplier<>(() -> new FileInputStream("terminal-web.props")).get(), new Properties());
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
@@ -40,7 +36,7 @@ public class ResourceServlet extends HttpServlet
 			}
 			else
 			{
-				out.print(StringHelper.join("\n", Listing.create(getResourceDirectory(type).listFiles())
+				out.print(StringHelper.join("\n", new Listing<>(getResourceDirectory(type).listFiles())
 						.format((file) -> file.getName())));
 			}
 		}
@@ -52,6 +48,6 @@ public class ResourceServlet extends HttpServlet
 	
 	protected File getResourceDirectory(ResourceType type)
 	{
-		return new File(settings.getString("resources", "resources"), type.getPath());
+		return new File(System.getProperty("catalina.home") + "/webapps/terminal-numerics/resources", type.getPath());
 	}
 }

@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 
+import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.data.FormatException;
@@ -46,9 +47,16 @@ public class BaseModuleContext implements ModuleContext
 			settings = new FileHandler<>(settingsFile, Properties.FORMAT).read();
 			directory = new File(settings.getString("directory", settingsFile.getParent()));
 			
-			downloader = new WebResourceDownloader(settings.getString("resource_url"));
+			if(getSettings().getBoolean("resource_download", false))
+			{
+				downloader = new WebResourceDownloader(settings.getString("resource_url"));
+			}
+			else
+			{
+				downloader = null;
+			}
 		}
-		catch(IOException | FormatException e)
+		catch(Exception e)
 		{
 			throw new ModuleException(e);
 		}
@@ -237,6 +245,8 @@ public class BaseModuleContext implements ModuleContext
 	@Override
 	public void downloadResource(String id, ResourceType type) throws ModuleException
 	{
+		Checks.checkNotNull(getDownloader(), new ModuleException("Resource downloader is not configured"));
+		
 		if(!id.endsWith("." + type.getExtension()))
 		{
 			id += "." + type.getExtension();
@@ -244,7 +254,7 @@ public class BaseModuleContext implements ModuleContext
 		
 		try(InputStream input = getDownloader().downloadResource(id, type))
 		{
-			File target = new File(getDirectory(), "resources/" + id);
+			File target = new File(getDirectory(), "resources/" + "/" + type.getPath() + "/" + id);
 			Files.copy(input, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			
 			type.register(this, target);
