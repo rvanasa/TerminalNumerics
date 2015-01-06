@@ -36,7 +36,7 @@ public class MathLauncher
 			screen.getProgressBar().setForeground(new Color(0x444444));
 			screen.display();
 		}
-		catch(Exception e)
+		catch(Throwable e)
 		{
 			e.printStackTrace();
 			new MessageComponent("An internal error has occurred. Please notify the developers.\n(" + e + ")").display();

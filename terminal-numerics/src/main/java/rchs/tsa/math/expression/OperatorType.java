@@ -1,6 +1,5 @@
 package rchs.tsa.math.expression;
 
-
 public enum OperatorType
 {
 	ADD(1, '+', (a, b, data) -> a + b),
@@ -37,8 +36,8 @@ public enum OperatorType
 	{
 		return getPriority() > other.getPriority();
 	}
-
-	public MathNumber getResult(MathNumber a, MathNumber b, MathData data)
+	
+	public INumber getResult(INumber a, INumber b, MathData data)
 	{
 		return new MathNumber(handle.getResult(a.getValue(), b.getValue(), data));
 	}

@@ -2,6 +2,7 @@ package rchs.tsa.math.graph;
 
 import rchs.tsa.math.MathException;
 import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.INumber;
 import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.expression.MathNumber;
 
@@ -47,17 +48,17 @@ public class Graph
 		return data;
 	}
 	
-	public MathNumber getFrom(MathNumber x) throws MathException
+	public INumber getFrom(INumber x) throws MathException
 	{
 		getData().setVariable(getAxis().getKey(), x);
 		
-		MathNumber y = getExpression().evaluate(getData());
+		INumber y = getExpression().evaluate(getData());
 		
 		for(IConstraint constraint : getConstraints())
 		{
 			if(constraint.isValid(x, y))
 			{
-				return new MathNumber(Double.NaN);
+				return MathNumber.NaN;
 			}
 		}
 		
@@ -72,6 +73,6 @@ public class Graph
 	
 	public interface IConstraint
 	{
-		public boolean isValid(MathNumber x, MathNumber y);
+		public boolean isValid(INumber x, INumber y);
 	}	
 }

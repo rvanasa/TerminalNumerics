@@ -4,7 +4,7 @@ import rchs.tsa.math.MathException;
 
 public interface IExpression
 {
-	public MathNumber evaluate(MathData data) throws MathException;
+	public INumber evaluate(MathData data) throws MathException;
 	
 	public String getStringValue();
 	

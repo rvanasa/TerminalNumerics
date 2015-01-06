@@ -1,11 +1,11 @@
 package rchs.tsa.math.resource.module.context;
 
-import rchs.tsa.math.resource.module.IModule;
-import rchs.tsa.math.resource.module.ModuleException;
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
+import rchs.tsa.math.resource.module.IModule;
+import rchs.tsa.math.resource.module.ModuleException;
 
 public class ModuleRegister implements IRegister<IModule>
 {
@@ -33,7 +33,7 @@ public class ModuleRegister implements IRegister<IModule>
 		{
 			module.getDelegate().init();
 		}
-		catch(Exception e)
+		catch(Throwable e)
 		{
 			throw new ModuleException("Failed to initialize module: " + module.getID(), e);
 		}

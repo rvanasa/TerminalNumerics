@@ -49,7 +49,7 @@ public enum ResourceType
 		}
 		catch(Exception e)
 		{
-			throw new ModuleException("Failed to register file resource: " + file.getName() + " (" + name() + ")", e);
+			throw new ModuleException(e);
 		}
 	}
 	

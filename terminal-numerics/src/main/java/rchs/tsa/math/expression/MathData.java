@@ -1,11 +1,11 @@
 package rchs.tsa.math.expression;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MathData
 {
-	private final HashMap<String, MathNumber> variables = new LinkedHashMap<>();
+	private final Map<String, INumber> variables = new LinkedHashMap<>();
 	
 	private boolean degrees = false;
 	
@@ -19,12 +19,12 @@ public class MathData
 		return variables.containsKey(key);
 	}
 	
-	public MathNumber getVariable(String key)
+	public INumber getVariable(String key)
 	{
 		return variables.get(key);
 	}
 	
-	public void setVariable(String key, MathNumber value)
+	public void setVariable(String key, INumber value)
 	{
 		variables.put(key, value);
 	}

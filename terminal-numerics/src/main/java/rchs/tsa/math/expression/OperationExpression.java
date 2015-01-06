@@ -31,7 +31,7 @@ public class OperationExpression extends MathExpression
 	}
 
 	@Override
-	public MathNumber evaluate(MathData data) throws MathException
+	public INumber evaluate(MathData data) throws MathException
 	{
 		return getOperator().getResult(getA().evaluate(data), getB().evaluate(data), data);
 	}

@@ -1,6 +1,6 @@
 package rchs.tsa.math.graph;
 
-import rchs.tsa.math.expression.MathNumber;
+import rchs.tsa.math.expression.INumber;
 import net.anasa.util.StringHelper;
 
 public class NumberSystem
@@ -24,11 +24,11 @@ public class NumberSystem
 	
 	public class Coordinate
 	{
-		private final MathNumber[] coords;
+		private final INumber[] coords;
 		
-		public Coordinate(NumberSystem system, MathNumber... coords)
+		public Coordinate(NumberSystem system, INumber... coords)
 		{
-			this.coords = new MathNumber[getDimensions()];
+			this.coords = new INumber[getDimensions()];
 			
 			for(int i = 0; i < coords.length; i++)
 			{
@@ -36,7 +36,7 @@ public class NumberSystem
 			}
 		}
 		
-		public MathNumber[] getCoords()
+		public INumber[] getCoords()
 		{
 			return coords;
 		}
@@ -51,12 +51,12 @@ public class NumberSystem
 			return NumberSystem.this.getAxes()[dimension];
 		}
 		
-		public MathNumber get(int dimension)
+		public INumber get(int dimension)
 		{
 			return getCoords()[dimension];
 		}
 		
-		public void set(int dimension, MathNumber number)
+		public void set(int dimension, INumber number)
 		{
 			getCoords()[dimension] = number;
 		}

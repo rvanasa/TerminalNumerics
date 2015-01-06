@@ -7,12 +7,12 @@ public class ModuleException extends Exception
 		super(message);
 	}
 	
-	public ModuleException(Exception e)
+	public ModuleException(Throwable e)
 	{
 		super(e);
 	}
 	
-	public ModuleException(String message, Exception e)
+	public ModuleException(String message, Throwable e)
 	{
 		super(message, e);
 	}

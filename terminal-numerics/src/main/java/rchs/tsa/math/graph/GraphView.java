@@ -5,6 +5,7 @@ import net.anasa.util.Checks;
 import net.anasa.util.Listing;
 import net.anasa.util.Mapping;
 import rchs.tsa.math.MathException;
+import rchs.tsa.math.expression.INumber;
 import rchs.tsa.math.expression.MathNumber;
 
 public class GraphView
@@ -85,9 +86,9 @@ public class GraphView
 		return this;
 	}
 	
-	public Listing<MathNumber> getInputValues(Graph graph)
+	public Listing<INumber> getInputValues(Graph graph)
 	{
-		Listing<MathNumber> list = new Listing<>();
+		Listing<INumber> list = new Listing<>();
 		
 		double min = getBounds().getMinX();
 		double max = getBounds().getMaxX();
@@ -108,7 +109,7 @@ public class GraphView
 		
 		Double lastX = null;
 		Double lastY = null;
-		for(MathNumber x : getInputValues(graph))
+		for(INumber x : getInputValues(graph))
 		{
 			lastY = getValue(graph, x, values, lastX, lastY);
 			lastX = x.getValue();
@@ -117,7 +118,7 @@ public class GraphView
 		return values;
 	}
 	
-	protected double getValue(Graph graph, MathNumber x, Mapping<Double, Double> values, Double lastX, Double lastY) throws MathException
+	protected double getValue(Graph graph, INumber x, Mapping<Double, Double> values, Double lastX, Double lastY) throws MathException
 	{
 		Double y = graph.getFrom(x).getValue();
 		

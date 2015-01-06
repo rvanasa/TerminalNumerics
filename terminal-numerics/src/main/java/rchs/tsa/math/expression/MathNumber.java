@@ -2,8 +2,10 @@ package rchs.tsa.math.expression;
 
 import net.anasa.util.StringHelper;
 
-public class MathNumber
+public class MathNumber implements INumber
 {
+	public static final MathNumber NaN = new MathNumber(Double.NaN);
+	
 	private final double value;
 	
 	public MathNumber(double value)
@@ -11,6 +13,7 @@ public class MathNumber
 		this.value = value;
 	}
 	
+	@Override
 	public double getValue()
 	{
 		return value;
@@ -21,24 +24,10 @@ public class MathNumber
 	{
 		return StringHelper.stripZero(getValue());
 	}
-
-	public boolean isFinite()
-	{
-		return Double.isFinite(getValue());
-	}
 	
-	public boolean isInfinite()
+	@Override
+	public String getStringValue()
 	{
-		return Double.isInfinite(getValue());
-	}
-	
-	public boolean isNaN()
-	{
-		return Double.isNaN(getValue());
-	}
-
-	public MathNumber negative()
-	{
-		return new MathNumber(-getValue());
+		return toString();
 	}
 }

@@ -1,0 +1,4 @@
+id: scala_module
+version: 1.0
+name: Scala Module
+delegate: net.anasa.math.module.scala.ScalaModule

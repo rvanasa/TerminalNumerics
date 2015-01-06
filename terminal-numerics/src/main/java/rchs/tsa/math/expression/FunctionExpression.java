@@ -24,7 +24,7 @@ public class FunctionExpression extends MathExpression
 	}
 	
 	@Override
-	public MathNumber evaluate(MathData data) throws MathException
+	public INumber evaluate(MathData data) throws MathException
 	{
 		return getFunction().evaluate(getOperand().evaluate(data), data);
 	}

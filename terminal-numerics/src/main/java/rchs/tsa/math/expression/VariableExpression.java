@@ -19,7 +19,7 @@ public class VariableExpression extends MathExpression implements IVariable
 	}
 
 	@Override
-	public MathNumber evaluate(MathData data) throws MathException
+	public INumber evaluate(MathData data) throws MathException
 	{
 		Checks.check(data.hasVariable(getName()), new MathException("Variable is not defined: " + getName()));
 		return data.getVariable(getName());
