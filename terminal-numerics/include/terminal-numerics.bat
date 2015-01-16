@@ -1,0 +1,1 @@
+java -jar terminal-numerics.jar
