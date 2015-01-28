@@ -1,6 +1,6 @@
 package rchs.tsa.math.expression;
 
-public interface IVariable extends IExpression
+public interface IVariable extends IMathExpression
 {
 	public String getName();
 }

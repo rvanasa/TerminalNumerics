@@ -2,6 +2,10 @@ package rchs.tsa.math.io.xml;
 
 import java.awt.Image;
 
+import net.anasa.util.Listing;
+import net.anasa.util.data.FormatException;
+import net.anasa.util.data.xml.IXmlLoader;
+import net.anasa.util.data.xml.XmlElement;
 import rchs.tsa.math.resource.Dependency;
 import rchs.tsa.math.resource.Version;
 import rchs.tsa.math.resource.app.App;
@@ -9,13 +13,11 @@ import rchs.tsa.math.resource.app.IApp;
 import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.standard.IStandard;
 import rchs.tsa.math.ui.xml.ILayoutNode;
-import net.anasa.util.Listing;
-import net.anasa.util.data.FormatException;
-import net.anasa.util.data.xml.IXmlLoader;
-import net.anasa.util.data.xml.XmlElement;
 
 public class XmlAppLoader implements IXmlLoader<IApp>
 {
+	private final XmlLayoutLoader layoutLoader = new XmlLayoutLoader();
+	
 	private final ModuleContext context;
 	
 	private final Image icon;
@@ -25,6 +27,11 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 		this.context = context;
 		
 		this.icon = icon;
+	}
+	
+	public XmlLayoutLoader getLayoutLoader()
+	{
+		return layoutLoader;
 	}
 	
 	@Override
@@ -42,7 +49,7 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 				.sort((a, b) -> a.getName().compareTo(b.getName()))
 				.toArray(IStandard.class);
 		
-		ILayoutNode launchComponent = new XmlLayoutLoader().load(element.getElement("layout"));
+		ILayoutNode launchComponent = getLayoutLoader().load(element.getElement("layout"));
 		
 		Dependency[] dependencies = new Listing<>(getValue("dependencies", element, "").split(",|;"))
 				.filter((data) -> !data.trim().isEmpty())

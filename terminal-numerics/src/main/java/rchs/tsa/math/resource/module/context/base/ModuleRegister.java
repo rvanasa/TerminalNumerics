@@ -1,4 +1,4 @@
-package rchs.tsa.math.resource.module.context;
+package rchs.tsa.math.resource.module.context.base;
 
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
@@ -6,6 +6,7 @@ import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
 import rchs.tsa.math.resource.module.IModule;
 import rchs.tsa.math.resource.module.ModuleException;
+import rchs.tsa.math.resource.module.context.IRegister;
 
 public class ModuleRegister implements IRegister<IModule>
 {

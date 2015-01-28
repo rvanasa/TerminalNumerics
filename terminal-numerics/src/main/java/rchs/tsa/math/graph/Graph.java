@@ -1,26 +1,26 @@
 package rchs.tsa.math.graph;
 
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.IMathExpression;
 import rchs.tsa.math.expression.INumber;
 import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.expression.MathNumber;
 
 public class Graph
 {
-	private final IExpression expression;
+	private final IMathExpression expression;
 	private final Axis axis;
 	
 	private final IConstraint[] constraints;
 	
 	private final MathData data = new MathData();
 	
-	public Graph(IExpression expression, IConstraint... constraints)
+	public Graph(IMathExpression expression, IConstraint... constraints)
 	{
 		this(expression, new Axis("x"), constraints);
 	}
 	
-	public Graph(IExpression expression, Axis axis, IConstraint... constraints)
+	public Graph(IMathExpression expression, Axis axis, IConstraint... constraints)
 	{
 		this.expression = expression;
 		this.axis = axis;
@@ -28,7 +28,7 @@ public class Graph
 		this.constraints = constraints;
 	}
 	
-	public IExpression getExpression()
+	public IMathExpression getExpression()
 	{
 		return expression;
 	}

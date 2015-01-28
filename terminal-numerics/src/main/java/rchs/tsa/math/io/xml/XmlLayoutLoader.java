@@ -24,12 +24,12 @@ public class XmlLayoutLoader implements IXmlLoader<ILayoutNode>
 	
 	public XmlLayoutLoader()
 	{
-		add(new LayoutBuilder("component", (element) -> new ComponentNode(element.getIDAttribute(), getProperties(element))));
-		add(new LayoutBuilder("app", (element) -> new AppNode(element.getIDAttribute(), getProperties(element))));
+		add(new LayoutBuilder("component", (element) -> new ComponentNode(element.getIDAttribute(), element.getAttribute("ref"), getProperties(element))));
+		add(new LayoutBuilder("app", (element) -> new AppNode(element.getIDAttribute(), element.getAttribute("ref"), getProperties(element))));
 		add(new LayoutBuilder("layout", (element) -> {
 			LayoutType type = LayoutType.valueOf(StringHelper.upperCase(element.getAttribute("type")));
 			Checks.checkNotNull(type, new FormatException("Invalid layout type: " + element.getAttribute("type")));
-			LayoutNode node = new LayoutNode(type.getLayout(getProperties(element)));
+			LayoutNode node = new LayoutNode(element.getAttribute("ref"), type.getLayout(getProperties(element)));
 			for(XmlElement child : element.getElements())
 			{
 				node.add(load(child), child.getAttribute("pos"));

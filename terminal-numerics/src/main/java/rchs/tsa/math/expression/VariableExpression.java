@@ -32,8 +32,8 @@ public class VariableExpression extends MathExpression implements IVariable
 	}
 	
 	@Override
-	public IExpression[] getChildren()
+	public IMathExpression[] getChildren()
 	{
-		return new IExpression[] {};
+		return new IMathExpression[] {};
 	}
 }

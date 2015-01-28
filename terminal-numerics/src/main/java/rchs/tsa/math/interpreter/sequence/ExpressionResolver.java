@@ -15,7 +15,7 @@ import net.anasa.util.data.resolver.logic.IResolver;
 import rchs.tsa.math.expression.ConstantType;
 import rchs.tsa.math.expression.FunctionExpression;
 import rchs.tsa.math.expression.FunctionType;
-import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.IMathExpression;
 import rchs.tsa.math.expression.MathNumber;
 import rchs.tsa.math.expression.NumberExpression;
 import rchs.tsa.math.expression.OperationExpression;
@@ -24,13 +24,13 @@ import rchs.tsa.math.expression.VariableExpression;
 import rchs.tsa.math.sequence.ExpressionTokenType;
 import rchs.tsa.math.sequence.SequenceNesting;
 
-public class ExpressionResolver extends MultiResolver<IExpression>
+public class ExpressionResolver extends MultiResolver<IMathExpression>
 {
 	public ExpressionResolver()
 	{
 		ExpressionResolver expression = this;
 		
-		add(new ITypeResolver<IExpression>()
+		add(new ITypeResolver<IMathExpression>()
 		{
 			@Override
 			public ExpressionTokenType getType()
@@ -39,7 +39,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 			
 			@Override
-			public IExpression resolve(IToken item) throws ResolverException
+			public IMathExpression resolve(IToken item) throws ResolverException
 			{
 				String data = item.getData();
 				
@@ -54,7 +54,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 		});
 		
-		add(new ITypeResolver<IExpression>()
+		add(new ITypeResolver<IMathExpression>()
 		{
 			@Override
 			public ExpressionTokenType getType()
@@ -63,13 +63,13 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 			
 			@Override
-			public IExpression resolve(IToken item) throws ResolverException
+			public IMathExpression resolve(IToken item) throws ResolverException
 			{
 				return new VariableExpression(item.getData());
 			}
 		});
 		
-		add(new IResolver<IExpression>()
+		add(new IResolver<IMathExpression>()
 		{
 			@Override
 			public boolean matches(Listing<IToken> data)
@@ -81,13 +81,13 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 			
 			@Override
-			public IExpression resolve(Listing<IToken> data) throws ResolverException
+			public IMathExpression resolve(Listing<IToken> data) throws ResolverException
 			{
 				return expression.resolve(data.shear(1, 1));
 			}
 		});
 		
-		IResolver<IExpression> operation = new IResolver<IExpression>()
+		IResolver<IMathExpression> operation = new IResolver<IMathExpression>()
 		{
 			@Override
 			public boolean matches(Listing<IToken> data)
@@ -104,7 +104,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 			
 			@Override
-			public IExpression resolve(Listing<IToken> data) throws ResolverException
+			public IMathExpression resolve(Listing<IToken> data) throws ResolverException
 			{
 				try
 				{
@@ -136,8 +136,8 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 					
 					int index = data.indexOf(splitter);
 					
-					IExpression a = expression.resolve(data.subList(0, index));
-					IExpression b = expression.resolve(data.subList(index + 1));
+					IMathExpression a = expression.resolve(data.subList(0, index));
+					IMathExpression b = expression.resolve(data.subList(index + 1));
 					
 					return new OperationExpression(OperatorType.get(splitter.getData()), a, b);
 				}
@@ -152,7 +152,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 		
 		add(operation);
 		
-		add(new IResolver<IExpression>()
+		add(new IResolver<IMathExpression>()
 		{
 			@Override
 			public boolean matches(Listing<IToken> data)
@@ -163,13 +163,13 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 			
 			@Override
-			public IExpression resolve(Listing<IToken> data) throws ResolverException
+			public IMathExpression resolve(Listing<IToken> data) throws ResolverException
 			{
 				return new FunctionExpression(FunctionType.get(data.get(0).getData()), expression.resolve(data.subList(1)));
 			}
 		});
 		
-		add(new IResolver<IExpression>()
+		add(new IResolver<IMathExpression>()
 		{
 			@Override
 			public boolean matches(Listing<IToken> data)
@@ -180,7 +180,7 @@ public class ExpressionResolver extends MultiResolver<IExpression>
 			}
 			
 			@Override
-			public IExpression resolve(Listing<IToken> data) throws ResolverException
+			public IMathExpression resolve(Listing<IToken> data) throws ResolverException
 			{
 				return new OperationExpression(OperatorType.SUBTRACT, new NumberExpression(0), expression.resolve(data.subList(1)));
 			}

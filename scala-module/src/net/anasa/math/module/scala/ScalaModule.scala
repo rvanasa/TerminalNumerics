@@ -6,6 +6,6 @@ object ScalaModule extends IModuleDelegate
 {
 	override def init()
 	{
-		System.out.println("Scala module loaded!");
+		System.out.println("[ScalaModule] Scala module loaded!");
 	}
 }

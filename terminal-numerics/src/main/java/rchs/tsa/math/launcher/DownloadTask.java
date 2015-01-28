@@ -19,7 +19,7 @@ public class DownloadTask extends ComplexTask
 			addTask(new Task("Installing available " + type.getPath(), () -> {
 				if(context.getDownloader() == null)
 				{
-					Debug.log("Skipping resource download");
+					Debug.log("Skipping resource download for " + type.getPath());
 					return;
 				}
 				try

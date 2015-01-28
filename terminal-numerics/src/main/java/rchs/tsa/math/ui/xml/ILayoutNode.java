@@ -1,10 +1,12 @@
 package rchs.tsa.math.ui.xml;
 
-import rchs.tsa.math.resource.module.context.ModuleContext;
 import net.anasa.util.data.FormatException;
-import net.anasa.util.ui.IComponent;
+import rchs.tsa.math.resource.module.context.IComponentHandler;
+import rchs.tsa.math.resource.module.context.ModuleContext;
 
 public interface ILayoutNode
 {
-	public IComponent compile(ModuleContext context) throws FormatException;
+	public String getRef();
+	
+	public IComponentHandler compile(ModuleContext context) throws FormatException;
 }

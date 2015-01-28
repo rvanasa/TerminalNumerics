@@ -1,9 +1,10 @@
-package rchs.tsa.math.resource.module.context;
+package rchs.tsa.math.resource.module.context.base;
 
-import rchs.tsa.math.resource.module.ModuleException;
 import net.anasa.util.Checks;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
+import rchs.tsa.math.resource.module.ModuleException;
+import rchs.tsa.math.resource.module.context.IComponentEntry;
 
 public class ComponentRegister extends LookupRegister<IComponentEntry>
 {
@@ -21,7 +22,7 @@ public class ComponentRegister extends LookupRegister<IComponentEntry>
 		
 		try
 		{
-			return entry.getComponent(props);
+			return entry.getHandler(props).getComponent();
 		}
 		catch(Exception e)
 		{

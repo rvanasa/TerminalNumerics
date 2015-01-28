@@ -5,9 +5,9 @@ import rchs.tsa.math.MathException;
 public class FunctionExpression extends MathExpression
 {
 	private final IFunction function;
-	private final IExpression operand;
+	private final IMathExpression operand;
 	
-	public FunctionExpression(IFunction function, IExpression operand)
+	public FunctionExpression(IFunction function, IMathExpression operand)
 	{
 		this.function = function;
 		this.operand = operand;
@@ -18,7 +18,7 @@ public class FunctionExpression extends MathExpression
 		return function;
 	}
 	
-	public IExpression getOperand()
+	public IMathExpression getOperand()
 	{
 		return operand;
 	}
@@ -36,8 +36,8 @@ public class FunctionExpression extends MathExpression
 	}
 	
 	@Override
-	public IExpression[] getChildren()
+	public IMathExpression[] getChildren()
 	{
-		return new IExpression[] {getOperand()};
+		return new IMathExpression[] {getOperand()};
 	}
 }

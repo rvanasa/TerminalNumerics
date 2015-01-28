@@ -5,14 +5,14 @@ import java.util.Collection;
 
 import net.anasa.util.Listing;
 import net.anasa.util.data.properties.Properties;
-import net.anasa.util.ui.IActionComponent;
 import net.anasa.util.ui.IComponent;
 import rchs.tsa.math.resource.IGenericResource;
 import rchs.tsa.math.resource.ResourceType;
 import rchs.tsa.math.resource.app.IApp;
 import rchs.tsa.math.resource.module.IModule;
 import rchs.tsa.math.resource.module.ModuleException;
-import rchs.tsa.math.resource.module.context.ActionRegister.IComponentAction;
+import rchs.tsa.math.resource.module.context.base.StateStandards;
+import rchs.tsa.math.resource.module.context.base.ActionRegister.IComponentAction;
 import rchs.tsa.math.standard.IStandard;
 import rchs.tsa.math.standard.IStandardModel;
 
@@ -60,7 +60,7 @@ public interface ModuleContext
 	
 	public void addAction(String id, IComponentAction action);
 	
-	public void onAction(String id, IActionComponent component);
+	public void onAction(String data, IComponentHandler handler);
 	
 	public IResourceDownloader getDownloader();
 	

@@ -10,7 +10,7 @@ import net.anasa.util.data.resolver.ResolverException;
 import rchs.tsa.math.MathException;
 import rchs.tsa.math.expression.ConstantType;
 import rchs.tsa.math.expression.FunctionType;
-import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.IMathExpression;
 import rchs.tsa.math.expression.OperatorType;
 import rchs.tsa.math.interpreter.pattern.RegexTokenPattern;
 import rchs.tsa.math.interpreter.pattern.TokenPattern;
@@ -40,7 +40,7 @@ public class SequenceParser extends PatternParser<IToken> implements IMathParser
 	}
 	
 	@Override
-	public IExpression getFrom(String data) throws MathException
+	public IMathExpression getFrom(String data) throws MathException
 	{
 		try
 		{
@@ -52,7 +52,7 @@ public class SequenceParser extends PatternParser<IToken> implements IMathParser
 		}
 	}
 	
-	public IExpression getFrom(Listing<IToken> data) throws MathException
+	public IMathExpression getFrom(Listing<IToken> data) throws MathException
 	{
 		try
 		{

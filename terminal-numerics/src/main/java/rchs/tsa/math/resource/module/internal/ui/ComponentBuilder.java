@@ -1,11 +1,12 @@
 package rchs.tsa.math.resource.module.internal.ui;
 
-import rchs.tsa.math.resource.module.context.IComponentEntry;
 import net.anasa.util.Listing;
 import net.anasa.util.data.FormatException;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
+import rchs.tsa.math.resource.module.context.IComponentEntry;
+import rchs.tsa.math.resource.module.context.IComponentHandler;
 
 public abstract class ComponentBuilder<T extends IComponent> implements IComponentEntry
 {
@@ -16,12 +17,12 @@ public abstract class ComponentBuilder<T extends IComponent> implements ICompone
 		return aspects;
 	}
 	
-	public abstract T build(AspectData data);
+	public abstract IComponentHandler buildHandler(AspectData data);
 	
 	@Override
-	public IComponent getComponent(Properties props) throws Exception
+	public IComponentHandler getHandler(Properties props) throws Exception
 	{
-		return build(new AspectData(props, this));
+		return buildHandler(new AspectData(props, this));
 	}
 	
 	public class ComponentAspect<A>

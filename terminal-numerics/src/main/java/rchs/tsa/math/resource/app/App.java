@@ -2,13 +2,13 @@ package rchs.tsa.math.resource.app;
 
 import java.awt.Image;
 
+import net.anasa.util.data.properties.Properties;
+import net.anasa.util.ui.IComponent;
+import net.anasa.util.ui.UI;
 import rchs.tsa.math.resource.Dependency;
 import rchs.tsa.math.resource.Version;
 import rchs.tsa.math.resource.module.context.IComponentEntry;
 import rchs.tsa.math.standard.IStandard;
-import net.anasa.util.data.properties.Properties;
-import net.anasa.util.ui.IComponent;
-import net.anasa.util.ui.UI;
 
 public class App implements IApp
 {
@@ -85,9 +85,9 @@ public class App implements IApp
 	{
 		try
 		{
-			return getLaunchComponent().getComponent(props);
+			return getLaunchComponent().getHandler(props).getComponent();
 		}
-		catch(Exception e)
+		catch(Throwable e)
 		{
 			UI.sendError("Failed to create launch component for app: " + getID(), e);
 			return null;

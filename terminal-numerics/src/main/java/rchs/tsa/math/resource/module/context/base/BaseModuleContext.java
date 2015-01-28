@@ -1,4 +1,4 @@
-package rchs.tsa.math.resource.module.context;
+package rchs.tsa.math.resource.module.context.base;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,6 @@ import net.anasa.util.Listing;
 import net.anasa.util.data.FormatException;
 import net.anasa.util.data.io.FileHandler;
 import net.anasa.util.data.properties.Properties;
-import net.anasa.util.ui.IActionComponent;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.UI;
 import rchs.tsa.math.resource.Dependency;
@@ -22,7 +21,11 @@ import rchs.tsa.math.resource.ResourceType;
 import rchs.tsa.math.resource.app.IApp;
 import rchs.tsa.math.resource.module.IModule;
 import rchs.tsa.math.resource.module.ModuleException;
-import rchs.tsa.math.resource.module.context.ActionRegister.IComponentAction;
+import rchs.tsa.math.resource.module.context.IComponentEntry;
+import rchs.tsa.math.resource.module.context.IComponentHandler;
+import rchs.tsa.math.resource.module.context.IResourceDownloader;
+import rchs.tsa.math.resource.module.context.ModuleContext;
+import rchs.tsa.math.resource.module.context.base.ActionRegister.IComponentAction;
 import rchs.tsa.math.standard.IStandard;
 import rchs.tsa.math.standard.IStandardModel;
 
@@ -231,9 +234,9 @@ public class BaseModuleContext implements ModuleContext
 	}
 	
 	@Override
-	public void onAction(String id, IActionComponent component)
+	public void onAction(String data, IComponentHandler handler)
 	{
-		actions.onAction(id, component);
+		actions.onAction(actions.getIDFromData(data), handler, actions.getArgsFromData(data));
 	}
 	
 	@Override

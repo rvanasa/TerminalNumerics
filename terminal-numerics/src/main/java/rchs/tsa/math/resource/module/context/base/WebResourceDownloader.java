@@ -1,4 +1,4 @@
-package rchs.tsa.math.resource.module.context;
+package rchs.tsa.math.resource.module.context.base;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +8,7 @@ import net.anasa.util.Listing;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.io.UrlReader;
 import rchs.tsa.math.resource.ResourceType;
+import rchs.tsa.math.resource.module.context.IResourceDownloader;
 
 public class WebResourceDownloader implements IResourceDownloader
 {

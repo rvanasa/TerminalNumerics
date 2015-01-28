@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.function.Supplier;
 
 import javax.swing.ImageIcon;
 
-import net.anasa.util.logic.IValue;
 import net.anasa.util.task.ITask;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.MessageComponent;
@@ -20,7 +20,7 @@ public class MathLauncher
 {
 	private final ModuleContext context;
 	
-	public MathLauncher(ModuleContext context, IValue<IComponent> gui) throws MathException
+	public MathLauncher(ModuleContext context, Supplier<IComponent> gui) throws MathException
 	{
 		this.context = context;
 		
@@ -31,7 +31,7 @@ public class MathLauncher
 		{
 			ITask task = new LauncherTask(context, dir);
 			Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/ui/thumbnail.png"));
-			SplashScreenComponent screen = new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Terminal Numerics", icon, gui.getValue()).display());
+			SplashScreenComponent screen = new SplashScreenComponent(new ImageIcon(getClass().getResource("/ui/splash_screen.png")), task, () -> new WindowComponent("Terminal Numerics", icon, gui.get()).display());
 			screen.setIcon(icon);
 			screen.getProgressBar().setForeground(new Color(0x444444));
 			screen.display();

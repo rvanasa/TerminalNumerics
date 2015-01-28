@@ -5,9 +5,9 @@ import rchs.tsa.math.MathException;
 public class OperationExpression extends MathExpression
 {
 	private final OperatorType operator;
-	private final IExpression a, b;
+	private final IMathExpression a, b;
 	
-	public OperationExpression(OperatorType operator, IExpression a, IExpression b)
+	public OperationExpression(OperatorType operator, IMathExpression a, IMathExpression b)
 	{
 		this.operator = operator;
 		
@@ -20,12 +20,12 @@ public class OperationExpression extends MathExpression
 		return operator;
 	}
 
-	public IExpression getA()
+	public IMathExpression getA()
 	{
 		return a;
 	}
 
-	public IExpression getB()
+	public IMathExpression getB()
 	{
 		return b;
 	}
@@ -42,7 +42,7 @@ public class OperationExpression extends MathExpression
 		return getDisplayData(getA()) + getOperator() + getDisplayData(getB());
 	}
 	
-	private String getDisplayData(IExpression expression)
+	private String getDisplayData(IMathExpression expression)
 	{
 		if(expression instanceof OperationExpression && getOperator().hasPriority(((OperationExpression)expression).getOperator()))
 		{
@@ -53,8 +53,8 @@ public class OperationExpression extends MathExpression
 	}
 	
 	@Override
-	public IExpression[] getChildren()
+	public IMathExpression[] getChildren()
 	{
-		return new IExpression[] {getA(), getB()};
+		return new IMathExpression[] {getA(), getB()};
 	}
 }

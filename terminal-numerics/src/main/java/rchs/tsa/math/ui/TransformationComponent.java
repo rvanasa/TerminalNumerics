@@ -1,7 +1,7 @@
 package rchs.tsa.math.ui;
 
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.expression.IExpression;
+import rchs.tsa.math.expression.IMathExpression;
 import rchs.tsa.math.expression.NumberExpression;
 import rchs.tsa.math.expression.OperationExpression;
 import rchs.tsa.math.expression.OperatorType;
@@ -48,7 +48,7 @@ public class TransformationComponent extends PanelComponent
 	{
 		try
 		{
-			IExpression expression = Evaluator.evaluate(graphData.getValue());
+			IMathExpression expression = Evaluator.evaluate(graphData.getValue());
 			
 			expression = new OperationExpression(OperatorType.MULTIPLY, expression, Evaluator.evaluate(verticalScale.getValue(), new NumberExpression(1)));
 			expression = new OperationExpression(OperatorType.ADD, expression, Evaluator.evaluate(verticalTranslation.getValue(), new NumberExpression(0)));

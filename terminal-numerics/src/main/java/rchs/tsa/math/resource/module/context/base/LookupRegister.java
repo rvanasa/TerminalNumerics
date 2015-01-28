@@ -1,5 +1,6 @@
-package rchs.tsa.math.resource.module.context;
+package rchs.tsa.math.resource.module.context.base;
 
+import rchs.tsa.math.resource.module.context.IRegister;
 import net.anasa.util.Checks;
 import net.anasa.util.Lookup;
 

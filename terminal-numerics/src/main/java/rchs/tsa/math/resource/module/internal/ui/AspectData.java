@@ -33,7 +33,7 @@ public class AspectData
 		return data.get(aspect.getName());
 	}
 	
-	public <T> T getValue(ComponentBuilder<?>.ComponentAspect<T> aspect)
+	public <T> T get(ComponentBuilder<?>.ComponentAspect<T> aspect)
 	{
 		return aspect.getValue(this);
 	}
