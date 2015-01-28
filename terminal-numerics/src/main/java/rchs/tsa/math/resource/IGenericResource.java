@@ -1,6 +1,5 @@
 package rchs.tsa.math.resource;
 
-
 public interface IGenericResource
 {
 	public String getID();
