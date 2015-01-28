@@ -29,15 +29,6 @@ public class ModuleRegister implements IRegister<IModule>
 		
 		getValues().add(module);
 		Debug.log("Loaded module: " + module.getID() + " " + module.getVersion());
-		
-		try
-		{
-			module.getDelegate().init();
-		}
-		catch(Throwable e)
-		{
-			throw new ModuleException("Failed to initialize module: " + module.getID(), e);
-		}
 	}
 	
 	@Override

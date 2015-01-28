@@ -2,6 +2,7 @@ package rchs.tsa.math.launcher;
 
 import java.io.File;
 
+import net.anasa.util.function.ExceptedConsumer;
 import net.anasa.util.task.ComplexTask;
 import net.anasa.util.task.DirectoryTask;
 import net.anasa.util.task.Task;
@@ -58,5 +59,9 @@ public class LauncherTask extends ComplexTask
 		addTask(new Task("Verifying dependencies", () -> {
 			context.verifyResources();
 		}));
+		
+		addTask(new Task("Initializing modules", () -> context.getModules().forEach(new ExceptedConsumer<>(
+				(module) -> module.getDelegate().init(),
+				(module, e) -> UI.sendError("Failed to initialize module: " + module.getName() + " " + module.getVersion(), e)))));
 	}
 }

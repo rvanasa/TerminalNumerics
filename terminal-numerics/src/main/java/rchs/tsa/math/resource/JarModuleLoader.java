@@ -32,8 +32,7 @@ public class JarModuleLoader implements ILoader<File, IModule>
 			String name = props.getString("name");
 			String description = props.getString("description", null);
 			
-			@SuppressWarnings("unchecked")
-			IModuleDelegate delegate = ((Class<? extends IModuleDelegate>)loadClass(file, props.getString("delegate"))).newInstance();
+			IModuleDelegate delegate = loadClass(IModuleDelegate.class, file, props.getString("delegate")).newInstance();
 			
 			Dependency[] dependencies = new Listing<>(props.getString("dependencies", "").split(",|;"))
 					.filter((data) -> !data.trim().isEmpty())
@@ -48,15 +47,16 @@ public class JarModuleLoader implements ILoader<File, IModule>
 		}
 	}
 	
-	protected Class<?> loadClass(File file, String name) throws FormatException
+	@SuppressWarnings("unchecked")
+	protected <T> Class<T> loadClass(Class<T> clazz, File file, String name) throws FormatException
 	{
 		try(URLClassLoader loader = new URLClassLoader(new URL[] {new URL("jar:file:" + file.getPath() + "!/")}))
 		{
-			return Class.forName(name, true, loader);
+			return (Class<T>)Class.forName(name, true, loader);
 		}
 		catch(Throwable e)
 		{
-			throw new FormatException(e);
+			throw new FormatException("Failed to load class from file: " + file, e);
 		}
 	}
 }
