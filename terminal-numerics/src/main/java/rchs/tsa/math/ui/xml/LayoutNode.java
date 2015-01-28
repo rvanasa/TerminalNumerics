@@ -2,10 +2,9 @@ package rchs.tsa.math.ui.xml;
 
 import net.anasa.util.Mapping;
 import net.anasa.util.data.FormatException;
+import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.layout.ILayout;
-import rchs.tsa.math.resource.module.context.ComponentHandler;
-import rchs.tsa.math.resource.module.context.IComponentHandler;
 import rchs.tsa.math.resource.module.context.ModuleContext;
 
 public class LayoutNode implements ILayoutNode
@@ -45,23 +44,17 @@ public class LayoutNode implements ILayoutNode
 	}
 	
 	@Override
-	public IComponentHandler compile(ModuleContext context) throws FormatException
+	public IComponent compile(ModuleContext context) throws FormatException
 	{
 		PanelComponent panel = new PanelComponent();
-		ComponentHandler handler = new ComponentHandler(getRef(), panel);
 		
 		for(ILayoutNode node : getPositions().getKeys())
 		{
-			IComponentHandler inner = node.compile(context);
-			
-			getLayout().set(getPositions().get(node), inner.getComponent());
-			
-			handler.addInner(inner);
-			inner.setParent(handler);
+			getLayout().set(getPositions().get(node), node.compile(context));
 		}
 		
 		getLayout().apply(panel);
 		
-		return handler;
+		return panel;
 	}
 }

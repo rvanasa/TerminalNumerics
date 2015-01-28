@@ -85,7 +85,7 @@ public class App implements IApp
 	{
 		try
 		{
-			return getLaunchComponent().getHandler(props).getComponent();
+			return getLaunchComponent().getComponent(props);
 		}
 		catch(Throwable e)
 		{

@@ -1,9 +1,8 @@
 package rchs.tsa.math.ui.xml;
 
 import net.anasa.util.data.properties.Properties;
+import net.anasa.util.ui.IComponent;
 import rchs.tsa.math.resource.app.IApp;
-import rchs.tsa.math.resource.module.context.ComponentHandler;
-import rchs.tsa.math.resource.module.context.IComponentHandler;
 import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.ui.app.AppPanelComponent;
 
@@ -38,9 +37,10 @@ public class AppNode implements ILayoutNode
 	}
 	
 	@Override
-	public IComponentHandler compile(ModuleContext context)
+	public IComponent compile(ModuleContext context)
 	{
 		IApp app = context.getApp(getID());
-		return new ComponentHandler(getRef(), app == null ? null : new AppPanelComponent(app, getConfig()));
+		
+		return app == null ? null : new AppPanelComponent(app, getConfig());
 	}
 }

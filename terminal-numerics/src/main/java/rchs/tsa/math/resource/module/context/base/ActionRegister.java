@@ -1,19 +1,19 @@
 package rchs.tsa.math.resource.module.context.base;
 
 import net.anasa.util.Debug;
-import rchs.tsa.math.resource.module.context.IComponentHandler;
+import net.anasa.util.ui.IComponent;
 import rchs.tsa.math.resource.module.context.base.ActionRegister.IComponentAction;
 
 public class ActionRegister extends LookupRegister<IComponentAction>
 {
-	public void onAction(String id, IComponentHandler handler, String[] args)
+	public void onAction(String id, IComponent component, String[] args)
 	{
 		IComponentAction action = getByID(id);
 		if(action != null)
 		{
 			try
 			{
-				action.onAction(handler, args);
+				action.onAction(component, args);
 			}
 			catch(Exception e)
 			{
@@ -37,6 +37,6 @@ public class ActionRegister extends LookupRegister<IComponentAction>
 	
 	public interface IComponentAction
 	{
-		public void onAction(IComponentHandler component, String[] args) throws Exception;
+		public void onAction(IComponent component, String[] args) throws Exception;
 	}
 }

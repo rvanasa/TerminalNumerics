@@ -11,8 +11,8 @@ import rchs.tsa.math.resource.ResourceType;
 import rchs.tsa.math.resource.app.IApp;
 import rchs.tsa.math.resource.module.IModule;
 import rchs.tsa.math.resource.module.ModuleException;
-import rchs.tsa.math.resource.module.context.base.StateStandards;
 import rchs.tsa.math.resource.module.context.base.ActionRegister.IComponentAction;
+import rchs.tsa.math.resource.module.context.base.StateStandards;
 import rchs.tsa.math.standard.IStandard;
 import rchs.tsa.math.standard.IStandardModel;
 
@@ -60,7 +60,7 @@ public interface ModuleContext
 	
 	public void addAction(String id, IComponentAction action);
 	
-	public void onAction(String data, IComponentHandler handler);
+	public void onAction(String data, IComponent component);
 	
 	public IResourceDownloader getDownloader();
 	

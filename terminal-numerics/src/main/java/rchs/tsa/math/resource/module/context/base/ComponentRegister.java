@@ -22,9 +22,9 @@ public class ComponentRegister extends LookupRegister<IComponentEntry>
 		
 		try
 		{
-			return entry.getHandler(props).getComponent();
+			return entry.getComponent(props);
 		}
-		catch(Exception e)
+		catch(Throwable e)
 		{
 			throw new ModuleException("Failed to construct component with properties: " + props, e);
 		}

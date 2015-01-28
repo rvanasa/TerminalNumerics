@@ -21,11 +21,11 @@ public class GraphModule extends AbstractModule implements IModuleDelegate
 		addComponent("graph", (Properties props) -> new GraphComponent(props.getString("display", "")));
 		addComponent("graph_input", (Properties props) -> new GraphInputComponent());
 		
-		addAction("update_graph", (handler, args) -> {
+		addAction("update_graph", (component, args) -> {
 			String data = StringHelper.join(" ", args);
-			if(handler.getComponent() instanceof GraphComponent)
+			if(component instanceof GraphComponent)
 			{
-				((GraphComponent)handler.getComponent()).updateGraphs(data);
+				((GraphComponent)component).updateGraphs(data);
 			}
 		});
 	}

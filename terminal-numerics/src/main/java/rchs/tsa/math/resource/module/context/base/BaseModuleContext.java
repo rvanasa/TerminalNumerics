@@ -22,7 +22,6 @@ import rchs.tsa.math.resource.app.IApp;
 import rchs.tsa.math.resource.module.IModule;
 import rchs.tsa.math.resource.module.ModuleException;
 import rchs.tsa.math.resource.module.context.IComponentEntry;
-import rchs.tsa.math.resource.module.context.IComponentHandler;
 import rchs.tsa.math.resource.module.context.IResourceDownloader;
 import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.resource.module.context.base.ActionRegister.IComponentAction;
@@ -234,9 +233,9 @@ public class BaseModuleContext implements ModuleContext
 	}
 	
 	@Override
-	public void onAction(String data, IComponentHandler handler)
+	public void onAction(String data, IComponent component)
 	{
-		actions.onAction(actions.getIDFromData(data), handler, actions.getArgsFromData(data));
+		actions.onAction(actions.getIDFromData(data), component, actions.getArgsFromData(data));
 	}
 	
 	@Override

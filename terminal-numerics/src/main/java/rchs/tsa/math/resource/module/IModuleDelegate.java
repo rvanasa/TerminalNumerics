@@ -2,16 +2,12 @@ package rchs.tsa.math.resource.module;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.function.Function;
 
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
-import net.anasa.util.data.properties.Properties;
-import net.anasa.util.ui.IComponent;
 import rchs.tsa.math.TerminalNumerics;
 import rchs.tsa.math.io.xml.XmlLayoutLoader;
 import rchs.tsa.math.resource.app.IApp;
-import rchs.tsa.math.resource.module.context.ComponentHandler;
 import rchs.tsa.math.resource.module.context.IComponentEntry;
 import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.resource.module.context.base.ActionRegister.IComponentAction;
@@ -33,12 +29,7 @@ public interface IModuleDelegate
 		getContext().addComponent(id, entry);
 	}
 	
-	default void addComponent(String id, Function<Properties, IComponent> builder)
-	{
-		getContext().addComponent(id, (props) -> new ComponentHandler(null, builder.apply(props)));
-	}
-	
-	default void addComponent(String id, URL layoutURL) throws IOException
+	default void addComponentLayout(String id, URL layoutURL) throws IOException
 	{
 		Checks.checkNotNull(layoutURL, new IOException("layout file URL must not be null"));
 		

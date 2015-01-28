@@ -9,7 +9,6 @@ import net.anasa.util.ui.WindowComponent;
 import rchs.tsa.math.resource.Version;
 import rchs.tsa.math.resource.module.AbstractModule;
 import rchs.tsa.math.resource.module.IModuleDelegate;
-import rchs.tsa.math.resource.module.context.ComponentHandler;
 
 public class UIModule extends AbstractModule implements IModuleDelegate
 {
@@ -21,7 +20,7 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 	@Override
 	public void init()
 	{
-		addComponent("panel", new UIComponentBuilder<PanelComponent>()
+		addComponent("panel", new UIComponentBuilder()
 		{
 			@Override
 			public PanelComponent getComponent(AspectData data)
@@ -29,7 +28,7 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 				return new PanelComponent();
 			}
 		});
-		addComponent("label", new UIComponentBuilder<LabelComponent>()
+		addComponent("label", new UIComponentBuilder()
 		{
 			ComponentAspect<String> text = new ComponentAspect<String>("text", IFormat.STRING, null);
 			
@@ -41,7 +40,7 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 				return label;
 			}
 		});
-		addComponent("button", new UIComponentBuilder<ButtonComponent>()
+		addComponent("button", new UIComponentBuilder()
 		{
 			ComponentAspect<String> text = new ComponentAspect<String>("text", IFormat.STRING, "");
 			ComponentAspect<String> action = new ComponentAspect<String>("action", IFormat.STRING, null);
@@ -49,19 +48,15 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 			@Override
 			public ButtonComponent getComponent(AspectData data)
 			{
-				return new ButtonComponent(data.get(text));
-			}
-			
-			@Override
-			public void setupHandler(AspectData data, ComponentHandler handler, ButtonComponent component)
-			{
-				component.addActionListener(new ExceptedRunnable(
-						() -> handler.onAction(data.get(action), true),
+				ButtonComponent button = new ButtonComponent(data.get(text));
+				button.addActionListener(new ExceptedRunnable(
+						() -> getContext().onAction(data.get(action), button),
 						(e) -> e.printStackTrace()));
+				return button;
 			}
 		});
 		
-		addAction("close", (handler, args) -> WindowComponent.getParentWindow(handler.getComponent()).close());
+		addAction("close", (component, args) -> WindowComponent.getParentWindow(component).close());
 	}
 	
 	@Override
