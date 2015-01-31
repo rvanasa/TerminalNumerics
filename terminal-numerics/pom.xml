@@ -72,7 +72,7 @@
 									<directory>${basedir}</directory>
 									<includes>
 										<include>data/**/*</include>
-										<exclude>data/logs</exclude>>
+										<exclude>data/logs/*</exclude>>
 										<!-- <include>src/**/*</include> -->
 									</includes>
 								</resource>

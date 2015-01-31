@@ -32,6 +32,13 @@ public class SequenceParser extends PatternParser<IToken> implements IMathParser
 			.add(new TokenPattern(ExpressionTokenType.NUMBER, (data) -> NumberHelper.isDouble(data) || ConstantType.isConstant(data)))
 			.add(new RegexTokenPattern("[a-zA-Z_]*", ExpressionTokenType.VARIABLE));
 	
+	private final ExpressionResolver resolver = new ExpressionResolver();
+	
+	public ExpressionResolver getResolver()
+	{
+		return resolver;
+	}
+	
 	public SequenceParser add(IParserPattern<IToken> pattern)
 	{
 		addPattern(pattern);
@@ -56,8 +63,7 @@ public class SequenceParser extends PatternParser<IToken> implements IMathParser
 	{
 		try
 		{
-			ExpressionResolver resolver = new ExpressionResolver();
-			return resolver.resolve(data);
+			return getResolver().resolve(data);
 		}
 		catch(ResolverException e)
 		{
