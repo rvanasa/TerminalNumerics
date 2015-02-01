@@ -1,16 +1,20 @@
-package rchs.tsa.math.ui.xml;
+package rchs.tsa.math.io.xml.layout.node;
 
+import net.anasa.util.EnumHelper;
 import net.anasa.util.data.FormatException;
+import net.anasa.util.data.IConformHandler;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.layout.ILayout;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIFlowLayout;
+import net.anasa.util.ui.layout.UIFlowLayout.FlowType;
 import net.anasa.util.ui.layout.UIVerticalLayout;
 
 public enum LayoutType
 {
 	FLOW((props) -> {
 		UIFlowLayout layout = new UIFlowLayout();
+		layout.setType(EnumHelper.getFrom(FlowType.class, props.getString("align", "center")));
 		return layout;
 	}),
 	VERTICAL((props) -> {
@@ -24,20 +28,15 @@ public enum LayoutType
 		return layout;
 	});
 	
-	private final ILayoutTypeHandle handle;
+	private final IConformHandler<Properties, ILayout> handle;
 	
-	private LayoutType(ILayoutTypeHandle handle)
+	private LayoutType(IConformHandler<Properties, ILayout> handle)
 	{
 		this.handle = handle;
 	}
 	
 	public ILayout getLayout(Properties props) throws FormatException
 	{
-		return handle.getLayout(props);
-	}
-	
-	private interface ILayoutTypeHandle
-	{
-		public ILayout getLayout(Properties props) throws FormatException;
+		return handle.getFrom(props);
 	}
 }

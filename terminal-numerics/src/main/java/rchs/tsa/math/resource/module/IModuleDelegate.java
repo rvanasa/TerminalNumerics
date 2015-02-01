@@ -6,7 +6,7 @@ import java.net.URL;
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import rchs.tsa.math.TerminalNumerics;
-import rchs.tsa.math.io.xml.XmlLayoutLoader;
+import rchs.tsa.math.io.xml.layout.XmlLayoutLoader;
 import rchs.tsa.math.resource.app.IApp;
 import rchs.tsa.math.resource.module.context.IComponentEntry;
 import rchs.tsa.math.resource.module.context.ModuleContext;
@@ -26,14 +26,14 @@ public interface IModuleDelegate
 	
 	default void addComponent(String id, IComponentEntry entry)
 	{
-		getContext().addComponent(id, entry);
+		getContext().addComponentEntry(id, entry);
 	}
 	
 	default void addComponentLayout(String id, URL layoutURL) throws IOException
 	{
 		Checks.checkNotNull(layoutURL, new IOException("layout file URL must not be null"));
 		
-		getContext().addComponent(id, (props) -> new XmlLayoutLoader().load(layoutURL.openStream()).compile(getContext()));
+		getContext().addComponentEntry(id, (props) -> new XmlLayoutLoader(getContext()).load(layoutURL.openStream()).compile(getContext()));
 	}
 	
 	default void addAction(String id, IComponentAction action)

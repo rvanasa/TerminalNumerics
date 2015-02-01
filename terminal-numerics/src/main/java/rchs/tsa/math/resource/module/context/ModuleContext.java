@@ -50,9 +50,9 @@ public interface ModuleContext
 	
 	public IComponentEntry getComponent(String id);
 	
-	public void addComponent(String id, IComponentEntry component);
-	
 	public IComponent createComponent(String id, Properties props) throws ModuleException;
+	
+	public void addComponentEntry(String id, IComponentEntry component);
 	
 	public Collection<IComponentAction> getActions();
 	

@@ -1,14 +1,19 @@
 package rchs.tsa.math.resource.module.internal.ui;
 
+import net.anasa.util.EnumHelper;
 import net.anasa.util.data.format.IFormat;
+import net.anasa.util.data.properties.Properties;
 import net.anasa.util.function.ExceptedRunnable;
 import net.anasa.util.ui.ButtonComponent;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.WindowComponent;
+import net.anasa.util.ui.layout.ILayout;
+import rchs.tsa.math.io.xml.layout.node.LayoutType;
 import rchs.tsa.math.resource.Version;
 import rchs.tsa.math.resource.module.AbstractModule;
 import rchs.tsa.math.resource.module.IModuleDelegate;
+import rchs.tsa.math.ui.app.AppPanelComponent;
 
 public class UIModule extends AbstractModule implements IModuleDelegate
 {
@@ -20,12 +25,26 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 	@Override
 	public void init()
 	{
+		addComponent("app", (props) -> new AppPanelComponent(getContext().getApp(props.getString("id")), props));
+		addComponent("layout", (props) -> {
+			LayoutType type = EnumHelper.getFrom(LayoutType.class, props.getString("type"));
+			
+			ILayout layout = type.getLayout(props);
+			
+			for(Properties child : props.getInnerList("_"))
+			{
+				layout.set(child.getString("pos", null), getContext().createComponent(child.getValue(), child));
+			}
+			
+			return new PanelComponent(layout);
+		});
 		addComponent("panel", new UIComponentBuilder()
 		{
 			@Override
 			public PanelComponent getComponent(AspectData data)
 			{
-				return new PanelComponent();
+				PanelComponent panel = new PanelComponent();
+				return panel;
 			}
 		});
 		addComponent("label", new UIComponentBuilder()

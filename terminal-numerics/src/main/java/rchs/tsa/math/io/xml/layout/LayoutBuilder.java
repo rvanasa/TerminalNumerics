@@ -1,17 +1,18 @@
-package rchs.tsa.math.ui.xml.builder;
+package rchs.tsa.math.io.xml.layout;
 
 import net.anasa.util.StringHelper;
 import net.anasa.util.data.FormatException;
+import net.anasa.util.data.IConformHandler;
 import net.anasa.util.data.xml.XmlElement;
-import rchs.tsa.math.ui.xml.ILayoutNode;
+import rchs.tsa.math.io.xml.layout.node.ILayoutNode;
 
 public class LayoutBuilder implements ILayoutBuilder
 {
 	private final String id;
 	
-	private final ILayoutBuilderHandle handle;
+	private final IConformHandler<XmlElement, ILayoutNode> handle;
 	
-	public LayoutBuilder(String id, ILayoutBuilderHandle handle)
+	public LayoutBuilder(String id, IConformHandler<XmlElement, ILayoutNode> handle)
 	{
 		this.id = id;
 		
@@ -33,10 +34,5 @@ public class LayoutBuilder implements ILayoutBuilder
 	public ILayoutNode getFrom(XmlElement element) throws FormatException
 	{
 		return handle.getFrom(element);
-	}
-	
-	public interface ILayoutBuilderHandle
-	{
-		public ILayoutNode getFrom(XmlElement element) throws FormatException;
 	}
 }

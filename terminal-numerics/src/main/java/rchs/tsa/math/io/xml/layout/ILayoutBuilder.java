@@ -1,6 +1,6 @@
-package rchs.tsa.math.ui.xml.builder;
+package rchs.tsa.math.io.xml.layout;
 
-import rchs.tsa.math.ui.xml.ILayoutNode;
+import rchs.tsa.math.io.xml.layout.node.ILayoutNode;
 import net.anasa.util.data.FormatException;
 import net.anasa.util.data.xml.XmlElement;
 

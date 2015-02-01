@@ -1,4 +1,4 @@
-package rchs.tsa.math.ui.xml;
+package rchs.tsa.math.io.xml.layout.node;
 
 import net.anasa.util.data.FormatException;
 import net.anasa.util.ui.IComponent;

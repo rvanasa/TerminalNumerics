@@ -3,7 +3,8 @@
 	<version>01.10.00</version>
 	<description>Demonstrates and validates a minimum-function app.</description>
 	<layout type="border">
-		<component id="label" pos="top" text="Nothing to see here, bye." />
-		<component id="button" pos="bottom" text="Close Window" action="close" />
+		<label pos="top" text="Nothing to see here, bye." />
+		<app pos="center" id="test_app" />
+		<button pos="bottom" text="Close Window" action="close" />
 	</layout>
 </app>

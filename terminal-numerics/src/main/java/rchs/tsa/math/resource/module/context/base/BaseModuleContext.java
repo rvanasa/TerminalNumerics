@@ -203,7 +203,7 @@ public class BaseModuleContext implements ModuleContext
 	}
 	
 	@Override
-	public void addComponent(String id, IComponentEntry component)
+	public void addComponentEntry(String id, IComponentEntry component)
 	{
 		components.register(id, component);
 	}
