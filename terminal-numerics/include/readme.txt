@@ -15,3 +15,5 @@ folder, provide a command argument designating the location of the settings file
 
 If you encounter a problem with the software, please notify the developers. 
 Primary contact email: ryanvandersmith@gmail.com
+
+Project source code can be found at: https://github.com/rvanasa/TerminalNumerics

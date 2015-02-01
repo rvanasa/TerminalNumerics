@@ -148,9 +148,9 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 			}
 		};
 		
-		add(new BiResolver<>("multiply", new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> operation.resolve(new Listing<>(a).add(new Token(ExpressionTokenType.OPERATOR, "*")).addAll(b))));
-		
 		add(operation);
+		
+		add(new BiResolver<>("multiply", new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> operation.resolve(new Listing<>(a).add(new Token(ExpressionTokenType.OPERATOR, "*")).addAll(b))));
 		
 		add(new IResolver<IMathExpression>()
 		{
