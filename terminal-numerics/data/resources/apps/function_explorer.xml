@@ -1,0 +1,10 @@
+<app id="function_explorer">
+	<name>Function Explorer</name>
+	<version>0.1</version>
+	<description>Explore the properties of function graphs.</description>
+	<standards>CCSS HSF.BF.A.1, CCSS HSF.BF.B.3</standards>
+	<dependencies>module.graph_module</dependencies>
+	<layout type="border">
+		<component id="graph_input" pos="center" />
+	</layout>
+</app>
