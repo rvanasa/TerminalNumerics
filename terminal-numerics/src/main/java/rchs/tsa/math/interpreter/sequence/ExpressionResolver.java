@@ -1,6 +1,7 @@
 package rchs.tsa.math.interpreter.sequence;
 
 import net.anasa.util.Checks;
+import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
@@ -109,7 +110,7 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 				try
 				{
 					Checks.check(SequenceNesting.isNestingValid(data) && SequenceNesting.stripNesting(data).contains((item) -> item.getType() == ExpressionTokenType.OPERATOR),
-							new ResolverException("Invalid operator input data: " + data));
+							new ResolverException("Sequence does not contain a valid operator: " + data));
 					
 					IToken splitter = null;
 					
@@ -132,12 +133,12 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 						}
 					}
 					
-					Checks.checkNotNull(splitter, new ResolverException("Sequence must contain an operator"));
-					
 					int index = data.indexOf(splitter);
 					
 					IMathExpression a = expression.resolve(data.subList(0, index));
 					IMathExpression b = expression.resolve(data.subList(index + 1));
+					
+					Debug.log(new OperationExpression(OperatorType.get(splitter.getData()), a, b).getStringValue());
 					
 					return new OperationExpression(OperatorType.get(splitter.getData()), a, b);
 				}
@@ -150,7 +151,7 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 		
 		add(operation);
 		
-		add(new BiResolver<>("multiply", new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> operation.resolve(new Listing<>(a).add(new Token(ExpressionTokenType.OPERATOR, "*")).addAll(b))));
+		add(new BiResolver<>(new CollectorResolver(expression), new CollectorResolver(expression), (a, b) -> expression.resolve(new Listing<>(a).add(new Token(ExpressionTokenType.OPERATOR, "*")).addAll(b))));
 		
 		add(new IResolver<IMathExpression>()
 		{

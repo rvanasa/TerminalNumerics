@@ -22,12 +22,12 @@ public class MathNumber implements INumber
 	@Override
 	public String toString()
 	{
-		return StringHelper.stripZero(getValue());
+		return getStringValue();
 	}
 	
 	@Override
 	public String getStringValue()
 	{
-		return toString();
+		return StringHelper.stripZero(getValue());
 	}
 }

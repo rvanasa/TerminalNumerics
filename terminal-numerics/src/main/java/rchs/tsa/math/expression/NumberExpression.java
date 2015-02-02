@@ -34,6 +34,6 @@ public class NumberExpression extends MathExpression
 	@Override
 	public IMathExpression[] getChildren()
 	{
-		return new IMathExpression[] {};
+		return new IMathExpression[0];
 	}
 }
