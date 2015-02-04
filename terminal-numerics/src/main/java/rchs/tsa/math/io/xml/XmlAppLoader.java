@@ -21,14 +21,16 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 	
 	private final XmlLayoutLoader layoutLoader;
 	
+	private final String id;
 	private final Image icon;
 	
-	public XmlAppLoader(ModuleContext context, Image icon)
+	public XmlAppLoader(ModuleContext context, String id, Image icon)
 	{
 		this.context = context;
 		
 		layoutLoader = new XmlLayoutLoader(context);
-		
+
+		this.id = id;
 		this.icon = icon;
 	}
 	
@@ -40,7 +42,7 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 	@Override
 	public IApp load(XmlElement element) throws FormatException
 	{
-		String id = element.getValue("id");
+		String id = element.getValue("id", this.id);
 		Version version = Version.getFrom(element.getValue("version"));
 		String name = element.getValue("name");
 		String description = element.getValue("description", "(No description provided)");

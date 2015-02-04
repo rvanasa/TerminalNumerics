@@ -13,7 +13,7 @@ public class Graph
 	
 	private final IConstraint[] constraints;
 	
-	private final MathData data = new MathData();
+	private MathData data;
 	
 	public Graph(IMathExpression expression, IConstraint... constraints)
 	{
@@ -26,6 +26,8 @@ public class Graph
 		this.axis = axis;
 		
 		this.constraints = constraints;
+		
+		setData(new MathData());
 	}
 	
 	public IMathExpression getExpression()
@@ -46,6 +48,11 @@ public class Graph
 	public MathData getData()
 	{
 		return data;
+	}
+	
+	public void setData(MathData data)
+	{
+		this.data = data;
 	}
 	
 	public INumber getFrom(INumber x) throws MathException

@@ -1,0 +1,13 @@
+<app>
+	<name>Hands-on Quadratics</name>
+	<version>1.0</version>
+	<description>Visualize the properties of quadratic functions.</description>
+	<standards></standards>
+	<dependencies>module.graph_module</dependencies>
+	<layout type="border">
+		<tabs>
+			<graph_model title="Standard Form" model="a*x^2 + b*x + c" display="ax^2 + bx + c" input="a:1 b:0 c:0" />
+			<graph_model title="Vertex Form" model="a(x - h)^2 + k" input="a:1 h:0 k:0" />
+		</tabs>
+	</layout>
+</app>

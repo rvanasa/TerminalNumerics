@@ -44,7 +44,7 @@ public class LauncherTask extends ComplexTask
 		
 		for(ResourceType type : ResourceType.values())
 		{
-			addTask(new DirectoryTask("Loading " + type.getPath(), new File(dir, "resources/" + type.getPath()), (file) -> file.getName().endsWith("." + type.getExtension()), (file) -> {
+			addTask(new DirectoryTask("Loading " + type.getPath(), new File(dir, "resources/" + type.getPath()), true, (file) -> file.getName().endsWith("." + type.getExtension()), (file) -> {
 				try
 				{
 					type.register(context, file);

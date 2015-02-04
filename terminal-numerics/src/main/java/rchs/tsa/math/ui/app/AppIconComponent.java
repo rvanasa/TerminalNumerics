@@ -11,6 +11,7 @@ import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.WindowComponent;
 import net.anasa.util.ui.event.ClickEvent.ButtonType;
 import net.anasa.util.ui.menu.MenuActionComponent;
+import rchs.tsa.math.TerminalNumerics;
 import rchs.tsa.math.resource.app.IApp;
 
 public class AppIconComponent extends LabelComponent
@@ -60,7 +61,7 @@ public class AppIconComponent extends LabelComponent
 		IComponent component = getApp().getLaunchComponent(getLaunchConfig());
 		if(component != null)
 		{
-			WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon(), component);
+			WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon() != null ? app.getIcon() : TerminalNumerics.getIcon(), component);
 			window.setMinSize(window.getSize());
 			window.display();
 		}

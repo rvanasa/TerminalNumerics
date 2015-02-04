@@ -24,7 +24,7 @@ public class GraphView
 	
 	public GraphView(Bounds bounds)
 	{
-		this(bounds, 200);
+		this(bounds, 180);
 		
 		normalizeInterval();
 	}

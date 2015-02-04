@@ -1,5 +1,7 @@
 package rchs.tsa.math;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -111,6 +113,11 @@ public final class TerminalNumerics
 	public static File getDirectory()
 	{
 		return getContext().getDirectory();
+	}
+	
+	public static Image getIcon()
+	{
+		return Toolkit.getDefaultToolkit().getImage(TerminalNumerics.class.getResource("/ui/thumbnail.png"));
 	}
 	
 	public static ModuleContext getContext()

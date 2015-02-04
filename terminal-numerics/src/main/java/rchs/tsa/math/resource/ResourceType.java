@@ -19,7 +19,7 @@ public enum ResourceType
 	APPS("xml", (context, file) -> {
 		File imageFile = new File(file.getParent(), file.getName().replaceAll(".xml$", ".png"));
 		Image image = !imageFile.isFile() ? null : new ImageIcon(imageFile.toURI().toURL()).getImage();
-		context.addApp(new XmlAppLoader(context, image).load(XmlFile.read(file).getBaseElement()));
+		context.addApp(new XmlAppLoader(context, file.getName().replaceAll(".xml$", ""), image).load(XmlFile.read(file).getBaseElement()));
 	});
 	
 	private final String extension;

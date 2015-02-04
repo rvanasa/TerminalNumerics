@@ -1,0 +1,13 @@
+<app>
+	<name>Hands-on Reciprocal Functions</name>
+	<version>1.0</version>
+	<description>Visualize the properties of reciprocal functions.</description>
+	<standards></standards>
+	<dependencies>module.graph_module</dependencies>
+	<layout type="border">
+		<tabs>
+			<graph_model title="Basic" model="a / ( b(x - h) ) + k" input="a:1 b:1 h:0 k:0" />
+			<graph_model title="Inverse Square" model="a / ( b(x - h)^2 ) + k" input="a:1 b:1 h:0 k:0" />
+		</tabs>
+	</layout>
+</app>

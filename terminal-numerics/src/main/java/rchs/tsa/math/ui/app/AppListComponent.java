@@ -85,7 +85,7 @@ public class AppListComponent extends PanelComponent
 		getAppPanel().removeComponents();
 		
 		UIVerticalLayout layout = new UIVerticalLayout(4);
-		for(IApp app : getApps())
+		for(IApp app : getApps().sort((a, b) -> a.getName().compareTo(b.getName())))
 		{
 			if(app != null && getAppFilter() != null && getAppFilter().isValid(app, getFilterBar().getValue()))
 			{

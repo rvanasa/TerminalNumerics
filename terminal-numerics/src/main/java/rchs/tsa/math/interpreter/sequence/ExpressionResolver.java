@@ -1,7 +1,6 @@
 package rchs.tsa.math.interpreter.sequence;
 
 import net.anasa.util.Checks;
-import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
@@ -114,22 +113,23 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 					
 					IToken splitter = null;
 					
-					boolean last = false;
+					// boolean last = false;
 					for(IToken item : SequenceNesting.stripNesting(data))
 					{
-						if(!last && item.getType() == ExpressionTokenType.OPERATOR)
+						if(/** !last && **/
+						item.getType() == ExpressionTokenType.OPERATOR)
 						{
 							OperatorType op = OperatorType.get(item.getData());
 							
 							if(splitter == null || !op.hasPriority(OperatorType.get(splitter.getData())))
 							{
 								splitter = item;
-								last = true;
+								// last = true;
 							}
 						}
 						else
 						{
-							last = false;
+							// last = false;
 						}
 					}
 					
@@ -137,8 +137,6 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 					
 					IMathExpression a = expression.resolve(data.subList(0, index));
 					IMathExpression b = expression.resolve(data.subList(index + 1));
-					
-					Debug.log(new OperationExpression(OperatorType.get(splitter.getData()), a, b).getStringValue());
 					
 					return new OperationExpression(OperatorType.get(splitter.getData()), a, b);
 				}

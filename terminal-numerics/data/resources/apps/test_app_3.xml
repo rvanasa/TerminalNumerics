@@ -1,5 +1,5 @@
-<app id="test_app_3">
-	<name>Another Test App</name>
+<app>
+	<name>Test App No. 3</name>
 	<version>01.10.00</version>
 	<description>Demonstrates and validates a minimum-function app.</description>
 	<layout type="border">

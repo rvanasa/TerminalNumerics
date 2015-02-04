@@ -7,6 +7,7 @@ import net.anasa.util.function.ExceptedRunnable;
 import net.anasa.util.ui.ButtonComponent;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
+import net.anasa.util.ui.TabbedComponent;
 import net.anasa.util.ui.WindowComponent;
 import net.anasa.util.ui.layout.ILayout;
 import rchs.tsa.math.io.xml.layout.node.LayoutType;
@@ -27,7 +28,7 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 	{
 		addComponent("app", (props) -> new AppPanelComponent(getContext().getApp(props.getString("id")), props));
 		addComponent("layout", (props) -> {
-			LayoutType type = EnumHelper.getFrom(LayoutType.class, props.getString("type"));
+			LayoutType type = EnumHelper.getFrom(LayoutType.class, props.getString("type", LayoutType.BORDER.name()));
 			
 			ILayout layout = type.getLayout(props);
 			
@@ -37,6 +38,15 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 			}
 			
 			return new PanelComponent(layout);
+		});
+		addComponent("tabs", (props) -> {
+			TabbedComponent component = new TabbedComponent();
+			for(Properties inner : props.getInnerList("_"))
+			{
+				component.addTab(inner.getString("title", ""), getContext().createComponent(inner.getValue(), inner));
+			}
+			
+			return component;
 		});
 		addComponent("panel", new UIComponentBuilder()
 		{

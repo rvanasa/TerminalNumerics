@@ -2,6 +2,7 @@ package rchs.tsa.math.ui;
 
 import java.awt.Desktop;
 
+import net.anasa.util.function.ExceptedRunnable;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.OutputComponent;
 import net.anasa.util.ui.PanelComponent;
@@ -30,16 +31,9 @@ public class MathContainerComponent extends PanelComponent
 						new SeperatorComponent(),
 						new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
 				}), new MenuComponent("Advanced", new IComponent[] {
-						new MenuActionComponent("Browse Data Files", () -> {
-								try
-								{
-									Desktop.getDesktop().open(TerminalNumerics.getDirectory());
-								}
-								catch(Exception e)
-								{
-									e.printStackTrace();
-								}
-							}),
+						new MenuActionComponent("Browse Data Files", () -> new ExceptedRunnable(
+								() -> Desktop.getDesktop().open(TerminalNumerics.getDirectory()),
+								(e) -> e.printStackTrace())),
 						new MenuActionComponent("Monitor System Output", () -> new WindowComponent("System Output", new ScrollComponent(true, new OutputComponent(60, 20))).display()),
 				})
 		}));

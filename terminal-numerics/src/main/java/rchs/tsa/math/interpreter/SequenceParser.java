@@ -30,7 +30,7 @@ public class SequenceParser extends PatternParser<IToken> implements IMathParser
 			.add(new TokenPattern(ExpressionTokenType.FUNCTION, (data) -> FunctionType.isFunction(data)))
 			.add(new TokenPattern(ExpressionTokenType.OPERATOR, (data) -> OperatorType.isOperator(data)))
 			.add(new TokenPattern(ExpressionTokenType.NUMBER, (data) -> NumberHelper.isDouble(data) || ConstantType.isConstant(data)))
-			.add(new RegexTokenPattern("[a-zA-Z_]*", ExpressionTokenType.VARIABLE));
+			.add(new RegexTokenPattern("[a-zA-Z]", ExpressionTokenType.VARIABLE));
 	
 	private final ExpressionResolver resolver = new ExpressionResolver();
 	

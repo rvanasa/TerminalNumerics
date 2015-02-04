@@ -87,15 +87,15 @@ public class GraphComponent extends PanelComponent
 		PanelComponent bottom = new PanelComponent();
 		bottom.setBorder(2, 2);
 		
-		UIBorderLayout bottomLayout = new UIBorderLayout();
-		bottomLayout.set(BorderPosition.LEFT, new LabelComponent("Scale"));
-		bottomLayout.set(BorderPosition.CENTER, scaleSlider);
-		bottomLayout.apply(bottom);
+		new UIBorderLayout()
+				.set(BorderPosition.LEFT, new LabelComponent("Zoom"))
+				.set(BorderPosition.CENTER, scaleSlider)
+				.apply(bottom);
 		
-		UIBorderLayout layout = new UIBorderLayout();
-		layout.set(BorderPosition.CENTER, graphPanel);
-		layout.set(BorderPosition.BOTTOM, bottom);
-		layout.apply(this);
+		new UIBorderLayout()
+				.set(BorderPosition.CENTER, graphPanel)
+				.set(BorderPosition.BOTTOM, bottom)
+				.apply(this);
 		
 		for(Graph graph : graphs)
 		{
