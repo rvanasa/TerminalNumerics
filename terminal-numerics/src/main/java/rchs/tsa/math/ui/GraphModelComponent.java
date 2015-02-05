@@ -68,6 +68,10 @@ public class GraphModelComponent extends PanelComponent
 				.set(BorderPosition.BOTTOM, inputPanel)
 				.apply(this);
 		
+		Graph graph = new Graph(getExpression());
+		graph.setData(this.mathData);
+		this.graph.setGraph(graph);
+		
 		updateGraph();
 	}
 	
@@ -98,10 +102,6 @@ public class GraphModelComponent extends PanelComponent
 	
 	public void updateGraph()
 	{
-		Graph graph = new Graph(getExpression());
-		graph.setData(getMathData());
-		getGraph().setGraph(graph);
-		
 		redraw();
 	}
 	

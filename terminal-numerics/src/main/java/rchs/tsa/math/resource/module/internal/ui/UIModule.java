@@ -1,13 +1,19 @@
 package rchs.tsa.math.resource.module.internal.ui;
 
 import net.anasa.util.EnumHelper;
+import net.anasa.util.TypeHelper;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.function.ExceptedRunnable;
 import net.anasa.util.ui.ButtonComponent;
+import net.anasa.util.ui.DoubleFieldComponent;
+import net.anasa.util.ui.IntegerFieldComponent;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
+import net.anasa.util.ui.SliderComponent;
 import net.anasa.util.ui.TabbedComponent;
+import net.anasa.util.ui.TabbedComponent.TabPosition;
+import net.anasa.util.ui.UIComponent.CursorType;
 import net.anasa.util.ui.WindowComponent;
 import net.anasa.util.ui.layout.ILayout;
 import rchs.tsa.math.io.xml.layout.node.LayoutType;
@@ -41,6 +47,7 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 		});
 		addComponent("tabs", (props) -> {
 			TabbedComponent component = new TabbedComponent();
+			component.setTabPosition(props.getEnum("side", TabPosition.TOP));
 			for(Properties inner : props.getInnerList("_"))
 			{
 				component.addTab(inner.getString("title", ""), getContext().createComponent(inner.getValue(), inner));
@@ -48,26 +55,19 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 			
 			return component;
 		});
-		addComponent("panel", new UIComponentBuilder()
-		{
-			@Override
-			public PanelComponent getComponent(AspectData data)
-			{
-				PanelComponent panel = new PanelComponent();
-				return panel;
-			}
+		addComponent("space", (props) -> {
+			PanelComponent panel = new PanelComponent();
+			panel.setSize(props.getDouble("width", 0), props.getDouble("height", 0));
+			return panel;
 		});
-		addComponent("label", new UIComponentBuilder()
-		{
-			ComponentAspect<String> text = new ComponentAspect<String>("text", IFormat.STRING, null);
-			
-			@Override
-			public LabelComponent getComponent(AspectData data)
-			{
-				LabelComponent label = new LabelComponent(data.get(text));
-				label.setBorder(4, 2);
-				return label;
-			}
+		addComponent("label", (props) -> {
+			LabelComponent label = new LabelComponent(props.getString("test", null));
+			label.setBorder(4, 2);
+			TypeHelper.ensure(props.getString("action", null), (action) -> {
+				label.setCursor(CursorType.HAND);
+				label.addClickListener((event) -> getContext().onAction(action, label));
+			});
+			return label;
 		});
 		addComponent("button", new UIComponentBuilder()
 		{
@@ -83,6 +83,31 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 						(e) -> e.printStackTrace()));
 				return button;
 			}
+		});
+		addComponent("slider", (props) -> {
+			SliderComponent slider = new SliderComponent(props.getInt("min", 0), props.getInt("max", 1), props.getInt("value", 0));
+			TypeHelper.ensure(props.getString("action", null), (action) -> slider.addActionListener(() -> getContext().onAction(action, slider)));
+			return slider;
+		});
+		addComponent("integer", (props) -> {
+			IntegerFieldComponent field = new IntegerFieldComponent(
+					props.getInt("value", 0),
+					props.getInt("min", Integer.MIN_VALUE),
+					props.getInt("max", Integer.MAX_VALUE),
+					props.getInt("step", 1)
+					);
+			TypeHelper.ensure(props.getString("action", null), (action) -> field.addActionListener(() -> getContext().onAction(action, field)));
+			return field;
+		});
+		addComponent("decimal", (props) -> {
+			DoubleFieldComponent field = new DoubleFieldComponent(
+					props.getDouble("value", 0),
+					props.getDouble("min", Double.MIN_VALUE),
+					props.getDouble("max", Double.MAX_VALUE),
+					props.getDouble("step", 1)
+					);
+			TypeHelper.ensure(props.getString("action", null), (action) -> field.addActionListener(() -> getContext().onAction(action, field)));
+			return field;
 		});
 		
 		addAction("close", (component, args) -> WindowComponent.getParentWindow(component).close());

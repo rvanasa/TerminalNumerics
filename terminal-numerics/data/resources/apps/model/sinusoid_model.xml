@@ -1,0 +1,36 @@
+<app>
+	<name>Hands-on Sinusoids</name>
+	<version>1.0</version>
+	<description>Visualize the properties of sinusoid functions.
+	</description>
+	<standards></standards>
+	<dependencies>module.graph_module</dependencies>
+	<layout type="border">
+		<tabs side="left">
+			<tabs title="Basic">
+				<graph_model title="Sine" model="A sin(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+				<graph_model title="Cosine" model="A cos(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+				<graph_model title="Tangent" model="A tan(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+			</tabs>
+			<tabs title="Inverse">
+				<graph_model title="Sine" model="A asin(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+				<graph_model title="Cosine" model="A acos(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+				<graph_model title="Tangent" model="A atan(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+			</tabs>
+			<tabs title="Reciprocal">
+				<graph_model title="Sine" model="A csc(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+				<graph_model title="Cosine" model="A sec(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+				<graph_model title="Tangent" model="A cot(Bx - C) + D"
+					input="A:1 B:1 C:0 D:0" />
+			</tabs>
+		</tabs>
+	</layout>
+</app>

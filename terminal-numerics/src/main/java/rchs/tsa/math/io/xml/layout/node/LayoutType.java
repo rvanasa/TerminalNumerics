@@ -1,6 +1,5 @@
 package rchs.tsa.math.io.xml.layout.node;
 
-import net.anasa.util.EnumHelper;
 import net.anasa.util.data.FormatException;
 import net.anasa.util.data.IConformHandler;
 import net.anasa.util.data.properties.Properties;
@@ -14,7 +13,7 @@ public enum LayoutType
 {
 	FLOW((props) -> {
 		UIFlowLayout layout = new UIFlowLayout();
-		layout.setType(EnumHelper.getFrom(FlowType.class, props.getString("align", "center")));
+		layout.setType(props.getEnum("align", FlowType.CENTER));
 		return layout;
 	}),
 	VERTICAL((props) -> {
@@ -24,7 +23,7 @@ public enum LayoutType
 	}),
 	BORDER((props) -> {
 		UIBorderLayout layout = new UIBorderLayout();
-		layout.setPadding(props.getInt("padding", 0));
+		layout.setPadding(props.getInt("spacing", 0));
 		return layout;
 	});
 	

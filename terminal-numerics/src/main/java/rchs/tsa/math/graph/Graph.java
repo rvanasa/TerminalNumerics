@@ -63,7 +63,7 @@ public class Graph
 		
 		for(IConstraint constraint : getConstraints())
 		{
-			if(constraint.isValid(x, y))
+			if(!constraint.isValid(x, y))
 			{
 				return MathNumber.NaN;
 			}

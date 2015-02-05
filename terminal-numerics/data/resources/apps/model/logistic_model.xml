@@ -1,10 +1,10 @@
 <app>
-	<name>Hands-on Logistic Growth</name>
+	<name>Hands-on Logistic Growth Model</name>
 	<version>1.0</version>
 	<description>Visualize the properties of logistic growth.</description>
 	<standards></standards>
 	<dependencies>module.graph_module</dependencies>
 	<layout type="border">
-		<graph_model model="L / ( 1 + e^(-k(x - h)) )" input="L:5 k:1 h:0" />
+		<graph_model model="L / ( 1 + e^(-kx) )" input="L:5 k:1" />
 	</layout>
 </app>
