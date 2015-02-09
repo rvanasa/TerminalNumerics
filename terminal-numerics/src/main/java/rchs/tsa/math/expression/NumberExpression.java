@@ -6,7 +6,7 @@ public class NumberExpression extends MathExpression
 	
 	public NumberExpression(double number)
 	{
-		this(new MathNumber(number));
+		this((new MathNumber(number)));
 	}
 	
 	public NumberExpression(INumber number)

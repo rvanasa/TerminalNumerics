@@ -4,7 +4,6 @@ import rchs.tsa.math.MathException;
 import rchs.tsa.math.expression.IMathExpression;
 import rchs.tsa.math.expression.INumber;
 import rchs.tsa.math.expression.MathData;
-import rchs.tsa.math.expression.MathNumber;
 
 public class Graph
 {
@@ -65,7 +64,7 @@ public class Graph
 		{
 			if(!constraint.isValid(x, y))
 			{
-				return MathNumber.NaN;
+				return INumber.NaN;
 			}
 		}
 		

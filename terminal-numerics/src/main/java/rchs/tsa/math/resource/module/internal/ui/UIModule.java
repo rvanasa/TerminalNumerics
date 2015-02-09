@@ -1,10 +1,10 @@
 package rchs.tsa.math.resource.module.internal.ui;
 
 import net.anasa.util.EnumHelper;
-import net.anasa.util.TypeHelper;
 import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.function.ExceptedRunnable;
+import net.anasa.util.type.TypeHelper;
 import net.anasa.util.ui.ButtonComponent;
 import net.anasa.util.ui.DoubleFieldComponent;
 import net.anasa.util.ui.IntegerFieldComponent;

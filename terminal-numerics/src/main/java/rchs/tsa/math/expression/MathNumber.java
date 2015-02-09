@@ -1,7 +1,5 @@
 package rchs.tsa.math.expression;
 
-import net.anasa.util.StringHelper;
-
 public class MathNumber implements INumber
 {
 	public static final MathNumber NaN = new MathNumber(Double.NaN);
@@ -23,11 +21,5 @@ public class MathNumber implements INumber
 	public String toString()
 	{
 		return getStringValue();
-	}
-	
-	@Override
-	public String getStringValue()
-	{
-		return StringHelper.stripZero(getValue());
 	}
 }

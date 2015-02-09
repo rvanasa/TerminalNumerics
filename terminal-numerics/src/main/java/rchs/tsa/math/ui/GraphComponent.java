@@ -3,15 +3,14 @@ package rchs.tsa.math.ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
 import net.anasa.util.Listing;
-import net.anasa.util.Mapping;
-import net.anasa.util.Pair;
 import net.anasa.util.data.resolver.IToken;
-import net.anasa.util.math.MathHelper;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.SliderComponent;
@@ -147,6 +146,7 @@ public class GraphComponent extends PanelComponent
 	@Override
 	public void redraw()
 	{
+		// getView().setResolution(200 / getGraphs().size());
 		getPanel().redraw();
 	}
 	
@@ -256,23 +256,23 @@ public class GraphComponent extends PanelComponent
 				Integer lastX = null;
 				Integer lastY = null;
 				
-				Mapping<Double, Double> map = getView().getValues(graph);
+				Map<Double, Double> map = getView().getValues(graph);
 				
-				for(Pair<Double, Double> pair : map)
+				for(Entry<Double, Double> entry : map.entrySet())
 				{
-					double x = pair.getKey();
-					double y = pair.getValue();
+					double x = entry.getKey();
+					double y = entry.getValue();
 					
 					int posX = getX(x);
 					int posY = getY(y);
 					
-					if(lastX != null && MathHelper.isContained(getY(y), 0, getPanel().getHeight()))
+					if(lastY != null && !Double.isNaN(y))
 					{
 						g.drawLine(lastX, lastY, posX, posY);
 					}
 					
 					lastX = posX;
-					lastY = posY;
+					lastY = !Double.isNaN(y) ? posY : null;
 				}
 			}
 			catch(MathException e)

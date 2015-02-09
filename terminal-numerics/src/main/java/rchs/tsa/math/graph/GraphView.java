@@ -1,11 +1,11 @@
 package rchs.tsa.math.graph;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
-import net.anasa.util.Listing;
-import net.anasa.util.Mapping;
 import rchs.tsa.math.MathException;
-import rchs.tsa.math.expression.INumber;
 import rchs.tsa.math.expression.MathNumber;
 
 public class GraphView
@@ -24,7 +24,7 @@ public class GraphView
 	
 	public GraphView(Bounds bounds)
 	{
-		this(bounds, 180);
+		this(bounds, 100);
 		
 		normalizeInterval();
 	}
@@ -86,64 +86,55 @@ public class GraphView
 		return this;
 	}
 	
-	public Listing<INumber> getInputValues(Graph graph)
+	public Map<Double, Double> getValues(Graph graph) throws MathException
 	{
-		Listing<INumber> list = new Listing<>();
+		Checks.checkNotNull(graph, new MathException("Graph cannot be null"));
+		
+		Map<Double, Double> map = new LinkedHashMap<>((int)(getBounds().getWidth() * getResolution()), 0.8F);
 		
 		double min = getBounds().getMinX();
 		double max = getBounds().getMaxX();
 		
-		for(double n = min; n <= max; n += getBounds().getWidth() / getResolution())
+		double step = getBounds().getWidth() / getResolution();
+		
+		for(double n = min; n <= max; n += step)
 		{
-			list.add(new MathNumber(n));
+			interpolate(graph, map, n, n + step);
 		}
 		
-		return list;
+		return map;
 	}
 	
-	public Mapping<Double, Double> getValues(Graph graph) throws MathException
+	private void interpolate(Graph graph, Map<Double, Double> map, double x1, double x2) throws MathException
 	{
-		Checks.checkNotNull(graph, new NullPointerException("Graph cannot be null"));
+		double y1 = graph.getFrom(new MathNumber(x1)).getValue();
+		double y2 = graph.getFrom(new MathNumber(x2)).getValue();
 		
-		Mapping<Double, Double> values = new Mapping<>();
+		double diffX = x2 - x1;
+		double diffY = Math.abs(y2 - y1);
 		
-		Double lastX = null;
-		Double lastY = null;
-		for(INumber x : getInputValues(graph))
+		if(Double.isInfinite(y1))
 		{
-			lastY = getValue(graph, x, values, lastX, lastY);
-			lastX = x.getValue();
+			y1 = Double.NaN;
+		}
+		if(Double.isInfinite(y2))
+		{
+			y2 = Double.NaN;
 		}
 		
-		return values;
-	}
-	
-	protected double getValue(Graph graph, INumber x, Mapping<Double, Double> values, Double lastX, Double lastY) throws MathException
-	{
-		Double y = graph.getFrom(x).getValue();
-		
-		if(lastX != null && x.getValue() > 0 && lastX < 0)
+		if(diffY > diffX && diffX > getBounds().getWidth() / getResolution() * 0.4)
 		{
-			values.put(0D, graph.getFrom(new MathNumber(0)).getValue());
+			interpolate(graph, map, x1, x1 + diffX / 2);
+			interpolate(graph, map, x1 + diffX / 2, x2);
 		}
-		
-		boolean flag = lastY != null && Math.abs(y - lastY) > 2 * getBounds().getWidth() / getResolution() && Math.abs(y - lastY) < getBounds().getHeight();
-		
-		if(flag)
+		else
 		{
-			getValue(graph, new MathNumber(x.getValue() - ((x.getValue() - lastX) / 2)), values, lastX, y);
+			map.put(x1, y1);
+			
+			if(diffY > getBounds().getHeight())
+			{
+				map.put(x1 + diffX / 2, Double.NaN);
+			}
 		}
-		
-		if(!y.isNaN())
-		{
-			values.put(x.getValue(), y);
-		}
-		
-		if(flag)
-		{
-			getValue(graph, new MathNumber(x.getValue() + ((x.getValue() - lastX) / 2)), values, x.getValue(), y);
-		}
-		
-		return y;
 	}
 }
