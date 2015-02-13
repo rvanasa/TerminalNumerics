@@ -49,7 +49,7 @@ public enum FunctionType implements IFunction
 	{
 		for(FunctionType type : FunctionType.values())
 		{
-			if(type.getName().equalsIgnoreCase(name))
+			if(type.getName().equals(name))
 			{
 				return type;
 			}

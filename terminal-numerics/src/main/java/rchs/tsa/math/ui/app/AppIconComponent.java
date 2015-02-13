@@ -42,7 +42,7 @@ public class AppIconComponent extends LabelComponent
 		
 		setContextMenu(new ContextMenuComponent(new IComponent[] {
 				new MenuActionComponent("Launch app", this::launchApp),
-				new MenuActionComponent("View info", () -> new WindowComponent(app.getName(), app.getIcon(), new AppInfoComponent(app)).display()),
+				new MenuActionComponent("View info", () -> new WindowComponent(app.getName(), app.getIcon() != null ? app.getIcon() : TerminalNumerics.getIcon(), new AppInfoComponent(app)).display()),
 		}));
 	}
 	

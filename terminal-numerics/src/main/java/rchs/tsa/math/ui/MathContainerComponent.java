@@ -23,21 +23,21 @@ public class MathContainerComponent extends PanelComponent
 {
 	public MathContainerComponent(ModuleContext context)
 	{
-		UIBorderLayout layout = new UIBorderLayout();
-		layout.set(BorderPosition.TOP, new MenuBarComponent(new MenuComponent[] {
-				new MenuComponent("Options", new IComponent[] {
-						new MenuActionComponent("View Software License", () -> new WindowComponent("Software License", new LicenseComponent()).display()),
-						new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(680, 600, new StandardModelComponent(context.getStandards("CCSS")))).display()),
-						new SeperatorComponent(),
-						new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
-				}), new MenuComponent("Advanced", new IComponent[] {
-						new MenuActionComponent("Browse Data Files", () -> new ExceptedRunnable(
-								() -> Desktop.getDesktop().open(TerminalNumerics.getDirectory()),
-								(e) -> e.printStackTrace())),
-						new MenuActionComponent("Monitor System Output", () -> new WindowComponent("System Output", new ScrollComponent(true, new OutputComponent(60, 20))).display()),
-				})
-		}));
-		layout.set(BorderPosition.CENTER, new AppListComponent(context));
-		layout.apply(this);
+		new UIBorderLayout()
+				.set(BorderPosition.TOP, new MenuBarComponent(new MenuComponent[] {
+						new MenuComponent("Options", new IComponent[] {
+								new MenuActionComponent("View Software License", () -> new WindowComponent("Software License", new LicenseComponent()).display()),
+								new MenuActionComponent("Common Core State Standards", () -> new WindowComponent("Common Core State Standards", new ScrollComponent(680, 600, new StandardModelComponent(context.getStandards("CCSS")))).display()),
+								new SeperatorComponent(),
+								new MenuActionComponent("Exit Application", () -> WindowComponent.closeAllWindows()),
+						}), new MenuComponent("Advanced", new IComponent[] {
+								new MenuActionComponent("Browse Data Files", () -> new ExceptedRunnable(
+										() -> Desktop.getDesktop().open(TerminalNumerics.getDirectory()),
+										(e) -> e.printStackTrace())),
+								new MenuActionComponent("Monitor System Output", () -> new WindowComponent("System Output", new ScrollComponent(true, new OutputComponent(60, 20))).display()),
+						})
+				}))
+				.set(BorderPosition.CENTER, new AppListComponent(context))
+				.apply(this);
 	}
 }

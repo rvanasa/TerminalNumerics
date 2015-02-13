@@ -2,7 +2,7 @@ package rchs.tsa.math.ui.app;
 
 import java.awt.Color;
 
-import javax.swing.BorderFactory;
+import javax.swing.border.BevelBorder;
 
 import net.anasa.util.Listing;
 import net.anasa.util.StringHelper;
@@ -23,6 +23,12 @@ public class AppListEntryComponent extends PanelComponent
 	{
 		this.app = app;
 		
+		setBorder(new BevelBorder(BevelBorder.RAISED));
+		
+		Vector2 size = new Vector2(480, 40);
+		setMaxSize(size);
+		setSize(size);
+		
 		AppIconComponent icon = new AppIconComponent(app);
 		
 		PanelComponent details = new PanelComponent();
@@ -35,10 +41,10 @@ public class AppListEntryComponent extends PanelComponent
 		LabelComponent description = new LabelComponent(app.getDescription());
 		description.setForeground(new Color(0x222222));
 		
-		UIBorderLayout detailLayout = new UIBorderLayout();
-		detailLayout.set(BorderPosition.TOP, name);
-		detailLayout.set(BorderPosition.CENTER, description);
-		detailLayout.apply(details);
+		new UIBorderLayout()
+				.set(BorderPosition.TOP, name)
+				.set(BorderPosition.CENTER, description)
+				.apply(details);
 		
 		LabelComponent standards = new LabelComponent("<html>" + StringHelper.join("<br/>", new Listing<>(getApp().getStandards())
 				.format((standard) -> standard.getName())));
@@ -46,17 +52,11 @@ public class AppListEntryComponent extends PanelComponent
 		ScrollComponent items = new ScrollComponent(standards);
 		items.removeBorder();
 		
-		UIBorderLayout layout = new UIBorderLayout(4);
-		layout.set(BorderPosition.LEFT, icon);
-		layout.set(BorderPosition.CENTER, details);
-		layout.set(BorderPosition.RIGHT, items);
-		layout.apply(this);
-		
-		setBorder(BorderFactory.createEtchedBorder());
-		
-		Vector2 size = new Vector2(480, 40);
-		setMaxSize(size);
-		setSize(size);
+		new UIBorderLayout(4)
+				.set(BorderPosition.LEFT, icon)
+				.set(BorderPosition.CENTER, details)
+				.set(BorderPosition.RIGHT, items)
+				.apply(this);
 	}
 	
 	public IApp getApp()

@@ -54,7 +54,7 @@ public class GraphModelComponent extends PanelComponent
 			});
 			field.onAction();
 			PanelComponent panel = new PanelComponent(new UIBorderLayout()
-					.set(BorderPosition.LEFT, new LabelComponent(var.getVariable()))
+					.set(BorderPosition.LEFT, new LabelComponent(var.getVariable(), new Font(Font.SERIF, Font.BOLD, 12)))
 					.set(BorderPosition.CENTER, value)
 					.set(BorderPosition.RIGHT, field));
 			panel.setBorder(10, 4);

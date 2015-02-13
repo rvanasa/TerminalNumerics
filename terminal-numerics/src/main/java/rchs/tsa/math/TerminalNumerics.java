@@ -11,8 +11,12 @@ import java.util.Date;
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import net.anasa.util.StringHelper;
+import net.anasa.util.data.FormatException;
+import net.anasa.util.data.format.IFormat;
+import net.anasa.util.data.io.FileHandler;
 import net.anasa.util.data.io.IOHelper;
 import net.anasa.util.data.properties.Properties;
+import net.anasa.util.data.properties.Settings;
 import net.anasa.util.ui.UI;
 import rchs.tsa.math.launcher.MathLauncher;
 import rchs.tsa.math.resource.module.ModuleException;
@@ -77,7 +81,7 @@ public final class TerminalNumerics
 					e.printStackTrace();
 				}
 			});
-
+			
 			Debug.log("Settings file: " + settingsFile.getAbsolutePath());
 			Debug.log("[" + new Date() + "]");
 			
@@ -105,9 +109,9 @@ public final class TerminalNumerics
 		return getInstance().license;
 	}
 	
-	public static Properties getSettings()
+	public static Settings getSettings()
 	{
-		return getContext().getSettings();
+		return getInstance().settings;
 	}
 	
 	public static File getDirectory()
@@ -134,14 +138,26 @@ public final class TerminalNumerics
 	
 	private final String license;
 	
+	private final Settings settings;
+	
 	private ModuleContext context;
 	
-	private TerminalNumerics(File settingsFile) throws IOException, ModuleException
+	private TerminalNumerics(File settingsFile) throws ModuleException
 	{
-		INSTANCE = this;
-		
-		license = IOHelper.read(getClass().getResourceAsStream("/license.txt"));
-		
-		setContext(new BaseModuleContext(settingsFile));
+		try
+		{
+			INSTANCE = this;
+			
+			license = IOHelper.read(getClass().getResourceAsStream("/license.txt"));
+			
+			settings = new Settings(new FileHandler<>(settingsFile, Properties.FORMAT).read());
+			settings.add("directory", IFormat.STRING, settingsFile.getParent());
+			
+			setContext(new BaseModuleContext(settings));
+		}
+		catch(IOException | FormatException e)
+		{
+			throw new ModuleException(e);
+		}
 	}
 }

@@ -4,18 +4,18 @@ import net.anasa.util.Listing;
 
 public enum ConstantType
 {
-	PI(Math.PI, "\u03C0"),
-	E(Math.E);
+	PI(Math.PI, "pi", "\u03C0"),
+	E(Math.E, "e");
 	
 	private final double value;
 	
-	private final String[] otherNames;
+	private final String[] names;
 	
 	private ConstantType(double value, String... otherNames)
 	{
 		this.value = value;
 		
-		this.otherNames = otherNames;
+		this.names = otherNames;
 	}
 	
 	public double getValue()
@@ -23,19 +23,14 @@ public enum ConstantType
 		return value;
 	}
 	
-	public String getName()
+	public String[] getNames()
 	{
-		return name().toLowerCase();
-	}
-	
-	public String[] getOtherNames()
-	{
-		return otherNames;
+		return names;
 	}
 	
 	public boolean isName(String name)
 	{
-		return getName().equalsIgnoreCase(name) || new Listing<>(getOtherNames()).contains((n) -> n.equalsIgnoreCase(name));
+		return new Listing<>(getNames()).contains((n) -> n.equals(name));
 	}
 	
 	public static boolean isConstant(String name)

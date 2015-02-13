@@ -42,12 +42,12 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 	@Override
 	public IApp load(XmlElement element) throws FormatException
 	{
-		String id = element.getValue("id", this.id);
-		Version version = Version.getFrom(element.getValue("version"));
-		String name = element.getValue("name");
-		String description = element.getValue("description", "(No description provided)");
+		String id = element.getString("id", this.id);
+		Version version = Version.getFrom(element.getString("version"));
+		String name = element.getString("name");
+		String description = element.getString("description", "(No description provided)");
 		
-		IStandard[] standards = new Listing<>(element.getValue("standards", "").split(",|;"))
+		IStandard[] standards = new Listing<>(element.getString("standards", "").split(",|;"))
 				.filter((data) -> !data.trim().isEmpty())
 				.conform((data) -> context.getStandard(data))
 				.filter((data) -> data != null)
@@ -56,7 +56,7 @@ public class XmlAppLoader implements IXmlLoader<IApp>
 		
 		ILayoutNode launchComponent = getLayoutLoader().load(element.getElement("layout"));
 		
-		Dependency[] dependencies = new Listing<>(element.getValue("dependencies", "").split(",|;"))
+		Dependency[] dependencies = new Listing<>(element.getString("dependencies", "").split(",|;"))
 				.filter((data) -> !data.trim().isEmpty())
 				.conform((data) -> Dependency.getFrom(data))
 				.toArray(Dependency.class);

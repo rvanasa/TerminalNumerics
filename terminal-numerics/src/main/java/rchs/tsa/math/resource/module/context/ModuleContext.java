@@ -18,8 +18,6 @@ import rchs.tsa.math.standard.IStandardModel;
 
 public interface ModuleContext
 {
-	public Properties getSettings();
-	
 	public File getDirectory();
 	
 	public StateStandards getStandards();

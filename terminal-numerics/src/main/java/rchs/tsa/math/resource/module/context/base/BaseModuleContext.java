@@ -11,8 +11,10 @@ import net.anasa.util.Checks;
 import net.anasa.util.Debug;
 import net.anasa.util.Listing;
 import net.anasa.util.data.FormatException;
-import net.anasa.util.data.io.FileHandler;
+import net.anasa.util.data.format.IFormat;
 import net.anasa.util.data.properties.Properties;
+import net.anasa.util.data.properties.Settings;
+import net.anasa.util.data.properties.Settings.Setting;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.UI;
 import rchs.tsa.math.resource.Dependency;
@@ -30,7 +32,6 @@ import rchs.tsa.math.standard.IStandardModel;
 
 public class BaseModuleContext implements ModuleContext
 {
-	private final Properties settings;
 	private final File directory;
 	
 	private final StateStandards standards = new StateStandards();
@@ -42,16 +43,16 @@ public class BaseModuleContext implements ModuleContext
 	
 	private final IResourceDownloader downloader;
 	
-	public BaseModuleContext(File settingsFile) throws ModuleException
+	public BaseModuleContext(Settings settings) throws ModuleException
 	{
 		try
 		{
-			settings = new FileHandler<>(settingsFile, Properties.FORMAT).read();
-			directory = new File(settings.getString("directory", settingsFile.getParent()));
+			directory = new File(settings.getValue("directory", String.class));
 			
-			if(getSettings().getBoolean("resource_download", false))
+			Setting<String> resourceURL = settings.add("resource_url", IFormat.STRING);
+			if(resourceURL.hasValue())
 			{
-				downloader = new WebResourceDownloader(settings.getString("resource_url"));
+				downloader = new WebResourceDownloader(resourceURL.getValue());
 			}
 			else
 			{
@@ -62,12 +63,6 @@ public class BaseModuleContext implements ModuleContext
 		{
 			throw new ModuleException(e);
 		}
-	}
-	
-	@Override
-	public Properties getSettings()
-	{
-		return settings;
 	}
 	
 	@Override
