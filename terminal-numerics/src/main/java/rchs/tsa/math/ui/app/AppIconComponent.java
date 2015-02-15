@@ -29,7 +29,7 @@ public class AppIconComponent extends LabelComponent
 	
 	public AppIconComponent(IApp app, Properties launchConfig)
 	{
-		super(app.getIcon() == null ? null : new ImageIcon(app.getIcon().getScaledInstance(IMAGE_SIZE, IMAGE_SIZE, Image.SCALE_SMOOTH)));
+		super(app.getIcon() == null ? new ImageIcon(TerminalNumerics.getIcon()) : new ImageIcon(app.getIcon().getScaledInstance(IMAGE_SIZE, IMAGE_SIZE, Image.SCALE_SMOOTH)));
 		
 		this.app = app;
 		
@@ -42,7 +42,7 @@ public class AppIconComponent extends LabelComponent
 		
 		setContextMenu(new ContextMenuComponent(new IComponent[] {
 				new MenuActionComponent("Launch app", this::launchApp),
-				new MenuActionComponent("View info", () -> new WindowComponent(app.getName(), app.getIcon() != null ? app.getIcon() : TerminalNumerics.getIcon(), new AppInfoComponent(app)).display()),
+				new MenuActionComponent("View info", () -> new WindowComponent(app.getName(), app.getIcon() != null ? app.getIcon() : TerminalNumerics.getIcon(), new AppInfoComponent(app)).setResizable(false).display()),
 		}));
 	}
 	
@@ -61,9 +61,9 @@ public class AppIconComponent extends LabelComponent
 		IComponent component = getApp().getLaunchComponent(getLaunchConfig());
 		if(component != null)
 		{
-			WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon() != null ? app.getIcon() : TerminalNumerics.getIcon(), component);
-			window.setMinSize(window.getSize());
+			WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon() != null ? getApp().getIcon() : TerminalNumerics.getIcon(), component);
 			window.display();
+			window.setMinSize(window.getSize());
 		}
 	}
 }

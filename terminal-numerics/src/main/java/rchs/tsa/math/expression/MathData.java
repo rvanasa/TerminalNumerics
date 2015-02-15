@@ -1,11 +1,11 @@
 package rchs.tsa.math.expression;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MathData
 {
-	private final Map<String, INumber> variables = new LinkedHashMap<>();
+	private final Map<String, INumber> variables = new HashMap<>();
 	
 	private boolean degrees = false;
 	
@@ -13,25 +13,43 @@ public class MathData
 	{
 		
 	}
+	
+	public boolean isValidVariable(String key)
+	{
+		return key != null;
+	}
+	
+	public Map<String, INumber> getVariables()
+	{
+		return variables;
+	}
 
 	public boolean hasVariable(String key)
 	{
-		return variables.containsKey(key);
+		return getVariables().containsKey(key);
 	}
 	
 	public INumber getVariable(String key)
 	{
-		return variables.get(key);
+		return getVariables().get(key);
 	}
 	
 	public void setVariable(String key, INumber value)
 	{
-		variables.put(key, value);
+		if(isValidVariable(key))
+		{
+			getVariables().put(key, value);
+		}
+	}
+	
+	public void removeVariable(String key)
+	{
+		getVariables().remove(key);
 	}
 	
 	public void clearVariables()
 	{
-		variables.clear();
+		getVariables().clear();
 	}
 
 	public boolean isDegreeMode()

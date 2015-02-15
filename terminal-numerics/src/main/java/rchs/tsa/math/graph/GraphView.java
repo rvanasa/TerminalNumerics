@@ -6,6 +6,7 @@ import java.util.Map;
 import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
 import rchs.tsa.math.MathException;
+import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.expression.MathNumber;
 
 public class GraphView
@@ -86,7 +87,7 @@ public class GraphView
 		return this;
 	}
 	
-	public Map<Double, Double> getValues(Graph graph) throws MathException
+	public Map<Double, Double> getValues(Graph graph, MathData data) throws MathException
 	{
 		Checks.checkNotNull(graph, new MathException("Graph cannot be null"));
 		
@@ -99,16 +100,16 @@ public class GraphView
 		
 		for(double n = min; n <= max; n += step)
 		{
-			interpolate(graph, map, n, n + step);
+			interpolate(graph, data, map, n, n + step);
 		}
 		
 		return map;
 	}
 	
-	private void interpolate(Graph graph, Map<Double, Double> map, double x1, double x2) throws MathException
+	private void interpolate(Graph graph, MathData data, Map<Double, Double> map, double x1, double x2) throws MathException
 	{
-		double y1 = graph.getFrom(new MathNumber(x1)).getValue();
-		double y2 = graph.getFrom(new MathNumber(x2)).getValue();
+		double y1 = graph.getFrom(new MathNumber(x1), data).getValue();
+		double y2 = graph.getFrom(new MathNumber(x2), data).getValue();
 		
 		double diffX = x2 - x1;
 		double diffY = Math.abs(y2 - y1);
@@ -124,8 +125,8 @@ public class GraphView
 		
 		if(diffY > diffX && diffX > getBounds().getWidth() / getResolution() * 0.4)
 		{
-			interpolate(graph, map, x1, x1 + diffX / 2);
-			interpolate(graph, map, x1 + diffX / 2, x2);
+			interpolate(graph, data, map, x1, x1 + diffX / 2);
+			interpolate(graph, data, map, x1 + diffX / 2, x2);
 		}
 		else
 		{

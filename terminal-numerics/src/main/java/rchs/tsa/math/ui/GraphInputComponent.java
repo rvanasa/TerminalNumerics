@@ -33,9 +33,11 @@ public class GraphInputComponent extends PanelComponent
 	public GraphInputComponent(MathData mathData)
 	{
 		graph = new GraphComponent();
+		graph.setMathData(mathData);
 		
 		input = new TextFieldComponent((data) -> getGraph().updateGraphs(data));
-		input.setToolTipText("<html>Input an expression to be displayed on the graph. (Example: -5x+3^x)<br/>You can graph multiple functions by seperating each expression with a semicolon (;).");
+		input.setToolTipText("<html>Input an expression to be displayed on the graph. (Example: -5x+3^x)<br/>You can graph multiple functions by seperating each expression with a semicolon (;).<br/>Right-click for additional configuration options.");
+		input.setContextMenu(graph.getPanel().getContextMenu());
 		
 		selectedGraph = new SelectionComponent<>((value) -> getGraph().getFunctionColor(getGraph().getGraphs().indexOf(value)).getName());
 		selectedGraph.addActionListener(() -> calculate());
@@ -43,14 +45,11 @@ public class GraphInputComponent extends PanelComponent
 		
 		this.mathData = mathData;
 		
-		PanelComponent top = new PanelComponent();
+		PanelComponent top = new PanelComponent(new UIBorderLayout()
+				.set(BorderPosition.LEFT, new LabelComponent(" f(x) = "))
+				.set(BorderPosition.CENTER, input)
+				.set(BorderPosition.RIGHT, new ButtonComponent("Graph", () -> getGraph().updateGraphs(getInput().getValue()))));
 		top.setBorder(2, 2);
-		
-		UIBorderLayout topLayout = new UIBorderLayout();
-		topLayout.set(BorderPosition.LEFT, new LabelComponent(" f(x) = "));
-		topLayout.set(BorderPosition.CENTER, input);
-		topLayout.set(BorderPosition.RIGHT, new ButtonComponent("Graph", () -> getGraph().updateGraphs(getInput().getValue())));
-		topLayout.apply(top);
 		
 		PropertyFieldComponent<Graph> graphSelect = new PropertyFieldComponent<>("Selected Graph", selectedGraph);
 		graph.addGraphListener((event) -> updateGraphSelection());
@@ -58,7 +57,7 @@ public class GraphInputComponent extends PanelComponent
 		PanelComponent calcPanel = new PanelComponent();
 		calcPanel.setBorder(4, 2);
 		
-		calculations.add(new CalculationComponent<>("Solve for x", new TextFieldComponent(16), (data) -> getSelectedGraph() != null ? getSelectedGraph().getFrom(Evaluator.evaluate(data).evaluate(getMathData())) : null));
+		calculations.add(new CalculationComponent<>("Solve for x", new TextFieldComponent(16), (data) -> getSelectedGraph() != null ? getSelectedGraph().getFrom(Evaluator.parse(data).evaluate(getMathData()), getMathData()) : null));
 		
 		UIVerticalLayout calcLayout = new UIVerticalLayout();
 		calcLayout.add(graphSelect);
@@ -68,11 +67,11 @@ public class GraphInputComponent extends PanelComponent
 		}
 		calcLayout.apply(calcPanel);
 		
-		UIBorderLayout layout = new UIBorderLayout();
-		layout.set(BorderPosition.TOP, top);
-		layout.set(BorderPosition.CENTER, graph);
-		layout.set(BorderPosition.BOTTOM, calcPanel);
-		layout.apply(this);
+		new UIBorderLayout()
+				.set(BorderPosition.TOP, top)
+				.set(BorderPosition.CENTER, graph)
+				.set(BorderPosition.BOTTOM, calcPanel)
+				.apply(this);
 	}
 	
 	public GraphComponent getGraph()

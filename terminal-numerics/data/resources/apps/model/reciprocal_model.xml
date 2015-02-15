@@ -7,7 +7,7 @@
 	<layout type="border">
 		<tabs>
 			<graph_model title="Basic" model="a / ( b(x - h) ) + k" input="a:1 b:1 h:0 k:0" />
-			<graph_model title="Inverse Square" model="a / ( b(x - h)^2 ) + k" input="a:1 b:1 h:0 k:0" />
+			<graph_model title="Inverse Square" model="a / (b(x - h)^2) + k" display="a / ( b(x - h)² ) + k" input="a:1 b:1 h:0 k:0" />
 		</tabs>
 	</layout>
 </app>

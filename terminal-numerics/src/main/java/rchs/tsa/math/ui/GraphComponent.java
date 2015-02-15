@@ -9,15 +9,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.anasa.util.Bounds;
 import net.anasa.util.Checks;
+import net.anasa.util.Concurrency;
+import net.anasa.util.Debug;
+import net.anasa.util.Debug.MessageType;
 import net.anasa.util.Listing;
 import net.anasa.util.data.resolver.IToken;
+import net.anasa.util.ui.ContextMenuComponent;
+import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.SliderComponent;
+import net.anasa.util.ui.WindowComponent;
 import net.anasa.util.ui.event.IComponentListener;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
+import net.anasa.util.ui.menu.MenuActionComponent;
 import rchs.tsa.math.MathException;
+import rchs.tsa.math.TerminalNumerics;
+import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.graph.Graph;
 import rchs.tsa.math.graph.GraphView;
 import rchs.tsa.math.interpreter.SequenceParser;
@@ -54,6 +63,8 @@ public class GraphComponent extends PanelComponent
 	
 	private SequenceParser parser;
 	
+	private MathData mathData = new MathData();
+	
 	public GraphComponent(String data)
 	{
 		this();
@@ -74,6 +85,14 @@ public class GraphComponent extends PanelComponent
 		
 		graphPanel = new PanelComponent();
 		graphPanel.addDrawListener((event) -> updateGraphPanel(event.getGraphics()));
+		graphPanel.setContextMenu(new ContextMenuComponent(new IComponent[] {
+				new MenuActionComponent("Configure", () -> {
+						MathDataComponent component = new MathDataComponent(getMathData());
+						component.addDrawListener((event) -> redraw());
+						addDrawListener((event) -> component.updateVariables());
+						new WindowComponent("Graph Configuration", TerminalNumerics.getIcon(), component).setResizable(false).tether(WindowComponent.getParentWindow(this)).display();
+					})
+		}));
 		
 		graphPanel.setBackground(BG_COLOR);
 		graphPanel.setSize(SIZE, SIZE);
@@ -107,7 +126,7 @@ public class GraphComponent extends PanelComponent
 		return functionColors.getOrDefault(index, new FunctionColor("Black", 0x000000));
 	}
 	
-	protected PanelComponent getPanel()
+	public PanelComponent getPanel()
 	{
 		return graphPanel;
 	}
@@ -127,6 +146,16 @@ public class GraphComponent extends PanelComponent
 		this.parser = parser;
 	}
 	
+	public MathData getMathData()
+	{
+		return mathData;
+	}
+	
+	public void setMathData(MathData mathData)
+	{
+		this.mathData = mathData;
+	}
+	
 	public Listing<Graph> getGraphs()
 	{
 		return graphs;
@@ -143,13 +172,6 @@ public class GraphComponent extends PanelComponent
 		getGraphs().clear();
 	}
 	
-	@Override
-	public void redraw()
-	{
-		// getView().setResolution(200 / getGraphs().size());
-		getPanel().redraw();
-	}
-	
 	public void addGraph(Listing<IToken> data)
 	{
 		addGraphs(new Listing<Listing<IToken>>(data));
@@ -159,24 +181,24 @@ public class GraphComponent extends PanelComponent
 	{
 		Checks.checkNotNull(data, "data cannot be null");
 		
-		new Thread(() -> {
+		Concurrency.runThreaded(() -> {
 			clearGraphs();
 			for(Listing<IToken> sequence : data)
 			{
 				try
 				{
-					Graph graph = new Graph(Evaluator.evaluate(sequence));
+					Graph graph = new Graph(Evaluator.parse(sequence));
 					addGraph(graph);
 					
 					getEvents().dispatch(new GraphEvent(this, graph));
 				}
-				catch(Exception e)
+				catch(MathException e)
 				{
-					e.printStackTrace();
+					Debug.log("Failed to evaluate expression: " + e.getMessage());
 				}
 			}
 			redraw();
-		}).start();
+		});
 	}
 	
 	public void updateGraphs(String data)
@@ -212,6 +234,12 @@ public class GraphComponent extends PanelComponent
 	public void addGraphListener(IComponentListener<GraphEvent> listener)
 	{
 		getEvents().register(GraphEvent.class, listener);
+	}
+	
+	@Override
+	public void redraw()
+	{
+		getPanel().redraw();
 	}
 	
 	private void updateGraphPanel(Graphics2D g)
@@ -256,7 +284,7 @@ public class GraphComponent extends PanelComponent
 				Integer lastX = null;
 				Integer lastY = null;
 				
-				Map<Double, Double> map = getView().getValues(graph);
+				Map<Double, Double> map = getView().getValues(graph, getMathData());
 				
 				for(Entry<Double, Double> entry : map.entrySet())
 				{
@@ -277,7 +305,7 @@ public class GraphComponent extends PanelComponent
 			}
 			catch(MathException e)
 			{
-				e.printStackTrace();
+				Debug.msg(MessageType.ERROR, "Failed to draw graph data: " + e.getMessage());
 			}
 			
 			index++;

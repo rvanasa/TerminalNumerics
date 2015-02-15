@@ -12,8 +12,6 @@ public class Graph
 	
 	private final IConstraint[] constraints;
 	
-	private MathData data;
-	
 	public Graph(IMathExpression expression, IConstraint... constraints)
 	{
 		this(expression, new Axis("x"), constraints);
@@ -25,8 +23,6 @@ public class Graph
 		this.axis = axis;
 		
 		this.constraints = constraints;
-		
-		setData(new MathData());
 	}
 	
 	public IMathExpression getExpression()
@@ -44,31 +40,28 @@ public class Graph
 		return constraints;
 	}
 	
-	public MathData getData()
+	public INumber getFrom(INumber x, MathData data) throws MathException
 	{
-		return data;
-	}
-	
-	public void setData(MathData data)
-	{
-		this.data = data;
-	}
-	
-	public INumber getFrom(INumber x) throws MathException
-	{
-		getData().setVariable(getAxis().getKey(), x);
-		
-		INumber y = getExpression().evaluate(getData());
-		
-		for(IConstraint constraint : getConstraints())
+		try
 		{
-			if(!constraint.isValid(x, y))
+			data.setVariable(getAxis().getKey(), x);
+			
+			INumber y = getExpression().evaluate(data);
+			
+			for(IConstraint constraint : getConstraints())
 			{
-				return INumber.NaN;
+				if(!constraint.isValid(x, y))
+				{
+					return INumber.NaN;
+				}
 			}
+			
+			return y;
 		}
-		
-		return y;
+		finally
+		{
+			data.removeVariable(getAxis().getKey());
+		}
 	}
 	
 	@Override

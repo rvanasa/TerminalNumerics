@@ -48,10 +48,10 @@ public class TransformationComponent extends PanelComponent
 	{
 		try
 		{
-			IMathExpression expression = Evaluator.evaluate(graphData.getValue());
+			IMathExpression expression = Evaluator.parse(graphData.getValue());
 			
-			expression = new OperationExpression(OperatorType.MULTIPLY, expression, Evaluator.evaluate(verticalScale.getValue(), new NumberExpression(1)));
-			expression = new OperationExpression(OperatorType.ADD, expression, Evaluator.evaluate(verticalTranslation.getValue(), new NumberExpression(0)));
+			expression = new OperationExpression(OperatorType.MULTIPLY, expression, Evaluator.parse(verticalScale.getValue(), new NumberExpression(1)));
+			expression = new OperationExpression(OperatorType.ADD, expression, Evaluator.parse(verticalTranslation.getValue(), new NumberExpression(0)));
 			
 			getGraph().setGraph(new Graph(expression));
 		}

@@ -11,6 +11,7 @@ import net.anasa.util.ui.IntegerFieldComponent;
 import net.anasa.util.ui.LabelComponent;
 import net.anasa.util.ui.PanelComponent;
 import net.anasa.util.ui.SliderComponent;
+import net.anasa.util.ui.SpaceComponent;
 import net.anasa.util.ui.TabbedComponent;
 import net.anasa.util.ui.TabbedComponent.TabPosition;
 import net.anasa.util.ui.UIComponent.CursorType;
@@ -56,9 +57,7 @@ public class UIModule extends AbstractModule implements IModuleDelegate
 			return component;
 		});
 		addComponent("space", (props) -> {
-			PanelComponent panel = new PanelComponent();
-			panel.setSize(props.getDouble("width", 0), props.getDouble("height", 0));
-			return panel;
+			return new SpaceComponent(props.getInt("width", 0), props.getInt("height", 0));
 		});
 		addComponent("label", (props) -> {
 			LabelComponent label = new LabelComponent(props.getString("test", null));

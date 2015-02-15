@@ -58,10 +58,6 @@ public class CalculationComponent<T> extends PanelComponent
 		{
 			getOutput().setValue(null);
 		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	public interface ICalculationCallback<T>

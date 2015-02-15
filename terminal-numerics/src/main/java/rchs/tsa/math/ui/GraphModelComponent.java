@@ -8,6 +8,7 @@ import net.anasa.util.ui.SliderComponent;
 import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 import net.anasa.util.ui.layout.UIFlowLayout;
+import net.anasa.util.ui.layout.UIGridLayout;
 import net.anasa.util.ui.layout.UIVerticalLayout;
 import rchs.tsa.math.expression.IMathExpression;
 import rchs.tsa.math.expression.MathData;
@@ -20,8 +21,6 @@ public class GraphModelComponent extends PanelComponent
 	
 	private final GraphComponent graph;
 	
-	private final MathData mathData;
-	
 	private final LabelComponent equationLabel;
 	
 	private final PanelComponent inputPanel;
@@ -31,8 +30,6 @@ public class GraphModelComponent extends PanelComponent
 		this.expression = expression;
 		
 		this.graph = new GraphComponent();
-		
-		this.mathData = new MathData();
 		
 		this.equationLabel = new LabelComponent();
 		
@@ -53,10 +50,11 @@ public class GraphModelComponent extends PanelComponent
 				updateGraph();
 			});
 			field.onAction();
-			PanelComponent panel = new PanelComponent(new UIBorderLayout()
-					.set(BorderPosition.LEFT, new LabelComponent(var.getVariable(), new Font(Font.SERIF, Font.BOLD, 12)))
-					.set(BorderPosition.CENTER, value)
-					.set(BorderPosition.RIGHT, field));
+			PanelComponent panel = new PanelComponent(new UIGridLayout()
+					.setPaddingX(10)
+					.add(0, 0, new LabelComponent(var.getVariable(), new Font(Font.SERIF, Font.BOLD, 14)))
+					.add(1, 0, value)
+					.add(2, 0, field));
 			panel.setBorder(10, 4);
 			layout.add(panel);
 		}
@@ -68,10 +66,7 @@ public class GraphModelComponent extends PanelComponent
 				.set(BorderPosition.BOTTOM, inputPanel)
 				.apply(this);
 		
-		Graph graph = new Graph(getExpression());
-		graph.setData(this.mathData);
-		this.graph.setGraph(graph);
-		
+		this.graph.setGraph(new Graph(getExpression()));
 		updateGraph();
 	}
 	
@@ -82,7 +77,7 @@ public class GraphModelComponent extends PanelComponent
 	
 	public MathData getMathData()
 	{
-		return mathData;
+		return getGraph().getMathData();
 	}
 	
 	public GraphComponent getGraph()

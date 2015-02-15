@@ -24,7 +24,7 @@ public class EvaluationComponent extends PanelComponent
 		calc = new CalculationComponent<>("Evaluate", new TextFieldComponent(), (data) -> {
 			try
 			{
-				return Evaluator.evaluate(data).evaluate(getMathData());
+				return Evaluator.parse(data).evaluate(getMathData());
 			}
 			catch(MathException e)
 			{

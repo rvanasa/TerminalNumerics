@@ -26,7 +26,7 @@ public class GraphModule extends AbstractModule implements IModuleDelegate
 		addComponent("graph", (props) -> new GraphComponent(props.getString("display", "")));
 		addComponent("graph_input", (props) -> new GraphInputComponent());
 		addComponent("graph_model", (props) -> {
-			IMathExpression expression = Evaluator.evaluate(props.getString("model"));
+			IMathExpression expression = Evaluator.parse(props.getString("model"));
 			ModelVariable[] vars = new Listing<>(props.getString("input").split("[,; ]"))
 					.filter((var) -> !var.trim().isEmpty())
 					.conform((var) -> {

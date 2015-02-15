@@ -10,16 +10,16 @@ public class Evaluator
 {
 	private static final SequenceParser PARSER = SequenceParser.EXPRESSION;
 	
-	public static IMathExpression evaluate(String data) throws MathException
+	public static IMathExpression parse(String data) throws MathException
 	{
 		return PARSER.getFrom(data);
 	}
 	
-	public static IMathExpression evaluate(String data, IMathExpression def)
+	public static IMathExpression parse(String data, IMathExpression def)
 	{
 		try
 		{
-			return evaluate(data);
+			return parse(data);
 		}
 		catch(MathException e)
 		{
@@ -27,7 +27,7 @@ public class Evaluator
 		}
 	}
 	
-	public static IMathExpression evaluate(Listing<IToken> data) throws MathException
+	public static IMathExpression parse(Listing<IToken> data) throws MathException
 	{
 		return PARSER.getFrom(data);
 	}

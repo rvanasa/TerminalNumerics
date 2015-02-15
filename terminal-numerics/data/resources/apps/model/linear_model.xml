@@ -1,0 +1,11 @@
+<app>
+	<name>Hands-on Linear Functions</name>
+	<version>1.0</version>
+	<description>Visualize the properties of linear functions.
+	</description>
+	<standards></standards>
+	<dependencies>module.graph_module</dependencies>
+	<layout type="border">
+		<graph_model model="mx + b" input="m:1 b:0" />
+	</layout>
+</app>
