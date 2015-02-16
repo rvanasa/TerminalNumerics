@@ -1,4 +1,4 @@
-package rchs.tsa.math.graph;
+package rchs.tsa.math.system;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

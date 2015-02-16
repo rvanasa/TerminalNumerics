@@ -58,12 +58,8 @@ public class AppIconComponent extends LabelComponent
 	
 	public void launchApp()
 	{
-		IComponent component = getApp().getLaunchComponent(getLaunchConfig());
-		if(component != null)
-		{
-			WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon() != null ? getApp().getIcon() : TerminalNumerics.getIcon(), component);
-			window.display();
-			window.setMinSize(window.getSize());
-		}
+		WindowComponent window = new WindowComponent(getApp().getName(), getApp().getIcon() != null ? getApp().getIcon() : TerminalNumerics.getIcon(), new AppPanelComponent(getApp(), getLaunchConfig()));
+		window.display();
+		window.setMinSize(window.getSize());
 	}
 }

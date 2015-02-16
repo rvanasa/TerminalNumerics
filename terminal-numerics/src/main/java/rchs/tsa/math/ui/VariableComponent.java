@@ -15,21 +15,21 @@ import rchs.tsa.math.util.Evaluator;
 
 public class VariableComponent extends PanelComponent
 {
-	private final MathData data;
+	private final MathData mathData;
 	private final String variable;
 	
 	private final TextFieldComponent inputField;
 	private final LabelComponent valueLabel;
 	
-	public VariableComponent(MathData data, String variable)
+	public VariableComponent(MathData mathData, String variable)
 	{
-		this.data = data;
+		this.mathData = mathData;
 		this.variable = variable;
 		
-		this.inputField = new TextFieldComponent(16);
+		inputField = new TextFieldComponent(16);
 		inputField.addKeyListener((event) -> updateData());
 		
-		this.valueLabel = new LabelComponent();
+		valueLabel = new LabelComponent();
 		
 		setBorder(2, 2);
 		new UIGridLayout()
@@ -42,9 +42,9 @@ public class VariableComponent extends PanelComponent
 		updateData();
 	}
 	
-	public MathData getData()
+	public MathData getMathData()
 	{
-		return data;
+		return mathData;
 	}
 	
 	public String getVariable()
@@ -64,20 +64,20 @@ public class VariableComponent extends PanelComponent
 	
 	public void updateData()
 	{
-		INumber value = getData().getVariable(getVariable());
+		INumber value = getMathData().getVariable(getVariable());
 		
 		try
 		{
-			value = Evaluator.parse(getInputField().getValue()).evaluate(getData());
+			value = Evaluator.parse(getMathData(), getInputField().getValue()).evaluate(getMathData());
 		}
 		catch(MathException e)
 		{
 			Debug.msg(MessageType.ERROR, e.getMessage());
 		}
 		
-		getData().setVariable(getVariable(), value);
+		getMathData().setVariable(getVariable(), value);
 		
-		getValueLabel().setText(getData().getVariable(getVariable()).getStringValue());
+		getValueLabel().setText(getMathData().getVariable(getVariable()).getStringValue());
 		redraw();
 	}
 }

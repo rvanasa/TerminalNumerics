@@ -13,7 +13,7 @@ import net.anasa.util.ui.layout.UIVerticalLayout;
 import rchs.tsa.math.expression.IMathExpression;
 import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.expression.MathNumber;
-import rchs.tsa.math.graph.Graph;
+import rchs.tsa.math.system.Graph;
 
 public class GraphModelComponent extends PanelComponent
 {
@@ -25,11 +25,11 @@ public class GraphModelComponent extends PanelComponent
 	
 	private final PanelComponent inputPanel;
 	
-	public GraphModelComponent(String display, IMathExpression expression, ModelVariable... vars)
+	public GraphModelComponent(MathData mathData, String display, IMathExpression expression, ModelVariable... vars)
 	{
 		this.expression = expression;
 		
-		this.graph = new GraphComponent();
+		this.graph = new GraphComponent(mathData);
 		
 		this.equationLabel = new LabelComponent();
 		

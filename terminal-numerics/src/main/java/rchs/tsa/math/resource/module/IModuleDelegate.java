@@ -5,7 +5,9 @@ import java.net.URL;
 
 import net.anasa.util.Checks;
 import net.anasa.util.Debug;
+import net.anasa.util.data.properties.Properties;
 import rchs.tsa.math.TerminalNumerics;
+import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.io.xml.layout.XmlLayoutLoader;
 import rchs.tsa.math.resource.app.IApp;
 import rchs.tsa.math.resource.module.context.IComponentEntry;
@@ -15,6 +17,11 @@ import rchs.tsa.math.resource.module.context.base.ActionRegister.IComponentActio
 public interface IModuleDelegate
 {
 	default void init() throws Exception
+	{
+		
+	}
+	
+	default void setupMathData(MathData data, Properties props)
 	{
 		
 	}

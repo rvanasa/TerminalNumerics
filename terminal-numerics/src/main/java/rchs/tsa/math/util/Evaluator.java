@@ -4,22 +4,26 @@ import net.anasa.util.Listing;
 import net.anasa.util.data.resolver.IToken;
 import rchs.tsa.math.MathException;
 import rchs.tsa.math.expression.IMathExpression;
+import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.interpreter.SequenceParser;
 
 public class Evaluator
 {
-	private static final SequenceParser PARSER = SequenceParser.EXPRESSION;
-	
-	public static IMathExpression parse(String data) throws MathException
+	public static SequenceParser getParser(MathData mathData)
 	{
-		return PARSER.getFrom(data);
+		return new SequenceParser(mathData);
 	}
 	
-	public static IMathExpression parse(String data, IMathExpression def)
+	public static IMathExpression parse(MathData mathData, String data) throws MathException
+	{
+		return getParser(mathData).getFrom(data);
+	}
+	
+	public static IMathExpression parse(MathData mathData, String data, IMathExpression def)
 	{
 		try
 		{
-			return parse(data);
+			return parse(mathData, data);
 		}
 		catch(MathException e)
 		{
@@ -27,8 +31,8 @@ public class Evaluator
 		}
 	}
 	
-	public static IMathExpression parse(Listing<IToken> data) throws MathException
+	public static IMathExpression parse(MathData mathData, Listing<IToken> data) throws MathException
 	{
-		return PARSER.getFrom(data);
+		return getParser(mathData).getFrom(data);
 	}
 }

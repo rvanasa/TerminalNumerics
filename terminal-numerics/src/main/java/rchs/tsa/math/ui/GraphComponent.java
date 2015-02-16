@@ -27,9 +27,9 @@ import net.anasa.util.ui.menu.MenuActionComponent;
 import rchs.tsa.math.MathException;
 import rchs.tsa.math.TerminalNumerics;
 import rchs.tsa.math.expression.MathData;
-import rchs.tsa.math.graph.Graph;
-import rchs.tsa.math.graph.GraphView;
 import rchs.tsa.math.interpreter.SequenceParser;
+import rchs.tsa.math.system.Graph;
+import rchs.tsa.math.system.GraphView;
 import rchs.tsa.math.ui.event.GraphEvent;
 import rchs.tsa.math.util.Evaluator;
 
@@ -54,6 +54,8 @@ public class GraphComponent extends PanelComponent
 			new FunctionColor("Pink", 0xA6517D),
 	});
 	
+	private final MathData mathData;
+	
 	private final Listing<Graph> graphs = new Listing<Graph>().setHandle(new CopyOnWriteArrayList<>());
 	private final GraphView view;
 	
@@ -63,22 +65,22 @@ public class GraphComponent extends PanelComponent
 	
 	private SequenceParser parser;
 	
-	private MathData mathData = new MathData();
-	
-	public GraphComponent(String data)
+	public GraphComponent(MathData mathData, String data)
 	{
-		this();
+		this(mathData);
 		
 		updateGraphs(data);
 	}
 	
-	public GraphComponent(Graph... graphs)
+	public GraphComponent(MathData mathData, Graph... graphs)
 	{
-		this(new GraphView(), graphs);
+		this(mathData, new GraphView(), graphs);
 	}
 	
-	public GraphComponent(GraphView view, Graph... graphs)
+	public GraphComponent(MathData mathData, GraphView view, Graph... graphs)
 	{
+		this.mathData = mathData;
+		
 		this.view = view;
 		
 		setBorder(2, 2);
@@ -91,13 +93,14 @@ public class GraphComponent extends PanelComponent
 						component.addDrawListener((event) -> redraw());
 						addDrawListener((event) -> component.updateVariables());
 						new WindowComponent("Graph Configuration", TerminalNumerics.getIcon(), component).setResizable(false).tether(WindowComponent.getParentWindow(this)).display();
-					})
+					}),
+		
 		}));
 		
 		graphPanel.setBackground(BG_COLOR);
 		graphPanel.setSize(SIZE, SIZE);
 		
-		setParser(SequenceParser.EXPRESSION);
+		setParser(Evaluator.getParser(mathData));
 		
 		scaleSlider = new SliderComponent(0, 154, 40);
 		scaleSlider.addActionListener((event) -> redraw());
@@ -119,6 +122,11 @@ public class GraphComponent extends PanelComponent
 		{
 			addGraph(graph);
 		}
+	}
+	
+	public MathData getMathData()
+	{
+		return mathData;
 	}
 	
 	public FunctionColor getFunctionColor(int index)
@@ -144,16 +152,6 @@ public class GraphComponent extends PanelComponent
 	public void setParser(SequenceParser parser)
 	{
 		this.parser = parser;
-	}
-	
-	public MathData getMathData()
-	{
-		return mathData;
-	}
-	
-	public void setMathData(MathData mathData)
-	{
-		this.mathData = mathData;
 	}
 	
 	public Listing<Graph> getGraphs()
@@ -187,7 +185,7 @@ public class GraphComponent extends PanelComponent
 			{
 				try
 				{
-					Graph graph = new Graph(Evaluator.parse(sequence));
+					Graph graph = new Graph(getParser().getFrom(sequence));
 					addGraph(graph);
 					
 					getEvents().dispatch(new GraphEvent(this, graph));
@@ -206,6 +204,10 @@ public class GraphComponent extends PanelComponent
 		if(getParser() == null)
 		{
 			return;
+		}
+		else if(data == null)
+		{
+			data = "";
 		}
 		
 		try
@@ -233,7 +235,7 @@ public class GraphComponent extends PanelComponent
 	
 	public void addGraphListener(IComponentListener<GraphEvent> listener)
 	{
-		getEvents().register(GraphEvent.class, listener);
+		addListener(GraphEvent.class, listener);
 	}
 	
 	@Override

@@ -12,21 +12,21 @@ import net.anasa.util.data.resolver.Token;
 import net.anasa.util.data.resolver.logic.BiResolver;
 import net.anasa.util.data.resolver.logic.CollectorResolver;
 import net.anasa.util.data.resolver.logic.IResolver;
-import rchs.tsa.math.expression.ConstantType;
 import rchs.tsa.math.expression.FunctionExpression;
-import rchs.tsa.math.expression.FunctionType;
+import rchs.tsa.math.expression.IConstant;
 import rchs.tsa.math.expression.IMathExpression;
+import rchs.tsa.math.expression.IOperator;
+import rchs.tsa.math.expression.MathData;
 import rchs.tsa.math.expression.MathNumber;
 import rchs.tsa.math.expression.NumberExpression;
 import rchs.tsa.math.expression.OperationExpression;
-import rchs.tsa.math.expression.OperatorType;
 import rchs.tsa.math.expression.VariableExpression;
 import rchs.tsa.math.sequence.ExpressionTokenType;
 import rchs.tsa.math.sequence.SequenceNesting;
 
 public class ExpressionResolver extends MultiResolver<IMathExpression>
 {
-	public ExpressionResolver()
+	public ExpressionResolver(MathData mathData)
 	{
 		ExpressionResolver expression = this;
 		
@@ -43,10 +43,10 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 			{
 				String data = item.getData();
 				
-				ConstantType constant = ConstantType.get(data);
+				IConstant constant = mathData.getConstant(data);
 				if(constant != null)
 				{
-					return new NumberExpression(new MathNumber(constant.getValue()));
+					return new NumberExpression(constant.getValue());
 				}
 				
 				Checks.check(NumberHelper.isDouble(data), new ResolverException("Invalid number: " + item.getData()));
@@ -119,9 +119,9 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 						if(/** !last && **/
 						item.getType() == ExpressionTokenType.OPERATOR)
 						{
-							OperatorType op = OperatorType.get(item.getData());
+							IOperator op = mathData.getOperator(item.getData());
 							
-							if(splitter == null || !op.hasPriority(OperatorType.get(splitter.getData())))
+							if(splitter == null || !op.hasPriority(mathData.getOperator(splitter.getData())))
 							{
 								splitter = item;
 								// last = true;
@@ -138,7 +138,7 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 					IMathExpression a = expression.resolve(data.subList(0, index));
 					IMathExpression b = expression.resolve(data.subList(index + 1));
 					
-					return new OperationExpression(OperatorType.get(splitter.getData()), a, b);
+					return new OperationExpression(mathData.getOperator(splitter.getData()), a, b);
 				}
 				catch(FormatException e)
 				{
@@ -158,13 +158,14 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 			{
 				return data.size() > 1
 						&& data.get(0).getType() == ExpressionTokenType.FUNCTION
-						&& expression.matches(data.subList(1));
+						&& expression.matches(data.subList(1))
+						&& (data.size() == 2 || SequenceNesting.isNestingToken(data.get(1).getType()));
 			}
 			
 			@Override
 			public IMathExpression resolve(Listing<IToken> data) throws ResolverException
 			{
-				return new FunctionExpression(FunctionType.get(data.get(0).getData()), expression.resolve(data.subList(1)));
+				return new FunctionExpression(mathData.getFunction(data.get(0).getData()), expression.resolve(data.subList(1)));
 			}
 		});
 		
@@ -174,14 +175,14 @@ public class ExpressionResolver extends MultiResolver<IMathExpression>
 			public boolean matches(Listing<IToken> data)
 			{
 				return data.size() > 1
-						&& StringHelper.equals(OperatorType.SUBTRACT.getSignature(), data.get(0).getData())
+						&& StringHelper.equals("-", data.get(0).getData())
 						&& expression.matches(data.subList(1));
 			}
 			
 			@Override
 			public IMathExpression resolve(Listing<IToken> data) throws ResolverException
 			{
-				return new OperationExpression(OperatorType.SUBTRACT, new NumberExpression(0), expression.resolve(data.subList(1)));
+				return new OperationExpression(mathData.getOperator("-"), new NumberExpression(0), expression.resolve(data.subList(1)));
 			}
 		});
 	}

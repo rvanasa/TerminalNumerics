@@ -10,7 +10,7 @@ import net.anasa.util.ui.layout.UIBorderLayout;
 import net.anasa.util.ui.layout.UIBorderLayout.BorderPosition;
 import net.anasa.util.ui.layout.UIVerticalLayout;
 import rchs.tsa.math.expression.MathData;
-import rchs.tsa.math.graph.Graph;
+import rchs.tsa.math.system.Graph;
 import rchs.tsa.math.util.Evaluator;
 
 public class GraphInputComponent extends PanelComponent
@@ -21,19 +21,11 @@ public class GraphInputComponent extends PanelComponent
 	
 	private final SelectionComponent<Graph> selectedGraph;
 	
-	private final MathData mathData;
-	
 	private final Listing<CalculationComponent<?>> calculations = new Listing<>();
-	
-	public GraphInputComponent()
-	{
-		this(new MathData());
-	}
 	
 	public GraphInputComponent(MathData mathData)
 	{
-		graph = new GraphComponent();
-		graph.setMathData(mathData);
+		graph = new GraphComponent(mathData);
 		
 		input = new TextFieldComponent((data) -> getGraph().updateGraphs(data));
 		input.setToolTipText("<html>Input an expression to be displayed on the graph. (Example: -5x+3^x)<br/>You can graph multiple functions by seperating each expression with a semicolon (;).<br/>Right-click for additional configuration options.");
@@ -42,8 +34,6 @@ public class GraphInputComponent extends PanelComponent
 		selectedGraph = new SelectionComponent<>((value) -> getGraph().getFunctionColor(getGraph().getGraphs().indexOf(value)).getName());
 		selectedGraph.addActionListener(() -> calculate());
 		selectedGraph.setWidth(100);
-		
-		this.mathData = mathData;
 		
 		PanelComponent top = new PanelComponent(new UIBorderLayout()
 				.set(BorderPosition.LEFT, new LabelComponent(" f(x) = "))
@@ -57,7 +47,7 @@ public class GraphInputComponent extends PanelComponent
 		PanelComponent calcPanel = new PanelComponent();
 		calcPanel.setBorder(4, 2);
 		
-		calculations.add(new CalculationComponent<>("Solve for x", new TextFieldComponent(16), (data) -> getSelectedGraph() != null ? getSelectedGraph().getFrom(Evaluator.parse(data).evaluate(getMathData()), getMathData()) : null));
+		calculations.add(new CalculationComponent<>("Solve for x", new TextFieldComponent(16), (data) -> getSelectedGraph() != null ? getSelectedGraph().getFrom(Evaluator.parse(getMathData(), data).evaluate(getMathData()), getMathData()) : null));
 		
 		UIVerticalLayout calcLayout = new UIVerticalLayout();
 		calcLayout.add(graphSelect);
@@ -86,7 +76,7 @@ public class GraphInputComponent extends PanelComponent
 	
 	public MathData getMathData()
 	{
-		return mathData;
+		return getGraph().getMathData();
 	}
 	
 	public Graph getSelectedGraph()

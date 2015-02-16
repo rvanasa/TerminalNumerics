@@ -10,6 +10,7 @@ import net.anasa.util.ui.UI;
 import rchs.tsa.math.resource.ResourceType;
 import rchs.tsa.math.resource.module.context.ModuleContext;
 import rchs.tsa.math.resource.module.internal.graph.GraphModule;
+import rchs.tsa.math.resource.module.internal.ui.MathModule;
 import rchs.tsa.math.resource.module.internal.ui.UIModule;
 
 public class LauncherTask extends ComplexTask
@@ -31,6 +32,7 @@ public class LauncherTask extends ComplexTask
 			try
 			{
 				context.addModule(new UIModule());
+				context.addModule(new MathModule());
 				context.addModule(new GraphModule());
 			}
 			catch(Exception e)

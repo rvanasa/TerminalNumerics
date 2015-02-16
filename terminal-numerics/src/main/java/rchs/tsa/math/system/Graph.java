@@ -1,4 +1,4 @@
-package rchs.tsa.math.graph;
+package rchs.tsa.math.system;
 
 import rchs.tsa.math.MathException;
 import rchs.tsa.math.expression.IMathExpression;

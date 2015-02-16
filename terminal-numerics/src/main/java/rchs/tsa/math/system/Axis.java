@@ -1,4 +1,4 @@
-package rchs.tsa.math.graph;
+package rchs.tsa.math.system;
 
 public class Axis
 {

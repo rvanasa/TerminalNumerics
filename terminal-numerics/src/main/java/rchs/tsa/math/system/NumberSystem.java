@@ -1,7 +1,12 @@
-package rchs.tsa.math.graph;
+package rchs.tsa.math.system;
 
-import rchs.tsa.math.expression.INumber;
+import net.anasa.util.ArrayHelper;
+import net.anasa.util.Checks;
 import net.anasa.util.StringHelper;
+import rchs.tsa.math.MathException;
+import rchs.tsa.math.expression.IMathExpression;
+import rchs.tsa.math.expression.INumber;
+import rchs.tsa.math.expression.MathData;
 
 public class NumberSystem
 {
@@ -16,10 +21,38 @@ public class NumberSystem
 	{
 		return axes;
 	}
+
+	public Axis getAxis(int index)
+	{
+		return ArrayHelper.getFromNullable(getAxes(), index);
+	}
 	
 	public int getDimensions()
 	{
 		return getAxes().length;
+	}
+	
+	public INumber evaluate(IMathExpression expression, MathData data, INumber... numbers) throws MathException
+	{
+		try
+		{
+			Checks.checkNotNull(numbers, new MathException("Numbers cannot be null"));
+			Checks.check(numbers.length == getDimensions(), new MathException("Invalid dimension count: " + numbers.length + " (should be " + getDimensions() + ")"));
+			
+			for(int i = 0; i < getDimensions(); i++)
+			{
+				data.setVariable(getAxis(i).getKey(), numbers[i]);
+			}
+			
+			return expression.evaluate(data);
+		}
+		finally
+		{
+			for(int i = 0; i < getDimensions(); i++)
+			{
+				data.removeVariable(getAxis(i).getKey());
+			}
+		}
 	}
 	
 	public class Coordinate

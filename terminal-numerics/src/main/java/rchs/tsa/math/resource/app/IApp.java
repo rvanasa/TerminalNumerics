@@ -5,6 +5,7 @@ import java.awt.Image;
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
 import rchs.tsa.math.resource.IGenericResource;
+import rchs.tsa.math.resource.module.ModuleException;
 import rchs.tsa.math.standard.IStandard;
 
 public interface IApp extends IGenericResource
@@ -17,5 +18,5 @@ public interface IApp extends IGenericResource
 	
 	public Image getIcon();
 	
-	public IComponent getLaunchComponent(Properties props);
+	public IComponent getLaunchComponent(Properties props) throws ModuleException;
 }

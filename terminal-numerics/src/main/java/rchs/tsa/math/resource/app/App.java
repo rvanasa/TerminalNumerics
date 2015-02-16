@@ -4,9 +4,9 @@ import java.awt.Image;
 
 import net.anasa.util.data.properties.Properties;
 import net.anasa.util.ui.IComponent;
-import net.anasa.util.ui.UI;
 import rchs.tsa.math.resource.Dependency;
 import rchs.tsa.math.resource.Version;
+import rchs.tsa.math.resource.module.ModuleException;
 import rchs.tsa.math.resource.module.context.IComponentEntry;
 import rchs.tsa.math.standard.IStandard;
 
@@ -81,7 +81,7 @@ public class App implements IApp
 	}
 
 	@Override
-	public IComponent getLaunchComponent(Properties props)
+	public IComponent getLaunchComponent(Properties props) throws ModuleException
 	{
 		try
 		{
@@ -89,8 +89,7 @@ public class App implements IApp
 		}
 		catch(Throwable e)
 		{
-			UI.sendError("Failed to create launch component for app: " + getID(), e);
-			return null;
+			throw new ModuleException("Failed to create launch component for app: " + getID(), e);
 		}
 	}
 	

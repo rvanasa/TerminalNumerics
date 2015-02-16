@@ -3,7 +3,11 @@ package rchs.tsa.math.resource.module.internal.graph;
 import net.anasa.util.Listing;
 import net.anasa.util.NumberHelper;
 import net.anasa.util.StringHelper;
+import net.anasa.util.data.properties.Properties;
 import rchs.tsa.math.expression.IMathExpression;
+import rchs.tsa.math.expression.MathData;
+import rchs.tsa.math.resource.Dependency;
+import rchs.tsa.math.resource.Dependency.DependencyType;
 import rchs.tsa.math.resource.Version;
 import rchs.tsa.math.resource.module.AbstractModule;
 import rchs.tsa.math.resource.module.IModuleDelegate;
@@ -17,16 +21,17 @@ public class GraphModule extends AbstractModule implements IModuleDelegate
 {
 	public GraphModule()
 	{
-		super("graph_module", new Version(1, 0, 0), "Graph Module", "Graphical display and evaluation functionality");
+		super("graph_module", new Version(1, 0, 0), "Graph Module", "Graphical display and evaluation functionality", new Dependency(DependencyType.MODULE, "math_module", new Version(1, 0, 0)));
 	}
 	
 	@Override
 	public void init()
 	{
-		addComponent("graph", (props) -> new GraphComponent(props.getString("display", "")));
-		addComponent("graph_input", (props) -> new GraphInputComponent());
+		addComponent("graph", (props) -> new GraphComponent(getMathData(props), props.getString("display", "")));
+		addComponent("graph_input", (props) -> new GraphInputComponent(getMathData(props)));
 		addComponent("graph_model", (props) -> {
-			IMathExpression expression = Evaluator.parse(props.getString("model"));
+			MathData mathData = getMathData(props);
+			IMathExpression expression = Evaluator.parse(mathData, props.getString("model"));
 			ModelVariable[] vars = new Listing<>(props.getString("input").split("[,; ]"))
 					.filter((var) -> !var.trim().isEmpty())
 					.conform((var) -> {
@@ -41,7 +46,7 @@ public class GraphModule extends AbstractModule implements IModuleDelegate
 						}
 					})
 					.toArray(ModelVariable.class);
-			return new GraphModelComponent(props.getString("display", props.getString("model")), expression, vars);
+			return new GraphModelComponent(mathData, props.getString("display", props.getString("model")), expression, vars);
 		});
 		
 		addAction("update_graph", (component, args) -> {
@@ -51,6 +56,11 @@ public class GraphModule extends AbstractModule implements IModuleDelegate
 				((GraphComponent)component).updateGraphs(data);
 			}
 		});
+	}
+	
+	private MathData getMathData(Properties props)
+	{
+		return MathData.create(getContext(), props.getInner("data"));
 	}
 	
 	@Override

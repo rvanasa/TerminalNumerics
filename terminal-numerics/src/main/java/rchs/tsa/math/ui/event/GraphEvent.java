@@ -1,6 +1,6 @@
 package rchs.tsa.math.ui.event;
 
-import rchs.tsa.math.graph.Graph;
+import rchs.tsa.math.system.Graph;
 import net.anasa.util.ui.IComponent;
 import net.anasa.util.ui.event.UIEvent;
 

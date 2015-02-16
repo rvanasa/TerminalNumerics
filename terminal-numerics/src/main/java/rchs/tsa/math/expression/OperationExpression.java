@@ -4,10 +4,10 @@ import rchs.tsa.math.MathException;
 
 public class OperationExpression extends MathExpression
 {
-	private final OperatorType operator;
+	private final IOperator operator;
 	private final IMathExpression a, b;
 	
-	public OperationExpression(OperatorType operator, IMathExpression a, IMathExpression b)
+	public OperationExpression(IOperator operator, IMathExpression a, IMathExpression b)
 	{
 		this.operator = operator;
 		
@@ -15,7 +15,7 @@ public class OperationExpression extends MathExpression
 		this.b = b;
 	}
 
-	public OperatorType getOperator()
+	public IOperator getOperator()
 	{
 		return operator;
 	}
@@ -33,7 +33,7 @@ public class OperationExpression extends MathExpression
 	@Override
 	public INumber evaluate(MathData data) throws MathException
 	{
-		return getOperator().getResult(getA().evaluate(data), getB().evaluate(data), data);
+		return getOperator().operate(getA().evaluate(data), getB().evaluate(data));
 	}
 
 	@Override

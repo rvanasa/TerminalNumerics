@@ -15,6 +15,7 @@ import net.anasa.util.ui.layout.UIFlowLayout.FlowType;
 import net.anasa.util.ui.layout.UIVerticalLayout;
 import net.anasa.util.ui.menu.CheckBoxComponent;
 import rchs.tsa.math.expression.MathData;
+import rchs.tsa.math.expression.MathData.AngleMode;
 import rchs.tsa.math.expression.MathNumber;
 
 public class MathDataComponent extends PanelComponent
@@ -34,8 +35,8 @@ public class MathDataComponent extends PanelComponent
 				.set(BorderPosition.TOP, new ScrollComponent(320, 140, new PanelComponent(new UIBorderLayout()
 						.set(BorderPosition.TOP, variables))))
 				.set(BorderPosition.BOTTOM, new PanelComponent(new UIFlowLayout(FlowType.RIGHT)
-						.add(new CheckBoxComponent("Degree Mode", data.isDegreeMode(), (value) -> {
-							getData().setDegreeMode(value);
+						.add(new CheckBoxComponent("Degree Mode", data.getMode() == AngleMode.DEGREES, (value) -> {
+							getData().setMode(value ? AngleMode.DEGREES : AngleMode.RADIANS);
 							updateVariables();
 						}))
 						.add(new ButtonComponent("Add Variable(s)", () -> UI.input("Add Variable(s)", "Enter variable name(s):", (vars) -> new ForEachStatement<>(Arrays.asList(vars.split(",|;")), (var) -> addVariable(var.trim())).run())))))
@@ -64,7 +65,7 @@ public class MathDataComponent extends PanelComponent
 		
 		getVariableComponent().removeComponents();
 		UIVerticalLayout layout = new UIVerticalLayout(4);
-		for(String var : getData().getVariables().keySet())
+		for(String var : getData().getVariables().getKeys())
 		{
 			VariableComponent component = new VariableComponent(getData(), var);
 			component.getInputField().addKeyListener((event) -> {
