@@ -35,11 +35,12 @@ public class MathDataComponent extends PanelComponent
 				.set(BorderPosition.TOP, new ScrollComponent(320, 140, new PanelComponent(new UIBorderLayout()
 						.set(BorderPosition.TOP, variables))))
 				.set(BorderPosition.BOTTOM, new PanelComponent(new UIFlowLayout(FlowType.RIGHT)
+						.add(new ButtonComponent("Add Variable(s)", () -> UI.input("Add Variable(s)", "Enter variable name(s):", (vars) -> new ForEachStatement<>(Arrays.asList(vars.split(",|;")), (var) -> addVariable(var.trim())).run())))
 						.add(new CheckBoxComponent("Degree Mode", data.getMode() == AngleMode.DEGREES, (value) -> {
 							getData().setMode(value ? AngleMode.DEGREES : AngleMode.RADIANS);
 							updateVariables();
 						}))
-						.add(new ButtonComponent("Add Variable(s)", () -> UI.input("Add Variable(s)", "Enter variable name(s):", (vars) -> new ForEachStatement<>(Arrays.asList(vars.split(",|;")), (var) -> addVariable(var.trim())).run())))))
+						))
 				.apply(this);
 	}
 	
